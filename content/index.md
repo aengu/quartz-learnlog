@@ -1,106 +1,104 @@
-# 📚 LearnLog - 개발자를 위한 AI 검색 아카이브 시스템
+# 신혜란
 
-[https://github.com/aengu/learn-log](https://github.com/aengu/learn-log)
-
-[Learn Log - AI 개발 지식 베이스](https://learn-log.onrender.com/)
-
-## 🎯 프로젝트 개요
-
-개발 중 구글링하듯 기술적 질문을 검색하면, AI가 답변과 함께 공식 레퍼런스를 자동으로 찾아주고, 이를 노션 형식의 마크다운으로 정리해 아카이빙하는 시스템입니다.
-
-**핵심 가치**: 개발자의 학습 과정을 체계적으로 기록하고, 언제든 다시 찾아볼 수 있는 개인 지식 베이스 구축
+> Django 기반 백엔드 개발자입니다.
+> 주식 자동매매 서비스를 초기부터 운영까지 담당하며 서비스 분리, DB 부하 분산, 스케줄러 설계 등 실서비스 운영 경험이 있습니다.
+> 이후 실무에서 아쉬웠던 쿼리 최적화(N+1 문제, QuerySet 평가 시점)와 DB Lock 등을 깊이 학습하며 기반을 다졌고, 최근에는 AI API를 활용한 개인 프로젝트를 통해 테스트 자동화, CI/CD, 컨테이너 기반 개발 환경까지 직접 구축하고 있습니다.
 
 ---
 
-## ✨ 주요 기능
+# Contact
 
-### 1. **AI 기반 기술 질문 답변**
-
-- 사용자가 입력한 개발 관련 질문에 대해 AI가 상세한 답변 제공
-- 예: "docker bridge network와 host network 차이"
-
-### 2. **공식 레퍼런스 자동 검색 및 발췌**
-
-- 질문과 관련된 공식 문서 자동 검색
-- 각 레퍼런스의 URL 및 핵심 내용 발췌
-
-### 3. **노션 스타일 마크다운 자동 변환**
-
-- AI 답변과 레퍼런스를 하나의 문서로 통합
-- 표(table), 코드 블록, 하이라이트 등이 포함된 읽기 쉬운 포맷
-- 노션에 바로 복사/붙여넣기 가능
-
-### 4. **검색 히스토리 아카이빙**
-
-- 모든 검색 내용을 게시판 형식으로 저장
-- 태그/카테고리별 분류
-- 검색 및 필터링 기능
+- Email: shr19970923@gmail.com
+- GitHub: [https://github.com/aengu](https://github.com/aengu)
 
 ---
 
-## 🛠 기술 스택
+# Skills
 
-### **Backend**
-
-- **Django 5.x**: 웹 프레임워크
-- **Django REST Framework**: API 엔드포인트 구현
-- **PostgreSQL**: 검색 히스토리 및 메타데이터 저장, Full-Text Search
-
-### **Frontend**
-
-- **Django Template** + **HTMX**: SPA 없이 서버 렌더링 기반으로 SSE 스트리밍, 무한스크롤, 부분 페이지 갱신 구현
-- **Tailwind CSS**: 유틸리티 클래스 기반 CSS 프레임워크
-
-### **Testing & CI**
-
-- **pytest** + **pytest-django**: 테스트 러너 및 Django 통합
-- **factory_boy**: 테스트 데이터 팩토리
-- **GitHub Actions**: push/PR 시 자동 테스트 실행
-
-### **Deployment**
-
-- **Docker** + **Docker Compose**: 컨테이너화 및 개발 환경 구성
-- **Render**: 프로덕션 배포 (Web Service + Managed PostgreSQL)
+| 분류 | 기술 |
+| --- | --- |
+| Backend | Python, Django, Django REST Framework |
+| Database | PostgreSQL (Full-Text Search), MySQL |
+| Infra | Docker, Docker Compose, AWS (EC2, ELB, Auto Scaling, RDS) |
+| CI/CD | GitHub Actions, pytest, factory_boy |
+| AI/API | Groq API (Llama 3.3), Tavily API |
+| etc | Git, Jira, Confluence |
 
 ---
 
-## 🤖 AI/검색 LLM API
+# 경력
 
-### **1. Tavily API** (웹 검색)
+## 주식회사 맥클로린 (2021.03 ~ 2022.08)
 
-- **역할**: 실시간 웹 검색 및 공식 레퍼런스 발견
-- **장점**:
-    - AI 에이전트에 최적화된 검색 엔진
-    - 무료 티어 제공
-    - 특정 도메인(공식 문서) 우선 검색 가능
-- **사용 사례**:
-    - 질문 관련 공식 문서 URL 수집
-    - 각 문서의 핵심 내용 발췌
+**큐앤에이소프트** — 퀀트 딥러닝 주식 자동매매 서비스 개발 및 운영
 
-### **2. Groq API** (LLM)
+서비스 초기부터 참여하여, 주문 시스템 개발과 인프라 안정화를 담당했습니다.
+→ [[큐앤에이소프트- 상세페이지]]
 
-- **역할**: AI 답변 생성 및 마크다운 변환
-- **모델**: Llama 3.3 70B Versatile
-- **장점**:
-    - 무료 티어 (하루 14,400 요청)
-    - 초고속 응답 속도
-    - 코드/기술 질문에 강함
-- **사용 사례**:
-    - 기술 질문에 대한 상세한 답변 생성
-    - Tavily 검색 결과를 통합하여 노션 스타일 마크다운 생성
+### 주문 시스템 개발
+- 이베스트/키움 증권 API를 활용한 자동매매 시스템 구현
+- [주문 생성 → 승인 → 체결 → 완료] 구조에 승인 시스템을 도입하여 그룹/고객별 모니터링 체계 구축
+- 주차별 비중 조정, 종목 리밸런싱, 승인 요청 알림 등 트랜잭션을 APScheduler로 관리
 
-## 개발일지
+### 서비스 분리 및 부하 분산
+- **문제**: 리밸런싱 시 시스템 전체가 느려지는 현상 발생
+- **1차 해결**: 사내포털과 주문처리 서버를 Django 프로젝트 단위로 분리
+- **2차 해결**: 주문처리 서버에 ELB + Auto Scaling 적용 — CPU 사용량 기준으로 인스턴스 자동 확장
+- **3차 해결**: 주문처리 DB를 별도 분리하고, 사내포털에서 Django DB Router로 두 DB를 동시에 조회할 수 있도록 구성
 
-- [[vscode에서 Docker 컨테이너 디버깅하기]]
-- [[Django 모델 설계 및 마이그레이션 초기화]]
-- [[서비스 모델 설계]]
-- [[학습 로그 서비스 계층 설계 및 구현]]
-- [[기술 스택별 검색 도메인 자동 매핑 및 출처 판단 개선]]
-- [[검색 중 프로그레스바 + 진행로그를 위한 SSE 구현]]
-- [[학습로그 검색 기능 - Full-Text Search 구현]]
-- [[GitHub Actions로 테스트자동화]]
-- [[테스트코드 작성 - log list]]
-- [[Render 무료 배포 + DB 동기화 + 자동 백업 구현]]
-- [[render 배포웹 슬립 방지]]
-- [[학습 로그 기반 간격 반복 연습문제 시스템 구현]]
-- [[프롬프트 변경 효과 측정 - correct_index 오류율 비교 테스트]]
+### 스케줄러 분리
+- **문제**: Gunicorn worker마다 APScheduler가 중복 실행되는 현상 발견
+- **해결**: 스케줄러를 별도 Django 프로젝트로 분리하여 단일 프로세스로 실행
+
+### DB Connection 관리
+- **문제**: 주문 DB가 8~17시만 active인데, 스케줄러 스레드가 connection을 유지하여 DB 재시작 후에도 lost connection 에러 지속
+- **해결**: 스케줄러 트랜잭션 종료 시 connection을 명시적으로 close하도록 수정
+
+### 기타
+- CRM 권한 관리 — 팀/직급별 기능 제한을 Django admin에서 관리 가능하도록 구현
+- 영업팀 녹취파일 일별 통화시간 집계 자동화 (오디오파일 ETL)
+
+---
+
+## 연세대학교 LandFlow 프로젝트 (2021.07 ~ 2021.11)
+
+토석류 유동 시뮬레이션 프로그램 — Matlab GUI(App Designer) 개발
+→ [[landflow- 상세페이지]]
+
+- 2차원 지형 이미지 위에 등고선을 오버레이하고, brush 기능으로 영역 선택 후 값을 삽입하는 인터페이스 구현
+- brush를 지원하지 않는 heatmap 대신 surf 함수를 활용하여 3D 데이터를 2D 시점으로 표현하는 방식으로 해결
+
+---
+
+# 프로젝트
+
+## LearnLog — AI 개발 지식 베이스 (2025)
+
+[GitHub](https://github.com/aengu/learn-log) | [배포 사이트](https://learn-log.onrender.com/) | [[📚 LearnLog - 개발자를 위한 AI 검색 아카이브 시스템|포트폴리오]]
+
+개발 중 기술적 질문을 검색하면 AI가 답변과 공식 레퍼런스를 자동으로 찾아 마크다운으로 정리해주는 아카이브 시스템
+
+### 기술 스택
+Django 5 / DRF / PostgreSQL / Docker / HTMX / Tailwind CSS / pytest / GitHub Actions / Render
+
+### 주요 구현
+
+- **AI 답변 + 레퍼런스 통합**: Tavily API로 공식 문서 검색 → Groq API(Llama 3.3)로 답변 생성 → 노션 스타일 마크다운으로 변환
+- **SSE 스트리밍**: StreamingHttpResponse로 검색 진행 상태를 실시간 전달 (프로그레스바 + 진행 로그)
+- **Full-Text Search**: PostgreSQL SearchVector/SearchRank 기반 한국어 검색 구현
+- **간격 반복 연습문제 시스템**: 학습 로그 기반으로 3가지 유형의 연습문제를 LLM이 자동 생성하고 채점. 간격 반복 알고리즘(1, 3, 7, 14, 30일)으로 복습 스케줄 관리
+- **LLM 출력 검증**: correct_index 오류를 발견하고 프롬프트 수정 → N=20 비교 테스트로 오류율 20% → 0% 감소 확인
+- **DB 동기화/백업**: Django management command(dbpush/dbpull)로 로컬-Render DB 동기화, GitHub Actions로 주간 자동 백업
+- **테스트 자동화**: pytest + factory_boy 기반 테스트, GitHub Actions CI
+
+---
+
+# 학력
+
+## 충북대학교 (2016 ~ 2020)
+
+정보통신공학과
+
+## 멋쟁이사자처럼 (2019 ~ 2020)
+
+Django 웹개발 대외활동 운영진
