@@ -65,6 +65,8 @@
 토석류 유동 시뮬레이션 프로그램 — Matlab GUI(App Designer) 개발
 → [[landflow- 상세페이지]]
 
+![[이력서/신혜란/landflow- 상세페이지/landflow_실행화면.gif]]
+
 - 2차원 지형 이미지 위에 등고선을 오버레이하고, brush 기능으로 영역 선택 후 값을 삽입하는 인터페이스 구현
 - brush를 지원하지 않는 heatmap 대신 surf 함수를 활용하여 3D 데이터를 2D 시점으로 표현하는 방식으로 해결
 
