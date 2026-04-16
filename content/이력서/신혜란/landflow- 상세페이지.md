@@ -152,3 +152,5 @@ ax1의 x,y 크기와 대응하는 0배열을 만들어, 마우스로 선택한 �
         app.custom_data.AlphaData = app.custom_data.ZData;
     		app.custom_data.AlphaData(app.custom_data.AlphaData>=1) = 0.5;
     ```
+
+![[이력서/신혜란/landflow- 상세페이지/landflow_실행화면2.gif]]
