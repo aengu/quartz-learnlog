@@ -11,12 +11,12 @@ ax1에 2차원 배열을 이미지로 표시하고, 그 위에 2차원 배열에
 
 - 이미지
     
-    ![[landflow- 상세페이지/Untitled.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled.png]]
     
 
 - 이미지 + 등고선
     
-    ![[landflow- 상세페이지/Untitled 1.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 1.png]]
     
 
 ax1의 x,y 크기와 대응하는 0배열을 만들어, 마우스로 선택한 영역에 원하는 값을 insert할 수 있는 기능.
@@ -29,7 +29,7 @@ ax1의 x,y 크기와 대응하는 0배열을 만들어, 마우스로 선택한 �
     
     (brush: matlab에서 그래픽 객체를 선택 및 조작할 수 있는 brush 기능)
     
-    ![[landflow- 상세페이지/Untitled 2.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 2.png]]
     
 - 그래서 brush를 지원하는 그래픽 함수 중, surf 함수를 채용했다.
     
@@ -38,24 +38,24 @@ ax1의 x,y 크기와 대응하는 0배열을 만들어, 마우스로 선택한 �
 
 - 2차원 시점
     
-    ![[landflow- 상세페이지/Untitled 3.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 3.png]]
     
 
 - 3차원 시점
     
-    ![[landflow- 상세페이지/Untitled 4.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 4.png]]
     
 
 ### 구현방법
 
 1. app designer 해당 페이지 pannel에 ax1(이미지, 등고선), ax2(surf) 두 가지 축을 추가한다.
     
-    ![[landflow- 상세페이지/Untitled 5.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 5.png]]
     
 
 1. ax1에 이미지와 등고선을 plot한다
     
-    ![[landflow- 상세페이지/Untitled 1.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 1.png]]
     
     ```matlab
     
@@ -72,7 +72,7 @@ ax1의 x,y 크기와 대응하는 0배열을 만들어, 마우스로 선택한 �
 
 1. ax2에 surf를 plot한다
     
-    ![[landflow- 상세페이지/Untitled 6.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 6.png]]
     
     brush 기능을 사용하기 위해 ax1의 2차원 배열과 크기가 같은 0배열을 ax2에 surf하고 플롯을 2D로 보고, 축을 XY 평면에 정렬하여 조정한다.
     
@@ -89,7 +89,7 @@ ax1의 x,y 크기와 대응하는 0배열을 만들어, 마우스로 선택한 �
 
 1. AlphaData로 투명도 조절
     
-    ![[landflow- 상세페이지/Untitled 7.png]]
+    ![[이력서/신혜란/landflow- 상세페이지/Untitled 7.png]]
     
     ```matlab
     alphData = app.custom_data.ZData;
