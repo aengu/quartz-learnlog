@@ -8,8 +8,8 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      GitHub: "https://github.com/aengu",
+      Email: "mailto:shr19970923@gmail.com",
     },
   }),
 }
@@ -38,7 +38,16 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        // 최상위 항목(LearnLog, 이력서, 자기소개서)만 표시, 하위 파일 숨김
+        const slug = node.slug
+        const parts = slug.split("/").filter((s) => s && s !== "index")
+        return parts.length <= 1
+      },
+      folderClickBehavior: "link",
+      folderDefaultState: "collapsed",
+    }),
   ],
   right: [],
 }
@@ -58,7 +67,16 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        // 최상위 항목(LearnLog, 이력서, 자기소개서)만 표시, 하위 파일 숨김
+        const slug = node.slug
+        const parts = slug.split("/").filter((s) => s && s !== "index")
+        return parts.length <= 1
+      },
+      folderClickBehavior: "link",
+      folderDefaultState: "collapsed",
+    }),
   ],
   right: [],
 }

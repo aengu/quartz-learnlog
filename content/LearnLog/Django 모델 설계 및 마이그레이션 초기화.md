@@ -1,5 +1,26 @@
 # Django 모델 설계 및 마이그레이션 초기화
 
+[https://github.com/aengu/learn-log/commit/dd1d50e38328ffd06ce50a542c0794285f02b8f0](https://github.com/aengu/learn-log/commit/dd1d50e38328ffd06ce50a542c0794285f02b8f0)
+
+| 항목 | 내용 |
+| --- | --- |
+| 목적 | LearnLog의 핵심 기능(AI 답변 아카이빙, 태그 분류, 레퍼런스 관리)을 구현하기 위한 모델 설계 |
+| 범위 | Tag, Reference, LearningLog 모델 설계 + Docker 환경 마이그레이션 초기화 |
+
+---
+
+## 왜 이 구조인가
+
+LearnLog의 핵심 흐름은 "질문 → AI 답변 + 레퍼런스 수집 → 마크다운 정리 → 아카이빙"이다. 이 흐름을 지원하려면 세 가지가 필요했다:
+
+1. **학습 로그(LearningLog)**: 질문과 AI 답변, 마크다운 문서를 하나로 묶는 중심 모델
+2. **태그(Tag)**: 학습 로그를 주제별로 분류하고, 태그 기반 검색/필터링을 가능하게
+3. **레퍼런스(Reference)**: AI가 검색한 공식 문서 URL과 발췌 내용을 별도 모델로 관리 — 여러 학습 로그에서 같은 레퍼런스를 재사용할 수 있도록
+
+태그와 레퍼런스 모두 처음에는 LearningLog 안에 ArrayField로 넣었다가, 태그별 통계나 레퍼런스 재사용이 필요해지면서 별도 모델 + ManyToMany 관계로 분리했다.
+
+---
+
 # 1. 모델 구조
 
 ### Tag (태그)
