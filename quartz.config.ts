@@ -77,8 +77,8 @@ const config: QuartzConfig = {
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
+      Plugin.FolderPage(),
       Plugin.ContentPage(),
-      // Plugin.FolderPage(), // 폴더 리스팅 비활성화 — index.md 콘텐츠 페이지 사용
       Plugin.TagPage(),
       Plugin.ContentIndex({
         enableSiteMap: true,
