@@ -1,3 +1,7 @@
+---
+title: "Two Scoops of Django"
+---
+
 # Two Scoops of Django
 
 Status: In progress

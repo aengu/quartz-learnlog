@@ -1,3 +1,7 @@
+---
+title: "MVCC case study"
+---
+
 # MVCC case study
 
 Status: database

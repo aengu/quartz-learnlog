@@ -1,3 +1,7 @@
+---
+title: "concurrency handling: 동시성 제어 방법들"
+---
+
 # concurrency handling: 동시성 제어 방법들
 
 Status: Not started

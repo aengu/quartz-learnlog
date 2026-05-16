@@ -1,3 +1,7 @@
+---
+title: "Django DB Connection"
+---
+
 # Django DB Connection
 
 Status: django

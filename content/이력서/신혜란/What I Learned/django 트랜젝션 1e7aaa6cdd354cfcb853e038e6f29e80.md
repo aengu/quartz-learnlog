@@ -1,3 +1,7 @@
+---
+title: "django 트랜젝션"
+---
+
 # django 트랜젝션
 
 Status: django

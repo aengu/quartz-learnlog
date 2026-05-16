@@ -1,3 +1,7 @@
+---
+title: ".py와 .pyc의 차이점"
+---
+
 # .py와 .pyc의 차이점
 
 Status: python
