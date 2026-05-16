@@ -7,11 +7,7 @@
 
 ## About me
 
-실무에서 쿼리 최적화나 DB Lock 같은 문제를 만나면, 당장 해결은 했지만 "왜 그런가"를 제대로 짚지 못한 채 넘어간 적이 많았습니다.
-
-그래서 공백기 동안 아쉬웠던 영역을 다시 파서 ORM 최적화, 트랜잭션, MVCC 등 [12편의 학습 노트](https://aengu.github.io/quartz-learnlog/이력서/신혜란/What-I-Learned/)로 정리했고, 이 학습 과정 자체를 더 효율적으로 만들고 싶어서 [LearnLog](https://aengu.github.io/quartz-learnlog/)를 만들었습니다.
-
-검색 → 정리 → 복습까지 한 곳에서 돌아가는 시스템을 직접 설계하면서, 부족했던 부분을 채우는 데 가장 잘 맞는 방법을 찾은 것 같습니다.
+주식 자동매매 서비스에서 서비스 분리, DB 부하 분산, 스케줄러 설계 등 운영 전반을 1인 개발로 담당했습니다. 공백기 동안에는 실무에서 부족했던 DB 심화 영역을 [12편의 기술블로그](https://aengu.github.io/quartz-learnlog/이력서/신혜란/What-I-Learned/)로 정리했고, AI API를 활용한 개인 프로젝트([LearnLog](https://aengu.github.io/quartz-learnlog/))를 설계부터 배포·테스트 자동화까지 직접 구축했습니다. 개선한 것은 수치로 확인하고, 학습한 것은 글로 남기는 습관을 유지하고 있습니다.
 
 ---
 
