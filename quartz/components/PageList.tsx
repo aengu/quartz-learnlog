@@ -109,4 +109,8 @@ PageList.css = `
 .section > .tags {
   margin: 0;
 }
+
+.section .desc {
+  width: 100%;
+}
 `

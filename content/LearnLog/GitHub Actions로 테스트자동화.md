@@ -30,6 +30,21 @@
 
 ---
 
+## CI 파이프라인 흐름
+
+```mermaid
+flowchart LR
+    A["push / PR\n(master)"] --> B["ubuntu-latest"]
+    B --> C["PostgreSQL\nservice 컨테이너"]
+    B --> D["Python 설치\n+ pip install"]
+    C & D --> E["pytest 실행"]
+    E -->|"통과"| F["✅ PR 통과"]
+    E -->|"실패"| G["❌ PR 실패"]
+
+    style F fill:#51cf66,color:#fff
+    style G fill:#ff6b6b,color:#fff
+```
+
 ## 핵심 개념: GitHub Actions 워크플로우 구조
 
 ```yaml

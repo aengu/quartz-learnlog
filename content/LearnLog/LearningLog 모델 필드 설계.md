@@ -1,4 +1,4 @@
-# 서비스 모델 설계
+# LearningLog 모델 필드 설계
 
 [https://github.com/aengu/learn-log/commit/dd1d50e38328ffd06ce50a542c0794285f02b8f0](https://github.com/aengu/learn-log/commit/dd1d50e38328ffd06ce50a542c0794285f02b8f0)
 
@@ -23,29 +23,45 @@ AI 기반 기술 질문과 답변을 저장하는 모델 설계 및 구현
 
 ## 모델 관계도
 
-```
-Tag (태그)                    Reference (레퍼런스)
-  │                               │
-  │ M2M                           │ M2M
-  └──────── LearningLog ──────────┘
-              (학습 로그)
-              │
-              ├── query (질문)
-              ├── ai_response (AI 답변)
-              ├── markdown_content (마크다운)
-              ├── is_bookmarked (북마크)
-              ├── view_count (조회수)
-              └── created_at / updated_at
+```mermaid
+erDiagram
+    LearningLog ||--o{ Tag : "M2M (tags)"
+    LearningLog ||--o{ Reference : "M2M (references)"
 
+    LearningLog {
+        CharField query
+        TextField ai_response
+        TextField markdown_content
+        BooleanField is_bookmarked
+        PositiveIntegerField view_count
+        DateTimeField created_at
+        DateTimeField updated_at
+    }
+
+    Tag {
+        CharField name UK
+        SlugField slug UK
+        DateTimeField created_at
+    }
+
+    Reference {
+        URLField url UK
+        CharField title
+        TextField excerpt
+        CharField source_type
+        DateTimeField fetched_at
+    }
 ```
 
 ---
 
 ## 구현
 
-### models.py - 모델 설계
+모델은 3개다. 중심에 **LearningLog**(질문+답변)가 있고, 거기에 **Tag**(기술 스택 태그)와 **Reference**(출처 URL)가 M2M으로 붙는 구조. 태그와 레퍼런스를 별도 모델로 분리한 이유는 "같은 태그/레퍼런스가 여러 로그에 걸쳐 재사용"되기 때문이다 — `docker` 태그가 10개 로그에 달릴 수 있고, 같은 공식 문서 URL이 여러 답변에서 인용될 수 있다.
 
-**Tag 모델**: 태그별 검색 및 통계를 위해 별도 모델로 분리.
+### Tag
+
+태그별 검색 및 통계를 위해 별도 모델로 분리.
 
 ```python
 class Tag(models.Model):
@@ -60,7 +76,9 @@ class Tag(models.Model):
 
 - `slug`: URL에서 사용할 수 있도록 SlugField 추가 (예: `docker-network`)
 
-**Reference 모델**: 검색 결과로 얻은 공식 문서/블로그 등의 출처를 체계적으로 관리.
+### Reference
+
+검색 결과로 얻은 공식 문서/블로그 등의 출처를 체계적으로 관리.
 
 ```python
 class Reference(models.Model):
@@ -82,7 +100,9 @@ class Reference(models.Model):
 
 ```
 
-**LearningLog 모델**: 질문과 답변을 저장하는 모델. Tag, Reference와 ManyToMany로 연결.
+### LearningLog
+
+질문과 답변을 저장하는 중심 모델. Tag, Reference와 ManyToMany로 연결.
 
 ```python
 class LearningLog(models.Model):
@@ -120,3 +140,7 @@ class LearningLog(models.Model):
 - created_at: 최신순 정렬 (리스트 페이지)
 - query: 질문 검색 최적화
 - is_bookmarked: 북마크 필터링
+
+---
+
+같은 모델의 초기 설계와 마이그레이션 과정은 → [[Django 모델 설계 및 마이그레이션 초기화]]

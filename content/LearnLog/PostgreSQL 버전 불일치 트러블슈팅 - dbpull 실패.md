@@ -134,3 +134,5 @@ docker compose up -d
 | Render DB | 18 | 18 | 프로덕션 DB 서버 |
 
 세 군데 버전을 모두 맞춰야 `dbpull`(덤프 → 복원) 파이프라인이 정상 동작한다.
+
+dbpull/dbpush 구현과 Render 배포 전체 흐름은 여기서 → [[Render 무료 배포 + DB 동기화 + 자동 백업 구현]]

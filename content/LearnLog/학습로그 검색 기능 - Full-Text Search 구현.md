@@ -91,6 +91,15 @@ setweight(to_tsvector('simple', ai_response), 'B')  -- weight B = 0.4
 
 ## **구현**
 
+```mermaid
+flowchart LR
+    Q["검색어 입력"] --> V["SearchVector\n(query=A, ai_response=B)"]
+    V --> SQ["SearchQuery\n(토큰 변환)"]
+    SQ --> F["@@ 매칭\n(rank > 0 필터)"]
+    F --> R["SearchRank\n(가중치 점수)"]
+    R --> S["정렬\n(연관도/최신/조회수)"]
+```
+
 ### **검색 + 정렬 통합 메서드 (models.py)**
 
 ```python

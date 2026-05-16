@@ -19,6 +19,32 @@ LearnLog의 핵심 흐름은 "질문 → AI 답변 + 레퍼런스 수집 → 마
 
 태그와 레퍼런스 모두 처음에는 LearningLog 안에 ArrayField로 넣었다가, 태그별 통계나 레퍼런스 재사용이 필요해지면서 별도 모델 + ManyToMany 관계로 분리했다.
 
+```mermaid
+erDiagram
+    LearningLog ||--o{ Tag : "M2M (tags)"
+    LearningLog ||--o{ Reference : "M2M (references)"
+
+    LearningLog {
+        CharField query
+        TextField ai_response
+        TextField markdown_content
+        BooleanField is_bookmarked
+        PositiveIntegerField view_count
+    }
+
+    Tag {
+        CharField name UK
+        SlugField slug UK
+    }
+
+    Reference {
+        URLField url UK
+        CharField title
+        TextField excerpt
+        CharField source_type
+    }
+```
+
 ---
 
 # 1. 모델 구조
@@ -95,3 +121,7 @@ docker-compose exec web python manage.py migrate
 - `__pycache__` 폴더는 Python 바이트코드 캐시로, 삭제하지 않아도 무방
 - 개발 초기에는 DB를 완전히 초기화하는 것이 가장 깔끔함
 - `.gitignore`에 `__pycache__/`와 `.pyc` 추가 권장
+
+---
+
+모델의 필드 설계 근거와 인덱스 전략은 → [[LearningLog 모델 필드 설계]]
