@@ -639,3 +639,20 @@ iframe.pdf {
   transition: width 0.2s ease;
   z-index: 9999;
 }
+
+@media print {
+  .left,
+  .right,
+  .page-header,
+  .backlinks,
+  .graph,
+  footer {
+    display: none !important;
+  }
+
+  .center {
+    margin: 0 !important;
+    max-width: 100% !important;
+    grid-column: 1 / -1 !important;
+  }
+}
