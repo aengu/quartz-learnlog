@@ -19,9 +19,11 @@ rsync -av "$OBSIDIAN/LearnLog/attachments/" "$CONTENT/LearnLog/attachments/"
 # LearnLog index (포트폴리오)
 cp "$OBSIDIAN/LearnLog/📚 LearnLog - 개발자를 위한 AI 검색 아카이브 시스템.md" "$CONTENT/LearnLog/index.md"
 
-# 이력서 (What I Learned 제외 - 별도 관리)
+# 이력서 (What I Learned 제외 - 별도 관리, 대용량 영상 제외)
 rsync -av --delete \
   --exclude='신혜란/What I Learned/' \
+  --exclude='*.mov' \
+  --exclude='*.mp4' \
   "$OBSIDIAN/이력서/" "$CONTENT/이력서/"
 
 # What I Learned: sync 후 frontmatter 자동 추가

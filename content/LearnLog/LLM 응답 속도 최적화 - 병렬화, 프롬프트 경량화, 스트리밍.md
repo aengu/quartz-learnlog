@@ -69,7 +69,7 @@ with ThreadPoolExecutor(max_workers=2) as executor:
 ```
 
 SSE 뷰(`api_views.py`)에도 동일하게 적용. 이에 따라 프로그레스 단계도 5단계 → 4단계로 줄였다.
-![[Learn Log - 프레그레스바 수정.gif]]
+
 **Render 배포 환경에서 괜찮은가?** — 괜찮다. `ThreadPoolExecutor`는 프로세스 내부에서 스레드를 만드는 거고, 두 작업 모두 API 응답을 기다리는 I/O 작업이다. Python GIL이 있어도 I/O 대기 중에는 스레드가 해제되므로 실제로 동시에 동작한다.
 
 ---
@@ -233,6 +233,7 @@ const onUserInteract = () => {
 window.addEventListener('wheel', onUserInteract);
 window.addEventListener('touchmove', onUserInteract);
 ```
+![[Learn Log - AI 개발 지식 베이스.gif]]
 
 ---
 
