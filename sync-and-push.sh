@@ -74,7 +74,7 @@ sleep 3
 
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 "$CHROME" --headless --disable-gpu --no-pdf-header-footer --virtual-time-budget=10000 \
-  --print-to-pdf="$PDF_DIR/이력서.pdf" "http://localhost:8080/" 2>/dev/null
+  --print-to-pdf="$PDF_DIR/이력서.pdf" "http://localhost:8080/이력서/신혜란/" 2>/dev/null
 "$CHROME" --headless --disable-gpu --no-pdf-header-footer --virtual-time-budget=10000 \
   --print-to-pdf="$PDF_DIR/자기소개서.pdf" "http://localhost:8080/자기소개서" 2>/dev/null
 "$CHROME" --headless --disable-gpu --no-pdf-header-footer --virtual-time-budget=10000 \
