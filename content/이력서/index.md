@@ -95,7 +95,7 @@ Django 5 / DRF / PostgreSQL / Docker / HTMX / Tailwind CSS / pytest / GitHub Act
 - **AI 답변 + 레퍼런스 통합**: Tavily API로 공식 문서 검색 → Mistral Large로 답변 생성 → Groq(Llama 3.3)로 태그 추출/마크다운 변환
 - **SSE 스트리밍**: StreamingHttpResponse로 검색 진행 상태를 실시간 전달 (프로그레스바 + 진행 로그)
 - **Full-Text Search**: PostgreSQL SearchVector/SearchRank 기반 한국어 검색 구현
-- **간격 반복 연습문제 시스템**: 학습 로그 기반으로 3가지 유형의 연습문제를 LLM이 자동 생성하고 채점. 간격 반복 알고리즘(1, 3, 7, 14, 30일)으로 복습 스케줄 관리
+- **간격 반복 연습문제 시스템**: 저장한 학습 로그를 정말 이해했는지 점검하기 위한 연습문제. 학습 로그 기반으로 LLM이 두 유형(직접 답하기 / 선택지 고르기)으로 출제 → 간격 반복 알고리즘(1, 3, 7, 14, 30일)으로 복습 스케줄 관리
 - **LLM 출력 검증**: correct_index 오류를 발견하고 프롬프트 수정 → LLM Judge 검증 체계 구축으로 오류율 10% → 5% 감소 확인
 - **DB 동기화/백업**: Django management command(dbpush/dbpull)로 로컬-Render DB 동기화, GitHub Actions로 주간 자동 백업
 - **테스트 자동화**: pytest + factory_boy 기반 테스트, GitHub Actions CI
