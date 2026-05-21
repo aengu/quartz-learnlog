@@ -64,6 +64,26 @@ if [ $? -ne 0 ]; then
 fi
 
 echo ""
+echo "=== Exporting PDFs ==="
+PDF_DIR="/Users/shinhaeran/Desktop/혀란/력서/$(date '+%m%d')"
+mkdir -p "$PDF_DIR"
+
+npx serve "$QUARTZ/public" -l 8080 --no-clipboard > /dev/null 2>&1 &
+SERVE_PID=$!
+sleep 3
+
+CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+"$CHROME" --headless --disable-gpu --no-pdf-header-footer \
+  --print-to-pdf="$PDF_DIR/이력서.pdf" "http://localhost:8080/" 2>/dev/null
+"$CHROME" --headless --disable-gpu --no-pdf-header-footer \
+  --print-to-pdf="$PDF_DIR/자기소개서.pdf" "http://localhost:8080/자기소개서" 2>/dev/null
+"$CHROME" --headless --disable-gpu --no-pdf-header-footer \
+  --print-to-pdf="$PDF_DIR/포트폴리오.pdf" "http://localhost:8080/LearnLog/" 2>/dev/null
+
+kill $SERVE_PID 2>/dev/null
+echo "✅ PDFs saved to: $PDF_DIR"
+
+echo ""
 echo "=== Pushing ==="
 git add -A
 git commit -m "content sync $(date '+%Y-%m-%d %H:%M')"
