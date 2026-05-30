@@ -10,7 +10,7 @@ Status: python
 
 [Understanding the use of Python bytecode files in different scenarios.](https://medium.com/@vuducly151092/understanding-the-use-of-python-bytecode-files-in-different-scenarios-1ffd39723908)
 
-![](attachments/py%E1%84%8B%E1%85%AA%20pyc%E1%84%8B%E1%85%B4%20%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%A5%E1%86%B7_Untitled.png)
+![[attachments/py와 pyc의 차이점_Untitled.png]]
 
 - python은 모듈의 소스코드(.py)를 처음 가져올 때, 바이트 코드를 생성하여(.pyc) 모듈 로딩 성능을 향상시킨다.
 - 파이썬은 기존의 바이트 코드 파일(.pyc)을 사용할 것인지, 소스 코드 파일(.py)을 다시 컴파일 할 것인지를 결정하는 몇 가지 시나리오가 있다.

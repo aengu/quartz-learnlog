@@ -12,11 +12,11 @@ Status: database
 
 ### mvcc 등장 배경
 
-![Untitled](attachments/MVCC%20case%20study_Untitled.png)
+![[attachments/MVCC case study_Untitled.png]]
 
 기존의 lock 기반의 동시성 제어는 같은 데이터에 대해 read/read하는 경우는 허용 하지만, 그 외의 경우들은 모두 허용x (한쪽에 실행되면 다른 한쪽은 블락이 되어 기다리게 됨) → 동시에 처리할 수 있는 처리량이 줄어 들어 퍼포먼스 저하
 
-![Untitled](attachments/MVCC%20case%20study_Untitled%201.png)
+![[attachments/MVCC case study_Untitled 1.png]]
 
 위 문제를 보완하기 위해 mvcc 등장. 같은 데이터에 대해 write/write하는 경우는 한 쪽이 블락되는 형태로 동작하지만 그외의 동작들은 허용
 
@@ -113,7 +113,7 @@ tx2: x에 30을 입금한다.
 
 - postgresql: read commited **(x=50, y=80)**
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%202.png)
+    ![[attachments/MVCC case study_Untitled 2.png]]
     
     **tx1에서 먼저 x에 대한 write lock을 취득했기 때문에 tx2의 x에 대한 write는 블락됨을 유의하자.**
     
@@ -132,7 +132,7 @@ tx2: x에 30을 입금한다.
     
 - postgresql: read repeatable **(x=10, y=50)**
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%203.png)
+    ![[attachments/MVCC case study_Untitled 3.png]]
     
     ```python
     tx1 start
@@ -150,7 +150,7 @@ tx2: x에 30을 입금한다.
     
 - mysql: repeatable read **(x=10, y=50)**
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%204.png)
+    ![[attachments/MVCC case study_Untitled 4.png]]
     
     postgresql에서 트랜잭션의 격리수준이 read commited일 때 Lost update현상이 일어나서 repeatable read로 격리수준을 올렸더니 해결되었다.
     
@@ -186,7 +186,7 @@ tx2: x에 30을 입금한다.
 
 - mysql: repeatable read + locking read (x=40, y=50)
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%205.png)
+    ![[attachments/MVCC case study_Untitled 5.png]]
     
     - account_x, account_y를 가져올 때 get()에서 filter.select_for_update().[0]으로 변경
         
@@ -340,7 +340,7 @@ tx2: y = x+y
     
     write skew: 서로 다른 데이터 x,y 에 write 작업을 했음에도 데이터 불일치한 쓰기가 되는 현상
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%206.png)
+    ![[attachments/MVCC case study_Untitled 6.png]]
     
     ```python
     tx1 start
@@ -353,7 +353,7 @@ tx2: y = x+y
     
 - mysql: repeatable read **(x=20, y=30)** 해결
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%207.png)
+    ![[attachments/MVCC case study_Untitled 7.png]]
     
     tx1,2에 x,y read할 때 각각 locking read를 걸어주면 된다. tx1이 x에 대해 먼저 write lock를 취득했기 때문에 tx2는 블락되었다가 tx1이 commit된 후에 x,y를 읽는데, 이때 locking read이기 때문에 가장 최근의 데이터를 읽기 때문에 tx2의 x값:20, tx2의 y값:10로 읽어 정상적인 결과가 나왔다.
     
@@ -368,7 +368,7 @@ tx2: y = x+y
     
 - postgresql: repeatable read **(x=20, y=10)** 해결
     
-    ![Untitled](attachments/MVCC%20case%20study_Untitled%208.png)
+    ![[attachments/MVCC case study_Untitled 8.png]]
     
     tx1에서 x에 대한 write lock을 먼저 취득했기 때문에 tx2는 대기한다. tx1이 커밋되고 tx2가 x에 대한 write lock을 취득해 read 하려고 할 때, x에 대해 tx1이 먼저 업데이트 했으므로 tx2는 rollback된다.
     

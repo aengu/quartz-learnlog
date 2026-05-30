@@ -23,23 +23,23 @@ Status: database
 
 - **Dirty Read**: 커밋되지 않은 변경사항을 읽음
     
-    ![Untitled](attachments/transaction%20isolation%20level_Untitled.png)
+    ![[attachments/transaction isolation level_Untitled.png]]
     
     - tx1 실행 도중, 커밋되지 않은 롤백된 tx2의 write(y=70) 변경사항을 읽어 데이터 정합성을 위배한다.
 - **Non-repeatable read (Fuzzy read)**: 같은 데이터의 값이 달라짐
     
-    ![Untitled](attachments/transaction%20isolation%20level_Untitled%201.png)
+    ![[attachments/transaction isolation level_Untitled 1.png]]
     
     - tx1이 동일한 데이터 x를 읽었는데 첫 번째와 두 번째의 값이 다르게 나왔다.
     - 여러 트랜잭션이 동시에 실행돼도 각각의 트랜잭션이 마치 혼자 실행되는 것 처럼 되어야 한다는 isolation 속성에 위배된다.
 - **Phantom read**: 없던 데이터가 생김
     
-    ![Untitled](attachments/transaction%20isolation%20level_Untitled%202.png)
+    ![[attachments/transaction isolation level_Untitled 2.png]]
     
     - 한 트랜잭션 안에서 동일한 조건으로 두 번 읽었는데, 각각의 결과가 다르게 나옴
 - **Dirty write:** commit 안된 데이터를 write 함
     
-    ![x 초기값 = 0](attachments/transaction%20isolation%20level_Untitled%203.png)
+    ![[attachments/transaction isolation level_Untitled 3.png]]
     
     x 초기값 = 0
     
@@ -48,7 +48,7 @@ Status: database
     - **rollback 시, 정상적인 recovery는 매우 중요하기 때문에 모든 isolation level에서 dirty write를 허용하면 안된다.**
 - **Lost update**: 업데이트를 덮어씀
     
-    ![x의 초기값 = 50](attachments/transaction%20isolation%20level_Untitled%204.png)
+    ![[attachments/transaction isolation level_Untitled 4.png]]
     
     x의 초기값 = 50
     
@@ -56,7 +56,7 @@ Status: database
     - 만약 순차적으로 트랜잭션을 실행 했다면 x의 값은 250이었겠지만, 겹쳐서 실행되어 tx1이 tx2를 덮어씌움
 - **Dirty read 확장판**: 롤백을 하지 않아도 dirty read가 발생할 수 있다
     
-    ![x,y 가 각각의 계좌라고 상정](attachments/transaction%20isolation%20level_Untitled%205.png)
+    ![[attachments/transaction isolation level_Untitled 5.png]]
     
     x,y 가 각각의 계좌라고 상정
     
@@ -64,7 +64,7 @@ Status: database
     - 하지만 tx2에서는 총 합이 60이기 때문에 데이터 정합성에 위배됨. (커밋되지 않은 데이터를 읽었기 때문에)
 - Read skew: inconsistent한 데이터 읽기
     
-    ![x,y가 각각의 계좌라고 상정](attachments/transaction%20isolation%20level_Untitled%206.png)
+    ![[attachments/transaction isolation level_Untitled 6.png]]
     
     x,y가 각각의 계좌라고 상정
     
@@ -72,7 +72,7 @@ Status: database
     - non-repeatable과 비슷한데 서로 관련 없는 x,y가 불일치 하다는 점이 차이점
 - Write skew: inconsistent한 데이터 쓰기
     
-    ![x+y ≥ 0 제약사항이 있다](attachments/transaction%20isolation%20level_Untitled%207.png)
+    ![[attachments/transaction isolation level_Untitled 7.png]]
     
     x+y ≥ 0 제약사항이 있다
     
@@ -80,7 +80,7 @@ Status: database
     - 서로 다른 데이터 x,y 에 write 작업을 했음에도 데이터 불일치한 쓰기가 됨
 - Phantom read 확장판:
     
-    ![Untitled](attachments/transaction%20isolation%20level_Untitled%208.png)
+    ![[attachments/transaction isolation level_Untitled 8.png]]
     
     - tx1에서 v>10인 튜플을 읽었지만 없기 때문에 아무것도 읽지 않았다.
     - 하지만 read(cnt) 하기 전 tx2 에서 v=15인 튜플을 insert 했기 때문에 cnt =1이 됐다.
@@ -96,29 +96,29 @@ Status: database
 - 동작방식 예
     1. read(x) ⇒ 50: tx1이 시작한 시점의 스냅샷의 x값을 읽는다
         
-        ![Untitled](attachments/transaction%20isolation%20level_Untitled%209.png)
+        ![[attachments/transaction isolation level_Untitled 9.png]]
         
     2. write(x=10): db에 write하는게 아닌, tx1의 스냅샷에 write한다.
         
-        ![Untitled](attachments/transaction%20isolation%20level_Untitled%2010.png)
+        ![[attachments/transaction isolation level_Untitled 10.png]]
         
         외부에서 볼 땐 여전히 x = 50
         
     3. read(y)⇒ 50: tx2가 시작되고, 이 시점의 스냅샷의 y값을 읽는다
         
-        ![Untitled](attachments/transaction%20isolation%20level_Untitled%2011.png)
+        ![[attachments/transaction isolation level_Untitled 11.png]]
         
     4. write(y = 150): 마찬가지로 db가 아닌 tx2의 스냅샷에 write 한다.
         
-        ![Untitled](attachments/transaction%20isolation%20level_Untitled%2012.png)
+        ![[attachments/transaction isolation level_Untitled 12.png]]
         
     5. tx2가 commit되는 순간, 스냅샷의 변경사항이 db에 적용된다.
         
-        ![Untitled](attachments/transaction%20isolation%20level_Untitled%2013.png)
+        ![[attachments/transaction isolation level_Untitled 13.png]]
         
     6. read(y) ⇒ 50: 이어서 tx1에서 y를 읽는데, tx1의 스냅샷의 y를 읽는다
         
-        ![Untitled](attachments/transaction%20isolation%20level_Untitled%2014.png)
+        ![[attachments/transaction isolation level_Untitled 14.png]]
         
     7. tx1에서 write 작업까지 하고 commit을 할 때
         - tx1과 tx2가 같은 데이터 y에 대해 쓰기 작업을 한다.
@@ -134,7 +134,7 @@ Status: database
 - 격리 수준은 **여러 트랜잭션이 동시에 변경을 수행하고 쿼리를 수행할 때** 성능과 신뢰성, 일관성 및 결과의 재현성(reproducibility) 간의 **균형을 조정**하는 설정이다.
 - SQL:1992 표준에서 소개한 4개의 level 이외에도 몇가지 더 있다. (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE)
     
-    ![Untitled](attachments/transaction%20isolation%20level_Untitled%2015.png)
+    ![[attachments/transaction isolation level_Untitled 15.png]]
     
 
 ### mysql의 격리수준
