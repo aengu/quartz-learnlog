@@ -63,7 +63,13 @@ Mistral Large 답변 생성이 보통 35~50초이므로 120초면 충분한 여�
 
 ---
 
-## 4. 참고
+## 4. 회고
+
+이번 일로 두 가지가 기억에 남았다. 하나는 에러 메시지를 곧이곧대로 믿으면 안 된다는 것. "out of memory?"라는 문구 때문에 한참 메모리만 뒤졌는데, 정작 범인은 timeout이었다. 메시지보다 스택트레이스 흐름(스트리밍 도중에 죽는다)을 따라간 게 실마리였다. 다른 하나는 로컬에서 멀쩡한데 배포에서만 터지면 환경 차이부터 의심해야 한다는 것. `runserver`는 timeout이 없고 Gunicorn은 워커를 강제로 관리하니, 같은 코드라도 배포 환경의 제약을 모르면 재현조차 안 된다.
+
+---
+
+## 5. 참고
 
 - Gunicorn 기본 timeout: 30초 ([Gunicorn 공식 문서](https://docs.gunicorn.org/en/stable/settings.html#timeout))
 - Render 무료 플랜 RAM: 512MB (진짜 OOM이 발생할 수도 있으니 모니터링 필요)
