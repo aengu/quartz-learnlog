@@ -366,7 +366,7 @@ Status: Done
     
     - 예제
         
-        ![[attachments/ORM_Untitled.png]]
+        ![[ORM_Untitled.png]]
         
         ```python
         # models.py
@@ -448,7 +448,7 @@ Status: Done
             .filter(order_owner__username='username4') # where 조건절
             ```
             
-            ![[attachments/ORM_Untitled 1.png]]
+            ![[ORM_Untitled 1.png]]
             
             | idbigint | reg_datetimestamp with time zone | descriptionscharacter varying | order_owner_idbigint | idbigint | passwordcharacter varying | last_logintimestamp with time zone | is_superuserboolean | usernamecharacter varying | first_namecharacter varying | last_namecharacter varying | emailcharacter varying | is_staffboolean | is_activeboolean | date_joinedtimestamp with time zone | userinfo_idbigint | aab_idbigint |
             | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -460,7 +460,7 @@ Status: Done
             .prefetch_related('product_set_included_order') # product(ordered product) 즉시 가져오기
             ```
             
-            ![[attachments/ORM_Untitled 2.png]]
+            ![[ORM_Untitled 2.png]]
             
             첫 번째 쿼리의 결과인 order들과 대응하는 Product (m2m 중계 테이블인 OrderedProduct도) 즉시 가져오기 위해 prefetch_related()함.
             

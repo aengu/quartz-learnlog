@@ -123,7 +123,7 @@ Django의 데이터베이스와 연결된 프로세스는 요청을 받은 후 �
 
 - APScheduler
     
-    ![[attachments/Django DB Connection_Untitled.png]]
+    ![[Django DB Connection_Untitled.png]]
     
     ```python
     time.monotonic()
