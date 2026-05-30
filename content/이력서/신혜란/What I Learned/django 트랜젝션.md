@@ -1,5 +1,5 @@
 ---
-title: "django 트랜젝션"
+title: "django 트랜젝션"
 ---
 
 # django 트랜젝션

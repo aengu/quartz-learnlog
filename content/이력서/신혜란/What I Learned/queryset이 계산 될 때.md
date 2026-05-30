@@ -1,5 +1,5 @@
 ---
-title: "queryset이 계산 될 때"
+title: "queryset이 계산 될 때"
 ---
 
 # queryset이 계산 될 때

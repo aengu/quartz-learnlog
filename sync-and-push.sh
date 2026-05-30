@@ -29,12 +29,14 @@ rsync -av --delete \
 # 이력서 폴더 index (explorer 클릭 시 콘텐츠 표시용)
 cp "$OBSIDIAN/이력서/신혜란.md" "$CONTENT/이력서/index.md"
 
-# What I Learned: sync 후 frontmatter 자동 추가
+# What I Learned: md 파일 + attachments(이미지) sync
 WIL="$CONTENT/이력서/신혜란/What I Learned"
+# 1) top-level md 파일
 rsync -av --delete \
-  --exclude='attachments/' \
   "$OBSIDIAN/이력서/신혜란/What I Learned/" "$WIL/" \
-  --include='*.md' --exclude='*/'
+  --include='*.md' --include='attachments/' --include='attachments/**' --exclude='*'
+# 2) attachments 이미지 (별도 보장)
+rsync -av "$OBSIDIAN/이력서/신혜란/What I Learned/attachments/" "$WIL/attachments/"
 
 for f in "$WIL"/*.md; do
   if ! head -1 "$f" | grep -q '^---'; then

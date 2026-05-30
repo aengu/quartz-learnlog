@@ -1,5 +1,5 @@
 ---
-title: "select_for_update와 block test"
+title: "select_for_update와 block test"
 ---
 
 # select_for_update와 block test

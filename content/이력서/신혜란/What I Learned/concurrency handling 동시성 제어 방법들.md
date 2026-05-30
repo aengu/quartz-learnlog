@@ -1,5 +1,5 @@
 ---
-title: "concurrency handling: 동시성 제어 방법들"
+title: "concurrency handling 동시성 제어 방법들"
 ---
 
 # concurrency handling: 동시성 제어 방법들
@@ -16,7 +16,7 @@ Status: Not started
 
 동시성 제어하고자 하는 모든 작업을 timestamp로 정렬하고 선형 queue에 넣고 빼며 별도의 프로세스로 실행한다 → 한 번에 한 요청만 처리하기 때문에 동시성, 경쟁조건이 발생할 일이 없다.
 
-![Untitled](concurrency%20handling%20%EB%8F%99%EC%8B%9C%EC%84%B1%20%EC%A0%9C%EC%96%B4%20%EB%B0%A9%EB%B2%95%EB%93%A4/Untitled.png)
+![Untitled](attachments/concurrency%20handling%20%E1%84%83%E1%85%A9%E1%86%BC%E1%84%89%E1%85%B5%E1%84%89%E1%85%A5%E1%86%BC%20%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%A5%20%E1%84%87%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%E1%84%83%E1%85%B3%E1%86%AF_Untitled.png)
 
 ### 동시성 제어 (ORM이 제공하는 도구들)
 

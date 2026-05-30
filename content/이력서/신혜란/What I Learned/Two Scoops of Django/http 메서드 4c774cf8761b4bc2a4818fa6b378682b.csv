@@ -1,9 +1,0 @@
-﻿요청목적,HTTP 메서드
-새로운 리소스 생성,POST
-리소스 읽기,GET
-리소스의 메타데이터 요청,HEAD
-리소스 데이터 업데이트,PUT
-리소스 부분 변경,PATCH
-리소스 삭제,DELETE
-특정 URL에 대해 지원되는 HTTP 메서드 출력,OPTIONS
-request에 대한 반환 에코,TRACE
