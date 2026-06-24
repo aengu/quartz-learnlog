@@ -42,6 +42,26 @@ Tavily는 영어권 웹 기반이라, 한국어 기술 쿼리로는 영어 공�
 
 ## 개선
 
+```mermaid
+flowchart LR
+    subgraph Before["Before — 검색이 깨지던 경로"]
+        direction TB
+        Q1["한국어 질문"] --> T1["Tavily 검색<br>(한국어 그대로 + github 강제 포함)"]
+        T1 --> R1["무관한 결과<br>(개인 레포, 번역서, 강의)"]
+    end
+    subgraph After["After"]
+        direction TB
+        Q2["한국어 질문"] --> C["① Groq: 영어 검색어 변환"]
+        C --> T2["② Tavily 검색<br>(공식문서 도메인 + current path)"]
+        T2 --> R2["공식 문서 5개"]
+    end
+
+    Before ~~~ After
+
+    style R1 fill:#ffe4e6
+    style R2 fill:#d1fae5
+```
+
 **① 한국어 → 영어 검색어 변환** (`search_official_docs`)
 Groq(llama-3.3)로 질문을 영어 키워드로 변환해 Tavily에 던진다. 도메인 매칭은 원본(한국어 키워드)+변환 쿼리 둘 다에서 추출.
 
@@ -158,6 +178,8 @@ Django는 `/en/stable` 대신 한 단계 위(`/en`)로 두니 영문만 필터�
 ### 부수 발견 — substring 매칭 버그 (별개 후속)
 
 `get_domains_for_query`가 `tech in query_lower` 단순 substring 매칭이라, "**Djan**go"에서 `go`(2글자)가 잡혀 `go.dev/doc`이 도메인 목록에 끼어든다. 결과엔 영향 없었지만(Tavily가 go.dev에서 Django 결과를 못 줌) 별개 후속 과제로 남김.
+
+→ **해결됨 (2026-06-10)**: ASCII 키는 영숫자 경계 정규식(`\b` 대신 — 한글이 붙는 "go언어" 표기를 살리기 위해), 한글 키는 더 긴 등록 키("자바스크립트") 제거 후 검사 방식으로 교체. "javascript의 java", "자바스크립트의 자바" 오매칭도 같이 잡혔다. 상세: [[꼬리질문#실제로 던져보기]]
 
 ---
 

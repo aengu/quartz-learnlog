@@ -48,6 +48,26 @@ SystemExit: 1
 - 로컬은 Django 개발 서버(`runserver`)를 사용하고, 이건 timeout 제한이 없다
 - Gunicorn은 프로덕션 WSGI 서버로, 워커 관리를 위해 timeout을 강제한다
 
+타이밍을 그림으로 보면:
+
+```mermaid
+sequenceDiagram
+    participant B as 브라우저
+    participant G as Gunicorn<br>(timeout 30초)
+    participant W as 워커
+    participant M as Mistral Large
+
+    B->>W: POST /api/query/stream/
+    W->>M: 스트리밍 요청
+    loop 35~50초 (답변 생성 내내 연결 유지)
+        M-->>W: 토큰
+        W-->>B: SSE 전송
+    end
+    Note over G: 30초 경과 —<br>"이 워커 죽었네" 판단
+    G--xW: SIGKILL 💀
+    W--xB: 연결 끊김 (답변 중단)
+```
+
 ---
 
 ## 3. 해결

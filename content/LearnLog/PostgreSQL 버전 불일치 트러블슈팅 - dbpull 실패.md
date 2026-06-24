@@ -7,6 +7,17 @@
 
 ---
 
+등장인물이 셋이라 헷갈리니 그림부터. dbpull은 ①②를 거치는데, 세 곳의 버전이 다 맞아야 한다.
+
+```mermaid
+flowchart LR
+    R["Render DB<br>PostgreSQL 18"] -->|"① pg_dump"| W["web 컨테이너의 클라이언트 도구<br>pg_dump/pg_restore<br>15 → 18로 올림 (에러 1)"]
+    W -->|"② pg_restore"| D["로컬 db 컨테이너<br>postgres:15 → 18-alpine (에러 2·3)"]
+
+    style W fill:#fef3c7
+    style D fill:#fef3c7
+```
+
 ## 에러 1: pg_dump 버전 불일치
 
 ```

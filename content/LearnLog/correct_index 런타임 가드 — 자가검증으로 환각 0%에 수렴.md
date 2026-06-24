@@ -63,6 +63,18 @@ def is_valid(step):
 
 ### 흐름
 
+```mermaid
+flowchart LR
+    G["LLM 출제<br>(correct_answer 강제)"] --> V{"step마다<br>choices[correct_index]<br>== correct_answer?"}
+    V -->|"모든 step 통과"| U["사용자에게 출제"]
+    V -->|"환각 발견 또는<br>step 부족"| R["전체 재생성<br>(1회)"]
+    R --> V
+
+    style V fill:#fef3c7
+    style R fill:#ffe4e6
+    style U fill:#d1fae5
+```
+
 ```python
 def _gen_path_trace(self, log):
     prompt = "..."  # v2 프롬프트 + correct_answer 출력 규칙
