@@ -136,7 +136,7 @@ def _rrf_merge(rankings, k=60):
 
 ## 생성에 연결
 
-검색해온 top-3을 답변 프롬프트에 넣는다. [[꼬리질문]] 때 만든 구조에 블록 하나가 추가됐다.
+검색해온 top-3을 답변 프롬프트에 넣는다. [[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]] 때 만든 구조에 블록 하나가 추가됐다.
 
 ```
 프롬프트 = ① 과거에 학습한 관련 기록 (신규, top-3 × 각 500자) <- NEW!!
@@ -204,7 +204,7 @@ Q: "ORM 쿼리가 반복 호출돼서 느려지는 문제"
 
 만들게 된 계기에 쓴 바로 그 시나리오다. FTS로는 0건이 나오는 질문인데 셋 다 정확하다.
 
-속도는 [[꼬리질문]] 때처럼 TTFT를 따로 쟀다.
+속도는 [[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]] 때처럼 TTFT를 따로 쟀다.
 
 | 항목 | RAG 없음 (before) | RAG 있음 (after) |
 | --- | --- | --- |
@@ -229,7 +229,7 @@ Q: "ORM 쿼리가 반복 호출돼서 느려지는 문제"
 - `search/services/learnlog_service.py`: `_embed`, `retrieve_similar_logs`, `_rrf_merge`, `_build_retrieved_context`
 - `search/management/commands/embed_logs.py`: 임베딩 백필 커맨드
 - `search/tests/test_rag.py`: RRF·벡터 정렬·폴백 테스트 9개
-- [[꼬리질문]]: 500자 규칙과 TTFT 측정법의 출처
+- [[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]]: 500자 규칙과 TTFT 측정법의 출처
 - [[학습로그 검색 기능 - Full-Text Search 구현]]: 하이브리드의 한쪽 축이 된 FTS
 - [[RAG 검색 파이프라인 개선 — 한국어 질문이 엉뚱한 결과를 부르던 문제]]: 웹검색 쪽 retrieval 개선
 - [[LLM 공급자 하이브리드 전환 - Groq + Mistral 속도·품질 벤치마크]]: mistral-embed를 고른 배경

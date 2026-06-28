@@ -2,7 +2,7 @@
 
 > **한 줄**: LLM 응답 시간은 프롬프트가 얼마나 긴가(입력)보다 답변을 얼마나 길게 쓰는가(출력)가 좌우한다. 입력은 한 번에 병렬로 처리(prefill)되고, 출력은 토큰을 하나씩 순차로 생성(decode)하기 때문이다. 프로젝트에서 같은 오해를 두 번 했고, 두 번 다 측정으로 교정했다.
 
-이건 특정 작업 일지가 아니라, 여러 작업([[LLM 응답 속도 최적화 - 병렬화, 프롬프트 경량화, 스트리밍|5월 속도 최적화]], [[꼬리질문]], [[pgvector 하이브리드 RAG]], [[LangGraph 라우팅 에이전트]])에서 반복해서 부딪힌 개념을 한곳에 모은 노트다.
+이건 특정 작업 일지가 아니라, 여러 작업([[LLM 응답 속도 최적화 - 병렬화, 프롬프트 경량화, 스트리밍|5월 속도 최적화]], [[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]], [[pgvector 하이브리드 RAG]], [[LangGraph 라우팅 에이전트]])에서 반복해서 부딪힌 개념을 한곳에 모은 노트다.
 
 ---
 
@@ -50,7 +50,7 @@ flowchart LR
 | 시점 | 한 일 | 처음 해석 | 측정 후 진실 |
 | --- | --- | --- | --- |
 | 5월 | 프롬프트 경량화 | "입력 줄여서 빨라졌다" | ❌ 입력 읽기는 원래 쌌다. **출력이 짧아져서** 빨라진 것 |
-| 6월 ([[꼬리질문]]) | 입력을 4.5배 늘려가며 TTFT 측정 | (검증) | ✅ 입력 늘려도 TTFT 그대로. 시간은 **출력**이 좌우 |
+| 6월 ([[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]]) | 입력을 4.5배 늘려가며 TTFT 측정 | (검증) | ✅ 입력 늘려도 TTFT 그대로. 시간은 **출력**이 좌우 |
 | 6월 ([[LangGraph 라우팅 에이전트]]) | 로그 컨텍스트 500→1500자 | "입력 늘리면 느려지고 잘릴라" | ✅ 안 느려짐. 오히려 500자가 더 잘림 |
 
 5월의 "입력 줄여서 빨라졌다"가 틀린 이유: 프롬프트가 가벼워지니 **모델이 답변을 짧게 생성**했고, 그래서 빨라진 거다. 지운 내용이 뭐였는지는 부차적이고, 핵심은 "재료가 줄면 출력도 준다"였다. 시간을 잡아먹던 건 입력 읽기(prefill)가 아니라 출력 생성(decode)이었다.
@@ -83,6 +83,6 @@ flowchart LR
 - [LLM Inference Metrics: TTFT, TPOT, TPS Explained](https://gradientupdate.substack.com/p/llm-inference-metrics-reference) — TTFT/TPOT 정의
 - [Optimizing LLM Inference: Prefill vs Decode, Latency vs Throughput (Medium)](https://medium.com/@maghonei/optimizing-llm-inference-prefill-vs-decode-latency-vs-throughput-80dbf00fc0ba)
 - [[LLM 응답 속도 최적화 - 병렬화, 프롬프트 경량화, 스트리밍]] — 5월의 첫 오해
-- [[꼬리질문]] — TTFT 측정으로 교정
+- [[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]] — TTFT 측정으로 교정
 - [[LangGraph 라우팅 에이전트]] — 1500자 실험, 양 vs 질
 - [[pgvector 하이브리드 RAG]] — 입력 추가 비용이 작다는 또 다른 사례

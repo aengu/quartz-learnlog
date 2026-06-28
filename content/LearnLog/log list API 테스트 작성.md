@@ -1,4 +1,4 @@
-# 테스트코드 작성 - log list
+# log list API 테스트 작성
 
 [https://github.com/aengu/learn-log/commit/a3039ee670aaf25181489b6b4517d8c3cdd67535](https://github.com/aengu/learn-log/commit/a3039ee670aaf25181489b6b4517d8c3cdd67535)
 
