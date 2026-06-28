@@ -226,4 +226,4 @@ def extract_answer_from_explanation(explanation: str) -> str | None:
 
 - [[프롬프트 검증 재설계 - pytest를 버리고 실험 스크립트로]] — 이 실험의 검증 방법론(pytest 기반) 자체를 재설계
 - [[correct_index 런타임 가드 — 자가검증으로 환각 0%에 수렴]] — "추가 개선 방향"의 자동 검증+재생성을 실제 구현
-- [[학습 로그 기반 간격 반복 연습문제 시스템 구현]] — `_gen_path_trace`가 속한 연습문제 시스템
+- [[간격 반복 연습문제 - 자동 출제·채점|학습 로그 기반 간격 반복 연습문제 시스템 구현]] — `_gen_path_trace`가 속한 연습문제 시스템

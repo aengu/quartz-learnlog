@@ -1,4 +1,4 @@
-# 내가 안 쓰는 기능을 다시 만들기 — 메타인지 학습 UX 재설계
+# 메타인지 학습 UX 재설계 - 안 쓰는 기능을 다시 만들기
 
 > **결과**: 채점 LLM 호출 1회 → **0회**, 두 유형 → **1개로 통합**, 모델/마이그레이션 변경 **0건**. 자가 마킹 UI로 *메타인지를 강제*하는 흐름으로 전환.
 
@@ -14,7 +14,7 @@
 
 > **내가 만든 도구를, 내가 안 쓰게 됐다.** 그 인식에서 시작한 재설계.
 
-원래 [[학습 로그 기반 간격 반복 연습문제 시스템 구현]]에서 3가지 유형(`generation_compare`, `path_trace`, `retrieval_checkin`)을 만들었다. 그런데 실제로 며칠 써보니 **생성→비교와 인출체크인을 거의 안 쓰게** 됐다. 
+원래 [[간격 반복 연습문제 - 자동 출제·채점|학습 로그 기반 간격 반복 연습문제 시스템 구현]]에서 3가지 유형(`generation_compare`, `path_trace`, `retrieval_checkin`)을 만들었다. 그런데 실제로 며칠 써보니 **생성→비교와 인출체크인을 거의 안 쓰게** 됐다. 
 ![[Pasted image 20260520144549.png]]
 
 이유를 곱씹어보니 둘 다 사용자 경험이 거의 같았다:
@@ -26,7 +26,7 @@
 학습 의도는 분명히 다른데, **UI가 동일**하니까 사용자 입장에선 "어차피 빈칸 채우기 → 채점받기"였다. 더 결정적인 문제는 **AI 점수가 두루뭉술해서 *뭘 빠뜨렸는지를 모른다*** 는 것. 옵시디언 노트에 적어둔 원래 의도와 정면 충돌하는 상태였다:
 
 > "비슷한 것 같음, 0.7점" 식의 두루뭉술한 채점은 학습자가 *뭘 빠뜨렸는지*를 모른다. **"아 이 부분을 까먹었구나"를 정확히 알아야 다음에 보완할 수 있다.**
-> — [[학습 로그 기반 간격 반복 연습문제 시스템 구현]]
+> — [[간격 반복 연습문제 - 자동 출제·채점|학습 로그 기반 간격 반복 연습문제 시스템 구현]]
 
 원래 참고했던 [DrCatHicks/learning-opportunities](https://github.com/DrCatHicks/learning-opportunities)의 [PRINCIPLES.md](https://github.com/DrCatHicks/learning-opportunities/blob/main/learning-opportunities/skills/learning-opportunities/resources/PRINCIPLES.md) / [SKILL.md](https://github.com/DrCatHicks/learning-opportunities/blob/main/learning-opportunities/skills/learning-opportunities/SKILL.md)를 다시 정독하면서 핵심 원칙을 놓쳤다는 걸 깨달았다.
 
@@ -123,7 +123,7 @@ flowchart TB
 
 **선택**: `score = 체크한 포인트 수 / 전체 포인트 수`, 통과 기준 0.6.
 
-자가 채점이라서 점수 산정은 단순할수록 좋다. 사용자가 체크한 핵심 포인트 비율 = 점수. 통과 기준 0.6은 기존 `advance_interval` / `reset_interval` 로직과 호환되어서 [[학습 로그 기반 간격 반복 연습문제 시스템 구현|간격 반복 시스템]]을 손대지 않고 그대로 작동.
+자가 채점이라서 점수 산정은 단순할수록 좋다. 사용자가 체크한 핵심 포인트 비율 = 점수. 통과 기준 0.6은 기존 `advance_interval` / `reset_interval` 로직과 호환되어서 [[간격 반복 연습문제 - 자동 출제·채점|간격 반복 시스템]]을 손대지 않고 그대로 작동.
 
 회고 작성 여부에 가중치를 두는 것도 고민했다 — "회고를 길게 쓰면 가산점" 같은 방식. 하지만 *글의 길이*는 학습 깊이와 비례하지 않고 오히려 게이밍(긴 글이 점수 높음)을 유도한다. 게다가 50자 강제로 이미 회고는 *최소 보장*되어 있어서 굳이 점수에 반영할 필요가 없었다.
 
@@ -322,5 +322,5 @@ path_trace:          {"selected_indices": [...]}  # 기존 그대로
 
 - [DrCatHicks/learning-opportunities — PRINCIPLES.md](https://github.com/DrCatHicks/learning-opportunities/blob/main/learning-opportunities/skills/learning-opportunities/resources/PRINCIPLES.md)
 - [DrCatHicks/learning-opportunities — SKILL.md](https://github.com/DrCatHicks/learning-opportunities/blob/main/learning-opportunities/skills/learning-opportunities/SKILL.md)
-- [[학습 로그 기반 간격 반복 연습문제 시스템 구현]]
+- [[간격 반복 연습문제 - 자동 출제·채점|학습 로그 기반 간격 반복 연습문제 시스템 구현]]
 - [[프롬프트 변경 효과 측정 - correct_index 오류율 비교 테스트]]

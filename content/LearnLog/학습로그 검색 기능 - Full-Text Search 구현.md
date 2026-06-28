@@ -235,4 +235,4 @@ indexes = [
 
 ## 이후 개선
 
-- 6월, 이 FTS에 pgvector 벡터 검색을 RRF로 결합한 하이브리드 검색으로 확장 → [[pgvector 하이브리드 RAG]]
+- 6월, 이 FTS에 pgvector 벡터 검색을 RRF로 결합한 하이브리드 검색으로 확장 → [[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합|pgvector 하이브리드 RAG]]

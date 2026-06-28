@@ -1,4 +1,4 @@
-# LangGraph 라우팅 에이전트
+# LangGraph 라우팅 에이전트 - 질문별 조건 분기
 
 > **결과**: 검색 → 웹 → 생성 직선 파이프라인을 LangGraph 조건 분기 그래프로 전환. 라우터 LLM이 검색된 내 학습 로그를 보고 "웹검색 생략"(로그로 충분)과 "로그 주입 차단"(무관한 주제)을 판단한다. 웹 생략 경로의 로그 컨텍스트는 500자 → 1500자로 늘렸는데, 걱정했던 max_tokens 잘림이 오히려 500자 쪽에서 나오는 반전이 있었다.
 
@@ -12,7 +12,7 @@
 
 ## 만들게 된 계기
 
-[[pgvector 하이브리드 RAG]]를 만들고 나니 약점이 하나 남았다. 관련 로그가 아예 없는 새 주제를 물어도 top-3을 억지로 뽑아서 무관한 로그가 프롬프트에 들어간다. 그리고 이미 내 로그에 답이 다 있는 질문도 매번 웹검색(3.3초)부터 돈다.
+[[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합|pgvector 하이브리드 RAG]]를 만들고 나니 약점이 하나 남았다. 관련 로그가 아예 없는 새 주제를 물어도 top-3을 억지로 뽑아서 무관한 로그가 프롬프트에 들어간다. 그리고 이미 내 로그에 답이 다 있는 질문도 매번 웹검색(3.3초)부터 돈다.
 
 둘 다 같은 원인이다. 파이프라인이 직선이라 모든 질문이 같은 경로를 탄다. "이 질문엔 웹이 필요한가, 내 로그가 쓸만한가"를 질문마다 판단하는 분기가 필요해졌고, 분기와 상태 관리가 생기는 시점이 LangGraph를 도입할 명분이 생기는 시점이다.
 
@@ -47,14 +47,14 @@ flowchart LR
     style BPAD fill:transparent,stroke:transparent,stroke-width:0px
 ```
 
-라우터의 판단은 2축(`use_logs`, `need_web`)이다. 이 둘이 [[pgvector 하이브리드 RAG|1번]]에서 못 풀고 남겼던 약점 두 개를 하나씩 막는다 — ①무관한 로그를 억지로 주입하던 것, ②답이 이미 있어도 매번 웹검색하던 것.
+라우터의 판단은 2축(`use_logs`, `need_web`)이다. 이 둘이 [[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합|1번]]에서 못 풀고 남겼던 약점 두 개를 하나씩 막는다 — ①무관한 로그를 억지로 주입하던 것, ②답이 이미 있어도 매번 웹검색하던 것.
 
 | 축 | 묻는 것 | false면 |
 | --- | --- | --- |
 | use_logs | 검색된 로그가 질문과 같은 주제인가 | 무관한 로그 주입 차단 (억지 top-3 해결) |
 | need_web | 로그만으로 부족한가 | 웹검색 생략 (3.3초 + Tavily 호출 절약) |
 
-나머지 노드(retrieve_logs, web_search, generate)는 [[pgvector 하이브리드 RAG|1번]]에서 만든 메서드를 그대로 감싼 거라, 라우터 구현에 새로 추가한 건 `decide_route` 하나다. 매 질문마다 도는 부가 호출이라 빠르고 싼 Groq 경량 모델에 temperature 0으로 맡겼다(판단 0.6초).
+나머지 노드(retrieve_logs, web_search, generate)는 [[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합|1번]]에서 만든 메서드를 그대로 감싼 거라, 라우터 구현에 새로 추가한 건 `decide_route` 하나다. 매 질문마다 도는 부가 호출이라 빠르고 싼 Groq 경량 모델에 temperature 0으로 맡겼다(판단 0.6초).
 
 ```python
 def decide_route(self, query, retrieved_logs):
@@ -236,12 +236,12 @@ flowchart LR
 - `search/services/learnlog_service.py`: `decide_route`
 - `benchmarks/0611/benchmark_rag_context_limit.py`: 절삭 길이 벤치마크 (원시 JSONL 저장)
 - `search/tests/test_search_agent.py`: 그래프 분기 테스트 (모킹)
-- [[pgvector 하이브리드 RAG]]: 이 에이전트의 retrieve_logs 노드가 된 작업
+- [[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합|pgvector 하이브리드 RAG]]: 이 에이전트의 retrieve_logs 노드가 된 작업
 - [[꼬리질문 - self-FK 질문 트리 구현|꼬리질문]]: 500자 규칙의 출처 + 픽스처 누설 교훈
-- [[검색 중 프로그레스바 + 진행로그를 위한 SSE 구현]]: 노드 이벤트를 받아주는 스트리밍 기반
+- [[SSE 진행 스트리밍 - 프로그레스바·진행로그|검색 중 프로그레스바 + 진행로그를 위한 SSE 구현]]: 노드 이벤트를 받아주는 스트리밍 기반
 
 ---
 
 ## 이후 개선
 
-- 회고에 적은 "웹 생략 경로의 오염된 로그 재사용" 우려를 예방·검출·표시 3단으로 다룸 → [[환각 방어]]
+- 회고에 적은 "웹 생략 경로의 오염된 로그 재사용" 우려를 예방·검출·표시 3단으로 다룸 → [[환각 방어 - 예방·검출·표시 3단|환각 방어]]

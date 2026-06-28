@@ -1,4 +1,4 @@
-# 검색 중 프로그레스바 + 진행로그를 위한 SSE 구현
+# SSE 진행 스트리밍 - 프로그레스바·진행로그
 
 [https://github.com/aengu/learn-log/commit/09bca5169f4d38256e33e6e36c993e54d6589363](https://github.com/aengu/learn-log/commit/09bca5169f4d38256e33e6e36c993e54d6589363)
 
