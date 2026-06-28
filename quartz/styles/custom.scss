@@ -1,3 +1,78 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// ===== LearnLog 포트폴리오 커스텀 =====
+
+// 핵심 지표 카드
+.ll-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1.6rem 0 2rem;
+}
+.ll-stat {
+  flex: 1 1 110px;
+  padding: 0.9rem 0.6rem;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--lightgray);
+}
+.ll-stat b {
+  display: block;
+  font-size: 1.45rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--secondary);
+}
+.ll-stat span {
+  font-size: 0.76rem;
+  color: var(--gray);
+}
+
+// 개발 타임라인
+.ll-timeline {
+  margin: 0.6rem 0 2rem;
+  padding-left: 1.4rem;
+  border-left: 2px solid var(--lightgray);
+}
+.ll-month {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.6rem;
+  color: var(--dark);
+}
+.ll-row {
+  position: relative;
+  margin: 0.45rem 0;
+  line-height: 1.55;
+}
+.ll-row::before {
+  content: "";
+  position: absolute;
+  left: -1.68rem;
+  top: 0.5rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--secondary);
+  box-shadow: 0 0 0 3px var(--light);
+}
+.ll-date {
+  font-variant-numeric: tabular-nums;
+  color: var(--gray);
+  font-size: 0.83rem;
+  margin-right: 0.45rem;
+}
+.ll-row a {
+  font-weight: 500;
+}
+.ll-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 0.05rem 0.5rem;
+  margin-left: 0.4rem;
+  border-radius: 999px;
+  background: var(--lightgray);
+  color: var(--darkgray);
+  vertical-align: middle;
+  white-space: nowrap;
+}
