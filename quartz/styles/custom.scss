@@ -2,77 +2,67 @@
 
 // ===== LearnLog 포트폴리오 커스텀 =====
 
-// 핵심 지표 카드
-.ll-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin: 1.6rem 0 2rem;
-}
-.ll-stat {
-  flex: 1 1 110px;
-  padding: 0.9rem 0.6rem;
-  text-align: center;
-  border-radius: 12px;
-  background: var(--lightgray);
-}
-.ll-stat b {
-  display: block;
-  font-size: 1.45rem;
-  line-height: 1.25;
-  font-weight: 700;
-  color: var(--secondary);
-}
-.ll-stat span {
-  font-size: 0.76rem;
-  color: var(--gray);
-}
+.ll-stats { display:flex; flex-wrap:wrap; gap:0.7rem; margin:1.6rem 0 2rem; }
+.ll-stat { flex:1 1 110px; padding:0.9rem 0.6rem; text-align:center; border-radius:12px; background:var(--lightgray); display:flex; flex-direction:column; justify-content:center; }
+.ll-stat small { display:block; font-size:0.66rem; color:var(--gray); margin-top:0.2rem; }
+.ll-stat b { display:block; font-size:1.45rem; line-height:1.25; font-weight:700; color:var(--secondary); }
+.ll-stat span { font-size:0.76rem; color:var(--gray); }
 
-// 개발 타임라인
-.ll-timeline {
-  margin: 0.6rem 0 2rem;
-  padding-left: 1.4rem;
-  border-left: 2px solid var(--lightgray);
+// 필터 (라디오 숨김 + 라벨 칩)
+input[name="llf"] { display:none; }
+.ll-filter { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0.6rem 0 1.3rem; }
+.ll-filter label {
+  font-size:0.76rem; padding:0.22rem 0.7rem; border-radius:999px;
+  border:1px solid var(--lightgray); color:var(--darkgray);
+  cursor:pointer; user-select:none; transition:all .12s;
 }
-.ll-month {
-  font-weight: 700;
-  font-size: 1.05rem;
-  margin: 1.5rem 0 0.6rem;
-  color: var(--dark);
-}
-.ll-row {
-  position: relative;
-  margin: 0.45rem 0;
-  line-height: 1.55;
-}
-.ll-row::before {
-  content: "";
-  position: absolute;
-  left: -1.68rem;
-  top: 0.5rem;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--secondary);
-  box-shadow: 0 0 0 3px var(--light);
-}
-.ll-date {
-  font-variant-numeric: tabular-nums;
-  color: var(--gray);
-  font-size: 0.83rem;
-  margin-right: 0.45rem;
-}
-.ll-row a {
-  font-weight: 500;
-}
-.ll-tag {
-  display: inline-block;
-  font-size: 0.7rem;
-  padding: 0.05rem 0.5rem;
-  margin-left: 0.4rem;
-  border-radius: 999px;
-  background: var(--lightgray);
-  color: var(--darkgray);
-  vertical-align: middle;
-  white-space: nowrap;
-}
+.ll-filter label:hover { border-color:var(--gray); }
+#f-all:checked ~ .ll-filter label[for="f-all"] { background:var(--secondary); color:var(--light); border-color:var(--secondary); }
+#f-design:checked ~ .ll-filter label[for="f-design"]{background:#5b6b7c;color:#fff;border-color:#5b6b7c;}
+#f-feature:checked ~ .ll-filter label[for="f-feature"]{background:#2f9e6e;color:#fff;border-color:#2f9e6e;}
+#f-rag:checked ~ .ll-filter label[for="f-rag"]{background:#7c5cbf;color:#fff;border-color:#7c5cbf;}
+#f-verify:checked ~ .ll-filter label[for="f-verify"]{background:#c75c6b;color:#fff;border-color:#c75c6b;}
+#f-perf:checked ~ .ll-filter label[for="f-perf"]{background:#c98a3c;color:#fff;border-color:#c98a3c;}
+#f-test:checked ~ .ll-filter label[for="f-test"]{background:#2f8f9e;color:#fff;border-color:#2f8f9e;}
+#f-ops:checked ~ .ll-filter label[for="f-ops"]{background:#4a7fb5;color:#fff;border-color:#4a7fb5;}
+#f-cs:checked ~ .ll-filter label[for="f-cs"]{background:#7a7a85;color:#fff;border-color:#7a7a85;}
+
+// 타임라인
+.ll-timeline { margin:0.4rem 0 2rem; padding-left:1.4rem; border-left:2px solid var(--lightgray); }
+.ll-month { font-weight:700; font-size:1.05rem; margin:1.5rem 0 0.6rem; color:var(--dark); }
+.ll-row { position:relative; margin:0.45rem 0; line-height:1.55; }
+.ll-row::before { content:""; position:absolute; left:-1.68rem; top:0.5rem; width:9px; height:9px; border-radius:50%; background:var(--secondary); box-shadow:0 0 0 3px var(--light); }
+.ll-date { font-variant-numeric:tabular-nums; color:var(--gray); font-size:0.83rem; margin-right:0.45rem; }
+.ll-row a { font-weight:500; }
+.ll-tag { display:inline-block; font-size:0.7rem; padding:0.05rem 0.5rem; margin-left:0.4rem; border-radius:999px; vertical-align:middle; white-space:nowrap; }
+.ll-tag[data-tag="설계"]{background:#5b6b7c;color:#fff;}
+.ll-tag[data-tag="기능구현"]{background:#2f9e6e;color:#fff;}
+.ll-tag[data-tag="AI/RAG"]{background:#7c5cbf;color:#fff;}
+.ll-tag[data-tag="AI/검증"]{background:#c75c6b;color:#fff;}
+.ll-tag[data-tag="성능"]{background:#c98a3c;color:#fff;}
+.ll-tag[data-tag="테스트"]{background:#2f8f9e;color:#fff;}
+.ll-tag[data-tag="배포·운영"]{background:#4a7fb5;color:#fff;}
+.ll-tag[data-tag="CS"]{background:#7a7a85;color:#fff;}
+
+// 필터 동작
+#f-design:checked ~ .ll-timeline .ll-row:not([data-tag="설계"]){display:none;}
+#f-feature:checked ~ .ll-timeline .ll-row:not([data-tag="기능구현"]){display:none;}
+#f-rag:checked ~ .ll-timeline .ll-row:not([data-tag="AI/RAG"]){display:none;}
+#f-verify:checked ~ .ll-timeline .ll-row:not([data-tag="AI/검증"]){display:none;}
+#f-perf:checked ~ .ll-timeline .ll-row:not([data-tag="성능"]){display:none;}
+#f-test:checked ~ .ll-timeline .ll-row:not([data-tag="테스트"]){display:none;}
+#f-ops:checked ~ .ll-timeline .ll-row:not([data-tag="배포·운영"]){display:none;}
+#f-cs:checked ~ .ll-timeline .ll-row:not([data-tag="CS"]){display:none;}
+#f-design:checked ~ .ll-timeline .ll-month,
+#f-feature:checked ~ .ll-timeline .ll-month,
+#f-rag:checked ~ .ll-timeline .ll-month,
+#f-verify:checked ~ .ll-timeline .ll-month,
+#f-perf:checked ~ .ll-timeline .ll-month,
+#f-test:checked ~ .ll-timeline .ll-month,
+#f-ops:checked ~ .ll-timeline .ll-month,
+#f-cs:checked ~ .ll-timeline .ll-month{display:none;}
+
+// 스크린샷
+.ll-shots { display:flex; flex-wrap:wrap; gap:0.7rem; margin:1rem 0 1.5rem; align-items:flex-start; }
+.ll-shots img { max-height:250px; width:auto; max-width:100%; border-radius:8px; border:1px solid var(--lightgray); }
+.ll-shot { display:block; max-width:100%; border-radius:8px; border:1px solid var(--lightgray); margin:1rem 0 1.5rem; }
