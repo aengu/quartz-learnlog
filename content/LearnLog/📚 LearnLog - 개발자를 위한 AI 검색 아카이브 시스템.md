@@ -10,16 +10,17 @@
 
 **핵심 가치**: 검색 → 정리 → 복습 → 재활용(RAG)의 학습 루프를 하나의 시스템 안에서 완결
 
-> 제가 개발하면서 매일 직접 쓰는 개인 학습 도구입니다. 토이 프로젝트로 끝내지 않고, 실제 사용 중 느낀 불편을 기능 개선으로 이어가고 있습니다.
+> 제가 개발하면서 매일 직접 쓰는 개인 학습 도구입니다. 토이 프로젝트로 끝내지 않고 실제 사용 중 느낀 불편을 기능 개선으로 이어가며, 개선은 벤치마크로 측정해 수치로 확인한 뒤 반영했습니다.
 
 <img src="LearnLog/attachments/Learn-Log---AI-개발-지식-베이스.gif" width="720" alt="LearnLog 실행 화면" />
 
 <div class="ll-stats">
   <div class="ll-stat"><b>5개월</b><span>지속 개발 (2026.1–6)</span></div>
   <div class="ll-stat"><b>28편</b><span>개발 일지</span></div>
-  <div class="ll-stat"><b>0%</b><span>출제 정답 오류율 · 런타임 검증</span></div>
+  <div class="ll-stat"><b>16개</b><span>벤치마크·검증 스크립트</span></div>
+  <div class="ll-stat"><b>10%→0%</b><span>LLM 출제 오류 · 91건 검증</span></div>
   <div class="ll-stat"><b>68→37s</b><span>응답 단축</span></div>
-  <div class="ll-stat"><b>73개</b><span>테스트</span><small>모듈 9개</small></div>
+  <div class="ll-stat"><b>73개</b><span>테스트 · CI 자동화</span></div>
 </div>
 
 ---
@@ -45,6 +46,18 @@ flowchart LR
 라우터가 질문마다 경로를 정하고(웹 생략 / 무관한 기록 차단), 과거 학습기록을 검색해 답변 컨텍스트를 채우며, 생성과 다른 모델로 환각을 비동기 검증합니다.
 
 *구현: 라우팅 LangGraph · 하이브리드 검색 pgvector+FTS · 답변 Mistral · 검증·경량작업 Groq · 웹검색 Tavily*
+
+---
+
+## 주요 기술적 도전
+
+| 주제 | 문제/과제 | 접근 | 결과 |
+|------|-----------|------|------|
+| 학습기록 재활용 (RAG) | 저장한 학습기록이 새 답변 생성에 안 쓰이고 묻힘 | pgvector 임베딩 + 기존 FTS를 RRF로 결합, top-3을 답변 프롬프트에 주입 | 키워드가 안 겹쳐도 의미로 검색 (추가 0.65s, 전체의 2%) → [[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합\|상세]] |
+| 질문별 경로 라우팅 | 모든 질문이 같은 직선 경로 → 불필요한 웹검색·무관 기록 주입 | LangGraph 조건 분기 — 라우터(Groq)가 웹검색 생략·무관 기록 차단을 판단, 기존 서비스 메서드를 노드로 재사용 | 질문별 경로 최적화 (웹 생략 시 단축) → [[LangGraph 라우팅 에이전트 - 질문별 조건 분기\|상세]] |
+| 환각 방어 | 무료 티어 모델 환각 + 오염된 과거 답변 재사용 위험 | 예방(grounding) · 검출(생성과 다른 모델로 비동기 모순 검증) · 표시(출처 배지) 3단 | 답변 속도 안 막는 검증 + 출처 신뢰도 표시 → [[환각 방어 - 예방·검출·표시 3단\|상세]] |
+| LLM 출제 정답 검증 | LLM이 생성한 연습문제의 정답(correct_index)이 틀림 | 반복 실험 + 별도 LLM 자동 판정 + 런타임 가드(결정적 검증·재생성) | 출제 정답 오류 10%→5%, 가드 도입 후 **91건 연속 무오류**(0/91) → [[프롬프트 변경 효과 측정 - correct_index 오류율 비교 테스트\|상세]] / [[correct_index 런타임 가드 — 자가검증으로 환각 0%에 수렴\|가드 상세]] |
+| LLM 속도 vs 품질 균형 | Mistral 도입 후 응답 68초 | 작업별 벤치마크 → Groq+Mistral 하이브리드 분리 → 병렬 처리·프롬프트 경량화·스트리밍 | 68초→**37초** 단축 + 체감 속도 개선 → [[LLM 공급자 하이브리드 전환 - Groq + Mistral 속도·품질 벤치마크\|하이브리드]] / [[LLM 응답 속도 최적화 - 병렬화, 프롬프트 경량화, 스트리밍\|코드 최적화]] |
 
 ---
 
@@ -77,28 +90,11 @@ flowchart LR
 
 ## 🛠 기술 스택
 
-### **Backend**
-
-- **Django 5.x**: 웹 프레임워크
-- **Django REST Framework**: API 엔드포인트 구현
-- **PostgreSQL 18**: 검색 히스토리·메타데이터 저장, Full-Text Search + **pgvector 하이브리드(벡터+키워드) 검색**
-- **LangGraph**: 질문별 조건 분기 라우팅 에이전트 (검색→생성 파이프라인 제어)
-
-### **Frontend**
-
-- **Django Template** + **HTMX**: SPA 없이 서버 렌더링 기반으로 SSE 스트리밍, 무한스크롤, 부분 페이지 갱신 구현
-- **Tailwind CSS**: 유틸리티 클래스 기반 CSS 프레임워크
-
-### **Testing & CI**
-
-- **pytest** + **pytest-django**: 테스트 러너 및 Django 통합
-- **factory_boy**: 테스트 데이터 팩토리
-- **GitHub Actions**: push/PR 시 자동 테스트 실행
-
-### **Deployment**
-
-- **Docker** + **Docker Compose**: 컨테이너화 및 개발 환경 구성
-- **Render**: 프로덕션 배포 (Web Service + Managed PostgreSQL)
+- **Backend**: Django 5 · DRF · **PostgreSQL 18** — FTS + pgvector 하이브리드 검색을 별도 벡터 DB 없이 DB 안에서 해결
+- **AI 파이프라인**: LangGraph — 질문별 조건 분기 라우팅 (검색→생성 파이프라인 제어)
+- **Frontend**: Django Template + **HTMX** — SPA 없이 SSE 스트리밍·무한스크롤·부분 갱신 · Tailwind CSS
+- **Testing & CI**: pytest · factory_boy (테스트 73개) · GitHub Actions push/PR 자동 실행
+- **Deployment**: Docker Compose · Render (Web Service + Managed PostgreSQL)
 
 ---
 
@@ -111,18 +107,6 @@ flowchart LR
 - **Groq (Llama 3.3)** — 태그 추출·마크다운 변환·라우팅 판단 등 경량·고속 작업
 
 > 초기 Groq 단독 → 품질 위해 Mistral 도입, 작업별 하이브리드로 분리. → [[LLM 공급자 하이브리드 전환 - Groq + Mistral 속도·품질 벤치마크|벤치마크]]
-
----
-
-## 주요 기술적 도전
-
-| 주제 | 문제/과제 | 접근 | 결과 |
-|------|-----------|------|------|
-| 학습기록 재활용 (RAG) | 저장한 학습기록이 새 답변 생성에 안 쓰이고 묻힘 | pgvector 임베딩 + 기존 FTS를 RRF로 결합, top-3을 답변 프롬프트에 주입 | 키워드가 안 겹쳐도 의미로 검색 (추가 0.65s, 전체의 2%) → [[pgvector 하이브리드 RAG - FTS+벡터 RRF 결합\|상세]] |
-| 질문별 경로 라우팅 | 모든 질문이 같은 직선 경로 → 불필요한 웹검색·무관 기록 주입 | LangGraph 조건 분기 — 라우터(Groq)가 웹검색 생략·무관 기록 차단을 판단, 기존 서비스 메서드를 노드로 재사용 | 질문별 경로 최적화 (웹 생략 시 단축) → [[LangGraph 라우팅 에이전트 - 질문별 조건 분기\|상세]] |
-| 환각 방어 | 무료 티어 모델 환각 + 오염된 과거 답변 재사용 위험 | 예방(grounding) · 검출(생성과 다른 모델로 비동기 모순 검증) · 표시(출처 배지) 3단 | 답변 속도 안 막는 검증 + 출처 신뢰도 표시 → [[환각 방어 - 예방·검출·표시 3단\|상세]] |
-| LLM 출제 정답 검증 | LLM이 생성한 연습문제의 정답(correct_index)이 틀림 | 반복 실험 + 별도 LLM 자동 판정 + 런타임 가드(결정적 검증·재생성) | 출제 정답 오류 10%→5%→**0%** → [[프롬프트 변경 효과 측정 - correct_index 오류율 비교 테스트\|상세]] / [[correct_index 런타임 가드 — 자가검증으로 환각 0%에 수렴\|0%까지]] |
-| LLM 속도 vs 품질 균형 | Mistral 도입 후 응답 68초 | 작업별 벤치마크 → Groq+Mistral 하이브리드 분리 → 병렬 처리·프롬프트 경량화·스트리밍 | 68초→**37초** 단축 + 체감 속도 개선 → [[LLM 공급자 하이브리드 전환 - Groq + Mistral 속도·품질 벤치마크\|하이브리드]] / [[LLM 응답 속도 최적화 - 병렬화, 프롬프트 경량화, 스트리밍\|코드 최적화]] |
 
 ---
 
