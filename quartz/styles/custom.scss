@@ -62,6 +62,91 @@ input[name="llf"] { display:none; }
 #f-ops:checked ~ .ll-timeline .ll-month,
 #f-cs:checked ~ .ll-timeline .ll-month{display:none;}
 
+// 기술적 도전 — 접이식 스토리 카드
+.ll-story {
+  margin:0.7rem 0; border:1px solid var(--lightgray); border-radius:12px;
+  overflow:hidden; transition:border-color .12s;
+}
+.ll-story[open] { border-color:var(--secondary); }
+.ll-story summary {
+  display:flex; align-items:baseline; gap:0.5rem; flex-wrap:wrap;
+  padding:0.75rem 1rem; cursor:pointer; user-select:none; list-style:none;
+}
+.ll-story summary::-webkit-details-marker { display:none; }
+.ll-story summary::before { content:"▸"; color:var(--gray); font-size:0.8rem; flex-shrink:0; }
+.ll-story[open] summary::before { content:"▾"; color:var(--secondary); }
+.ll-story summary:hover { background:var(--lightgray); }
+.ll-story summary b { color:var(--dark); white-space:nowrap; }
+.ll-story .ll-hook { color:var(--darkgray); font-size:0.88rem; }
+.ll-story .ll-num {
+  margin-left:auto; font-size:0.74rem; font-weight:600; color:var(--secondary);
+  background:var(--lightgray); padding:0.1rem 0.55rem; border-radius:999px; white-space:nowrap;
+}
+.ll-story p { margin:0.45rem 1rem 0.75rem; font-size:0.88rem; line-height:1.65; color:var(--darkgray); }
+.ll-story p b { color:var(--dark); }
+
+// 기술적 도전 — 3열 표
+.ll-table { width:100%; border-collapse:collapse; margin:1rem 0 1.5rem; }
+.ll-table th {
+  text-align:left; font-size:0.78rem; color:var(--gray); font-weight:600;
+  padding:0.3rem 0.7rem; border-bottom:2px solid var(--lightgray);
+}
+.ll-table td {
+  padding:0.75rem 0.7rem; border-bottom:1px solid var(--lightgray);
+  font-size:0.87rem; line-height:1.6; color:var(--darkgray); vertical-align:top;
+}
+.ll-table tr:hover td { background:color-mix(in srgb, var(--lightgray) 40%, transparent); }
+.ll-table td:first-child { width:20%; min-width:130px; }
+.ll-table td:first-child b { color:var(--dark); }
+.ll-table td:first-child small { display:block; color:var(--gray); font-size:0.74rem; margin-top:0.2rem; line-height:1.4; }
+.ll-table td:last-child { width:19%; min-width:120px; }
+.ll-table td:last-child .ll-num { display:inline-block; margin:0 0 0.35rem; }
+.ll-table td:last-child a { display:block; font-size:0.78rem; }
+
+// 모바일: 행을 카드처럼 쌓기
+@media (max-width: 680px) {
+  .ll-table thead { display:none; }
+  .ll-table, .ll-table tbody { display:block; }
+  .ll-table tr {
+    display:block; border:1px solid var(--lightgray); border-radius:12px;
+    margin:0.7rem 0; padding:0.4rem 0.9rem;
+  }
+  .ll-table td, .ll-table td:first-child, .ll-table td:last-child { display:block; width:100%; border:none; padding:0.3rem 0; }
+  .ll-table tr:hover td { background:none; }
+}
+
+// 기록 증거 배지
+.ll-proof { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.7rem 0 1.2rem; }
+.ll-proof a {
+  font-size:0.78rem; padding:0.3rem 0.75rem; border-radius:999px;
+  border:1px solid var(--lightgray); color:var(--darkgray); text-decoration:none;
+  transition:all .12s;
+}
+.ll-proof a:hover { border-color:var(--secondary); color:var(--secondary); }
+
+// ===== 인쇄(PDF 제출)용 =====
+@media print {
+  // 사이트 UI 숨김 — 본문만 인쇄
+  .left.sidebar, .right.sidebar, .search, .darkmode, .readermode,
+  .breadcrumb-container, .page-footer, .explorer-toggle, .content-meta { display:none !important; }
+  .page > #quartz-body .center { margin:0; width:100%; max-width:100%; }
+
+  // 접이식 카드: 전부 펼친 상태로 인쇄 (Chrome 131+ / Safari 18.4+)
+  .ll-story::details-content { content-visibility:visible !important; display:block !important; }
+  .ll-story { break-inside:avoid; border-color:#ccc; }
+  .ll-story summary::before { content:"" !important; }
+  .ll-story summary:hover { background:none; }
+
+  // 타임라인: 필터 칩 숨기고 전체 목록 표시
+  .ll-filter { display:none !important; }
+  .ll-timeline .ll-row { display:block !important; }
+  .ll-timeline .ll-month { display:block !important; }
+
+  // 카드·타일·표 행이 페이지 경계에서 잘리지 않게
+  .ll-stats, .ll-stat, .ll-proof, .ll-table tr { break-inside:avoid; }
+  .ll-shots img, .ll-shot { max-height:200px; }
+}
+
 // 스크린샷
 .ll-shots { display:flex; flex-wrap:wrap; gap:0.7rem; margin:1rem 0 1.5rem; align-items:flex-start; }
 .ll-shots img { max-height:250px; width:auto; max-width:100%; border-radius:8px; border:1px solid var(--lightgray); }
