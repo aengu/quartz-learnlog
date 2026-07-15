@@ -18,7 +18,7 @@
   <div class="ll-stat"><b>5개월</b><span>지속 개발 (2026.1–6)</span></div>
   <div class="ll-stat"><b>28편</b><span>개발 일지</span></div>
   <div class="ll-stat"><b>16개</b><span>벤치마크·검증 스크립트</span></div>
-  <div class="ll-stat"><b>10%→0%</b><span>LLM 출제 오류 · 91건 검증</span></div>
+  <div class="ll-stat"><b>0/91</b><span>가드 적용 후 최종 출력 불일치</span></div>
   <div class="ll-stat"><b>68→37s</b><span>응답 단축</span></div>
   <div class="ll-stat"><b>73개</b><span>테스트 · CI 자동화</span></div>
 </div>
@@ -71,8 +71,8 @@ flowchart LR
 </tr>
 <tr>
 <td>🔒 <b>런타임 가드</b><small>출력 자가검증 + 실패 시 재생성</small></td>
-<td>프롬프트로는 5%가 남았고, 자연어를 해석하는 어떤 검증도 결정적일 수 없었다. LLM에게 정답을 번호와 값으로 두 번 쓰게 강제 — 헷갈리는 순간 두 값이 어긋나고, 코드가 일치를 검증해 어긋나면 재생성. 못 잡는 유형까지 한계로 문서화.</td>
-<td><span class="ll-num">사용자 도달 오류 0/91</span><a href="../LearnLog/correct_index-런타임-가드-—-자가검증으로-환각-0-percent에-수렴">상세 →</a></td>
+<td>프롬프트 개선(10%→5%)은 모델 출력을 고쳤지만 5%는 0이 아니다. LLM에게 정답을 번호와 값으로 두 번 쓰게 강제 — 헷갈리는 순간 두 값이 어긋나고, 코드가 내부 일관성을 검사해 어긋나면 재생성. 서비스 계층에서 오류 노출을 통제하고, 못 잡는 유형까지 한계로 문서화.</td>
+<td><span class="ll-num">최종 출력 불일치 0/91</span><a href="../LearnLog/correct_index-런타임-가드-—-정답-인덱스-정합성-검증">상세 →</a></td>
 </tr>
 <tr>
 <td>⚡ <b>속도 vs 품질</b><small>모델 분리 + 병렬화 + 스트리밍</small></td>
@@ -152,7 +152,7 @@ flowchart LR
 <div class="ll-proof">
 <a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">🧪 효과 없던 실험도 기록 (max_tokens)</a>
 <a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">✏️ 틀린 결론을 두 달 뒤 실험으로 정정</a>
-<a href="../LearnLog/correct_index-런타임-가드-—-자가검증으로-환각-0-percent에-수렴">⚠️ 시스템이 못 잡는 유형까지 문서화</a>
+<a href="../LearnLog/correct_index-런타임-가드-—-정답-인덱스-정합성-검증">⚠️ 시스템이 못 잡는 유형까지 문서화</a>
 </div>
 
 <div class="ll-tl">
@@ -173,7 +173,7 @@ flowchart LR
 <div class="ll-row" data-tag="AI/RAG"><span class="ll-date">06-11</span><a href="../LearnLog/pgvector-하이브리드-RAG---FTS+벡터-RRF-결합">pgvector 하이브리드 RAG — FTS+벡터 RRF</a><span class="ll-tag" data-tag="AI/RAG">AI/RAG</span></div>
 <div class="ll-row" data-tag="AI/RAG"><span class="ll-date">06-11</span><a href="../LearnLog/LangGraph-라우팅-에이전트---질문별-조건-분기">LangGraph 라우팅 — 질문별 조건 분기</a><span class="ll-tag" data-tag="AI/RAG">AI/RAG</span></div>
 <div class="ll-row" data-tag="기능구현"><span class="ll-date">06-10</span><a href="../LearnLog/꼬리질문---self-FK-질문-트리-구현">꼬리질문 — self-FK 질문 트리</a><span class="ll-tag" data-tag="기능구현">기능구현</span></div>
-<div class="ll-row" data-tag="AI/검증"><span class="ll-date">06-04</span><a href="../LearnLog/correct_index-런타임-가드-—-자가검증으로-환각-0-percent에-수렴">런타임 가드 — 자가검증으로 환각 0%</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
+<div class="ll-row" data-tag="AI/검증"><span class="ll-date">06-04</span><a href="../LearnLog/correct_index-런타임-가드-—-정답-인덱스-정합성-검증">런타임 가드 — 최종 출력 불일치 0/91</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
 <div class="ll-month">2026.05</div>
 <div class="ll-row" data-tag="AI/RAG"><span class="ll-date">05-30</span><a href="../LearnLog/RAG-검색-파이프라인-개선-—-한국어-질문이-엉뚱한-결과를-부르던-문제">RAG 검색 개선 — 한국어 질문 정확도 복원</a><span class="ll-tag" data-tag="AI/RAG">AI/RAG</span></div>
 <div class="ll-row" data-tag="기능구현"><span class="ll-date">05-21</span><a href="../LearnLog/메타인지-학습-UX-재설계---안-쓰는-기능을-다시-만들기">메타인지 UX 재설계 — 안 쓰는 기능 다시 만들기</a><span class="ll-tag" data-tag="기능구현">기능구현</span></div>
