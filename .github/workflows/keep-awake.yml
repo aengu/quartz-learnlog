@@ -1,0 +1,37 @@
+name: Keep Render apps awake
+
+# Render 무료 플랜은 계정당 월 750시간(≈한 달 730시간)이라 두 서비스를 24시간 깨워둘 수 없다.
+# 채용 담당자가 링크를 여는 시간대(평일 업무시간)에만 깨워서 예산 안에 맞춘다.
+#   평일 11시간 × 22일 ≈ 242시간/서비스 → 두 개 합쳐 약 484시간
+#
+# 자가 ping(앱 내부 스레드)으로는 이걸 못 한다. ping을 멈추면 앱이 잠들고,
+# 잠들면 스레드도 같이 멈춰서 스스로 깨어나지 못하기 때문. 그래서 외부 트리거를 쓴다.
+
+on:
+  schedule:
+    # UTC 00:00~11:59 = KST 09:00~20:59, 월~금. 14분 간격(슬립 기준 15분보다 짧게)
+    - cron: "*/14 0-11 * * 1-5"
+  workflow_dispatch: # 필요할 때 수동 실행
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # 하나가 죽어도 나머지는 계속 깨움
+      matrix:
+        target:
+          - name: LearnLog
+            url: https://learn-log.onrender.com/
+          - name: 잇다루프
+            url: https://eatda-roop.onrender.com/
+    steps:
+      - name: Ping ${{ matrix.target.name }}
+        run: |
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -m 90 --retry 2 --retry-delay 20 "${{ matrix.target.url }}")
+          echo "${{ matrix.target.name }} → HTTP $code"
+          # 슬립에서 깨어나는 중이면 5xx가 잠깐 나올 수 있어 실패로 보지 않는다.
+          # 완전히 죽은 경우(000 = 연결 불가)만 실패 처리.
+          if [ "$code" = "000" ]; then
+            echo "::error::${{ matrix.target.name }} 응답 없음 (연결 실패)"
+            exit 1
+          fi
