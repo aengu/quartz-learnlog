@@ -69,19 +69,101 @@
 
 [GitHub](https://github.com/aengu/learn-log) | [배포 사이트](https://learn-log.onrender.com/) | [[📚 LearnLog - 개발자를 위한 AI 검색 아카이브 시스템|포트폴리오]]
 
-개발 중 기술적 질문을 검색하면 AI가 공식 레퍼런스와 함께 답을 정리하고, 저장한 학습기록을 다시 검색(RAG)해 새 답변에 활용하며 간격 반복 연습문제로 복습까지 잇는 AI 학습 아카이브
+개발 중 기술적 질문을 검색하면 AI가 공식 레퍼런스 기반으로 답을 정리하고, 저장한 기록을 다시 검색해 새 답변에 활용하며 복습 문제까지 잇는 AI 학습 아카이브
+
+<div class="rs-flow">
+<svg class="flow" viewBox="0 0 700 208" role="img"
+aria-label="사용자 질문을 라우터가 분석해 웹 문서 검색 또는 학습기록 검색으로 보내고, 그 결과로 AI가 답변을 생성한다. 답변은 다른 모델로 환각을 교차 검증하고 학습기록으로 저장되며, 저장된 기록은 복습 문제로 이어지는 동시에 다음 질문의 학습기록 검색에 재활용된다.">
+<defs>
+<marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+<polygon class="f-h" points="0,0 10,5 0,10"/>
+</marker>
+<marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+<polygon class="f-h k" points="0,0 10,5 0,10"/>
+</marker>
+</defs>
+
+<rect class="f-box"   x="6"   y="76"  width="72"  height="36" rx="4"/>
+<text class="f-t" x="42"  y="99"  text-anchor="middle">질문</text>
+
+<rect class="f-box k" x="98"  y="76"  width="88"  height="36" rx="4"/>
+<text class="f-t on" x="142" y="99"  text-anchor="middle">경로 결정</text>
+
+<rect class="f-box"   x="210" y="22"  width="116" height="36" rx="4"/>
+<text class="f-t" x="268" y="45"  text-anchor="middle">웹 문서 검색</text>
+
+<rect class="f-box k" x="210" y="126" width="116" height="42" rx="4"/>
+<text class="f-t on" x="268" y="144" text-anchor="middle">학습기록 검색</text>
+<text class="f-s on" x="268" y="159" text-anchor="middle">키워드 + 의미</text>
+
+<rect class="f-box"   x="352" y="76"  width="86"  height="36" rx="4"/>
+<text class="f-t" x="395" y="99"  text-anchor="middle">답변 생성</text>
+
+<rect class="f-box k" x="464" y="22"  width="110" height="42" rx="4"/>
+<text class="f-t on" x="519" y="40"  text-anchor="middle">환각 검증</text>
+<text class="f-s on" x="519" y="55"  text-anchor="middle">다른 모델 교차</text>
+
+<rect class="f-box"   x="464" y="126" width="110" height="36" rx="4"/>
+<text class="f-t" x="519" y="149" text-anchor="middle">학습기록 저장</text>
+
+<rect class="f-box"   x="600" y="126" width="94"  height="36" rx="4"/>
+<text class="f-t" x="647" y="149" text-anchor="middle">복습 문제</text>
+
+<line     class="f-l" x1="78" y1="94" x2="94" y2="94" marker-end="url(#a1)"/>
+<polyline class="f-l" points="186,88 198,88 198,40 206,40"    marker-end="url(#a1)"/>
+<polyline class="f-l" points="186,100 198,100 198,147 206,147" marker-end="url(#a1)"/>
+<polyline class="f-l" points="326,40 338,40 338,94 348,94"     marker-end="url(#a1)"/>
+<polyline class="f-l" points="326,147 338,147 338,94"/>
+<polyline class="f-l" points="438,88 450,88 450,43 460,43"     marker-end="url(#a1)"/>
+<polyline class="f-l" points="438,100 450,100 450,144 460,144" marker-end="url(#a1)"/>
+<line     class="f-l" x1="574" y1="144" x2="596" y2="144" marker-end="url(#a1)"/>
+
+<polyline class="f-l k" points="519,162 519,186 268,186 268,172" marker-end="url(#a2)"/>
+<text class="f-c" x="393" y="202" text-anchor="middle">다음 질문에 재활용 (RAG)</text>
+</svg>
+</div>
 
 ### 기술 스택
-Django 5 / DRF / PostgreSQL (FTS·pgvector) / LangGraph / Groq·Mistral·Tavily / Docker / HTMX / pytest·factory_boy / GitHub Actions / Render
+
+<div class="rs-stack">
+<span class="rs-chip" data-k="1">Django 5</span><span class="rs-chip" data-k="1">DRF</span><span class="rs-chip" data-k="1">PostgreSQL</span><span class="rs-chip">FTS</span><span class="rs-chip">pgvector</span><span class="rs-chip" data-k="1">LangGraph</span><span class="rs-chip">Groq</span><span class="rs-chip">Mistral</span><span class="rs-chip">Tavily</span><span class="rs-chip" data-k="1">Docker</span><span class="rs-chip">HTMX</span><span class="rs-chip">pytest</span><span class="rs-chip">factory_boy</span><span class="rs-chip">GitHub Actions</span><span class="rs-chip">Render</span>
+</div>
 
 ### 주요 구현
 
-- **하이브리드 검색 (RAG)**: PostgreSQL FTS(키워드)와 pgvector(임베딩)를 RRF로 결합해 과거 학습기록을 답변 생성에 주입. 키워드가 겹치지 않아도 의미 기반으로 검색, 추가 지연 0.65s(전체 파이프라인의 2%)
-- **조건 분기 파이프라인 (LangGraph)**: 라우터가 질문별로 웹검색 생략·무관 기록 차단을 판단하는 에이전트 그래프로 직선 파이프라인을 전환 (기존 서비스 메서드를 노드로 재사용)
-- **LLM 출력 검증**: 연습문제 정답 인덱스 오류를 별도 모델 교차 채점으로 측정해 프롬프트 개선으로 오류율 10%→5%, 이어 정답을 번호·값으로 중복 출력시켜 코드가 내부 일관성을 검사·재생성하는 런타임 가드 도입 → 가드 적용 후 **최종 출력 불일치 0/91**(실측)
-- **비동기 환각 방어**: 생성과 다른 모델로 모순을 비동기 검증(답변 속도 미차단)하고 출처 배지 표시
-- **성능 최적화**: 외부 API 6회 동기 호출을 병렬 처리 + 프롬프트 경량화 + SSE 스트리밍으로 응답 **68s→37s**
-- **테스트·배포 자동화**: pytest + factory_boy 테스트 73개 · GitHub Actions CI, dbpush/dbpull DB 동기화 커맨드·주간 자동 백업, Docker Compose·Render 배포
+<div class="rs-impl">
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">하이브리드 검색 (RAG)</span><span class="rs-metric">추가 지연 0.65s · 전체의 2%</span></div>
+<p class="rs-desc">PostgreSQL FTS(키워드)와 pgvector(임베딩)를 RRF로 결합해 과거 학습기록을 답변 생성에 주입. 키워드가 겹치지 않아도 의미 기반으로 검색된다.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">LLM 출력 검증</span><span class="rs-metric">오류율 10% → 5% → 불일치 0/91</span></div>
+<p class="rs-desc">연습문제 정답 인덱스 오류를 별도 모델 교차 채점으로 측정하고 프롬프트로 절반까지 줄인 뒤, 정답을 번호·값으로 중복 출력시켜 코드가 내부 일관성을 검사하고 어긋나면 재생성하는 런타임 가드를 도입.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">성능 최적화</span><span class="rs-metric">응답 68s → 37s</span></div>
+<p class="rs-desc">외부 API 6회 동기 호출을 병렬 처리하고, 프롬프트 경량화와 SSE 스트리밍을 더해 체감 지연을 줄임.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">조건 분기 파이프라인 (LangGraph)</span><span class="rs-metric">웹검색 생략 · 무관 기록 차단</span></div>
+<p class="rs-desc">라우터가 질문별로 웹검색 생략과 무관 기록 차단을 판단하는 에이전트 그래프로 직선 파이프라인을 전환. 기존 서비스 메서드를 노드로 재사용했다.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">비동기 환각 방어</span><span class="rs-metric">답변 속도 미차단</span></div>
+<p class="rs-desc">생성과 다른 계열 모델로 근거 자료와의 모순을 비동기 검증하고, 결과를 출처 배지로 표시.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">테스트 · 배포 자동화</span><span class="rs-metric">테스트 73개 · CI</span></div>
+<p class="rs-desc">pytest + factory_boy 테스트와 GitHub Actions CI, dbpush/dbpull DB 동기화 커맨드와 주간 자동 백업, Docker Compose·Render 배포.</p>
+</div>
+
+</div>
 
 ---
 

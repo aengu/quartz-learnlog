@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    baseUrl: "aengu.github.io/quartz-learnlog",
     ignorePatterns: ["private", "templates", ".obsidian", "attachments"],
     defaultDateType: "modified",
     theme: {
