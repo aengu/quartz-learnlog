@@ -145,7 +145,7 @@ flowchart LR
 
 ## 개발 타임라인
 
-2026년 1~6월, 약 5개월간 28편 — 검색 아카이브에서 RAG·환각 방어까지 꾸준히 발전시켰습니다. 태그를 누르면 영역별로 필터됩니다.
+2026년 1월부터 33편 — 검색 아카이브에서 RAG·환각 방어를 거쳐, 모델이 죽었을 때의 운영까지 기록했습니다. 태그를 누르면 영역별로 필터됩니다.
 
 성공만 기록하지 않았습니다 —
 
@@ -167,7 +167,14 @@ flowchart LR
 <input type="radio" name="llf" id="f-cs">
 <div class="ll-filter"><label for="f-all">전체</label><label for="f-design">설계</label><label for="f-feature">기능구현</label><label for="f-rag">AI/RAG</label><label for="f-verify">AI/검증</label><label for="f-perf">성능</label><label for="f-test">테스트</label><label for="f-ops">배포·운영</label><label for="f-cs">CS</label></div>
 <div class="ll-timeline">
+<div class="ll-month">2026.09</div>
+<div class="ll-row" data-tag="AI/검증"><span class="ll-date">09-11</span><a href="../LearnLog/멀티에이전트-작업을-기록으로-남기기---진행판과-Codex-브릿지-인계">멀티에이전트 기록 — 진행판·Codex 인계</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
+<div class="ll-row" data-tag="배포·운영"><span class="ll-date">09-11</span><a href="../LearnLog/쓰던-모델-4개가-한꺼번에-죽었다---교체와-CI가-못-잡은-이유">모델 4개 사망 — 교체와 CI 사각지대</a><span class="ll-tag" data-tag="배포·운영">배포·운영</span></div>
+<div class="ll-row" data-tag="AI/검증"><span class="ll-date">09-08</span><a href="../LearnLog/선택지-문제-품질-게이트---멀티에이전트로-설계-검토하기">선택지 품질 검증 — 멀티에이전트 검토</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
+<div class="ll-month">2026.07</div>
+<div class="ll-row" data-tag="설계"><span class="ll-date">07-03</span><a href="../LearnLog/코드-청소---중복·죽은-경로·조용히-저장되던-버그">코드 청소 — 죽은 경로·조용한 버그</a><span class="ll-tag" data-tag="설계">설계</span></div>
 <div class="ll-month">2026.06</div>
+<div class="ll-row" data-tag="기능구현"><span class="ll-date">06-28</span><a href="../LearnLog/일일-학습일지">일일 학습일지 — 하루 단위 회고</a><span class="ll-tag" data-tag="기능구현">기능구현</span></div>
 <div class="ll-row" data-tag="CS"><span class="ll-date">06-18</span><a href="../LearnLog/LLM-추론에서-입력은-싸고-출력이-비싸다">LLM 추론 — 입력은 싸고 출력이 비싸다</a><span class="ll-tag" data-tag="CS">CS</span></div>
 <div class="ll-row" data-tag="AI/검증"><span class="ll-date">06-16</span><a href="../LearnLog/환각-방어---예방·검출·표시-3단">환각 방어 — 예방·검출·표시 3단</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
 <div class="ll-row" data-tag="AI/RAG"><span class="ll-date">06-11</span><a href="../LearnLog/pgvector-하이브리드-RAG---FTS+벡터-RRF-결합">pgvector 하이브리드 RAG — FTS+벡터 RRF</a><span class="ll-tag" data-tag="AI/RAG">AI/RAG</span></div>

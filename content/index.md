@@ -3,8 +3,8 @@
 > **Python/Django 백엔드 개발자 — 금융 주문 시스템 운영 · LLM/RAG 서비스 개발**
 >
 > - 활성 고객 수백 명 규모·월 20만 건대 주문을 처리하는 주식 자동매매 서비스 개발·운영 — 주문 승인 시스템 설계, 동시성 제어·스케줄러 중복 실행·DB 커넥션 문제 해결, 후반 7개월 단독 운영
-> - AI API 활용 개인 프로젝트([LearnLog](https://aengu.github.io/quartz-learnlog/)) — 하이브리드 검색(RAG)·조건 분기 라우팅·LLM 출력 검증, Docker/CI/CD 직접 설계
-> - Django·DB 핵심 주제(ORM 최적화·트랜잭션·MVCC 등)를 학습하고, 개념 정리와 직접 실험을 병행해 [기술 글 12편으로 정리](https://aengu.github.io/quartz-learnlog/이력서/신혜란/What-I-Learned/)
+> - AI API 활용 개인 프로젝트(LearnLog) — 하이브리드 검색(RAG)·조건 분기 라우팅·LLM 출력 검증, Docker/CI/CD 직접 설계
+> - Django·DB 핵심 주제(ORM 최적화·트랜잭션·MVCC 등)를 학습하고, 개념 정리와 직접 실험을 병행해 [기술 글 13편으로 정리](https://aengu.github.io/quartz-learnlog/이력서/신혜란/What-I-Learned/)
 > - AI 부트캠프 5인 팀 해커톤 — 수요예측 기반 식품 순환 플랫폼(잇다루프) 기획·화면 설계·백엔드 담당, 파트 간 함수 계약을 먼저 확정해 대기 없이 병렬 개발
 
 ---
@@ -15,19 +15,6 @@
 - GitHub: [https://github.com/aengu](https://github.com/aengu)
 - Tech Notes: [https://aengu.github.io/quartz-learnlog/](https://aengu.github.io/quartz-learnlog/)
 - 자기소개서: [[자기소개서]]
-
----
-
-# Skills
-
-| 분류       | 기술                                                        |
-| -------- | --------------------------------------------------------- |
-| Backend  | Python, Django, Django REST Framework                     |
-| Database | PostgreSQL (Full-Text Search), MySQL                      |
-| Infra    | Docker, Docker Compose, AWS (EC2, ELB, Auto Scaling, RDS) |
-| CI/CD    | GitHub Actions, pytest, factory_boy                       |
-| AI/API   | Mistral API (Mistral Large), Groq API (Llama 3.3), Tavily API |
-| etc      | Git, Jira, Confluence                                     |
 
 ---
 
@@ -47,9 +34,9 @@
 - 월 20만 건대 대량 주문을 `bulk_create`/`bulk_update`로 일괄 처리해 DB 왕복 최소화
 
 ### 운영 안정화
-- 리밸런싱 부하로 서비스가 느려져 **팀이 서비스·DB를 분리**(ELB·Auto Scaling·DB Router, 상시 고사양 대비 월 서버 비용 25~50% 절감)했고, 그 분리로 새로 생긴 두 가지 안정성 문제를 직접 해결했습니다:
+- 리밸런싱 부하로 서비스가 느려져 **팀이 서비스·DB를 분리**(AWS ELB·Auto Scaling·DB Router, 상시 고사양 대비 월 서버 비용 25~50% 절감)했고, 그 분리로 새로 생긴 두 가지 안정성 문제를 직접 해결했습니다:
     - **스케줄러 중복 실행**: 배포 시 워커마다 스케줄러가 떠 같은 작업이 4회씩 실행되던 문제를, 별도 프로세스로 분리해 제거
-    - **DB 커넥션 오류**: 거래 시간대(8~17시) 외 주문 DB가 내려가며 반복되던 lost connection을, 트랜잭션 종료 시 커넥션을 명시적으로 정리해 해소
+    - **DB 커넥션 오류**: 비용 절감을 위해 거래 시간대(8~17시)에만 켜두던 주문 MySQL이 그 외 시간에 닫히며 반복되던 lost connection을, 트랜잭션 종료 시 커넥션을 명시적으로 정리해 해소
 
 ### 기타
 - 영업팀 상담 녹취 통화시간 자동 집계(ETL)로 매체별 상담 품질 측정 기반 마련
@@ -126,7 +113,7 @@ aria-label="사용자 질문을 라우터가 분석해 웹 문서 검색 또는 
 ### 기술 스택
 
 <div class="rs-stack">
-<span class="rs-chip" data-k="1">Django 5</span><span class="rs-chip" data-k="1">DRF</span><span class="rs-chip" data-k="1">PostgreSQL</span><span class="rs-chip">FTS</span><span class="rs-chip">pgvector</span><span class="rs-chip" data-k="1">LangGraph</span><span class="rs-chip">Groq</span><span class="rs-chip">Mistral</span><span class="rs-chip">Tavily</span><span class="rs-chip" data-k="1">Docker</span><span class="rs-chip">HTMX</span><span class="rs-chip">pytest</span><span class="rs-chip">factory_boy</span><span class="rs-chip">GitHub Actions</span><span class="rs-chip">Render</span>
+<span class="rs-chip" data-k="1">Django 5</span><span class="rs-chip" data-k="1">DRF</span><span class="rs-chip" data-k="1">PostgreSQL (FTS + pgvector)</span><span class="rs-chip" data-k="1">LangGraph</span><span class="rs-chip">Mistral</span><span class="rs-chip">Groq</span><span class="rs-chip">Tavily</span><span class="rs-chip" data-k="1">Docker</span><span class="rs-chip">pytest</span><span class="rs-chip">GitHub Actions</span>
 </div>
 
 ### 주요 구현
@@ -159,7 +146,12 @@ aria-label="사용자 질문을 라우터가 분석해 웹 문서 검색 또는 
 </div>
 
 <div class="rs-item">
-<div class="rs-head b"><span class="rs-name">테스트 · 배포 자동화</span><span class="rs-metric">테스트 73개 · CI</span></div>
+<div class="rs-head b"><span class="rs-name">AI 협업 워크플로</span><span class="rs-metric">설계 토론 → 교차 리뷰</span></div>
+<p class="rs-desc">Claude Agent Teams로 설계 쟁점을 검토하고, 구현 후 변경 코드와 토론 맥락을 Codex에 전달해 pytest와 함께 교차 검증하는 흐름을 구축.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">테스트 · 배포 자동화</span><span class="rs-metric">테스트 96개 · CI</span></div>
 <p class="rs-desc">pytest + factory_boy 테스트와 GitHub Actions CI, dbpush/dbpull DB 동기화 커맨드와 주간 자동 백업, Docker Compose·Render 배포.</p>
 </div>
 
