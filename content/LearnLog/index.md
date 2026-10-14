@@ -19,7 +19,7 @@
   <div class="ll-stat"><b>28편</b><span>개발 일지</span></div>
   <div class="ll-stat"><b>16개</b><span>벤치마크·검증 스크립트</span></div>
   <div class="ll-stat"><b>0/91</b><span>정답 인덱스·값 불일치 (20회 생성)</span></div>
-  <div class="ll-stat"><b>68→37s</b><span>응답 단축</span></div>
+  <div class="ll-stat"><b>52.6→37.3s</b><span>답변 생성 단축 · 당시 Mistral</span></div>
   <div class="ll-stat"><b>73개</b><span>테스트 · CI 자동화</span></div>
 </div>
 
@@ -76,8 +76,8 @@ flowchart LR
 </tr>
 <tr>
 <td>⚡ <b>속도 vs 품질</b><small>모델 분리 + 병렬화 + 스트리밍</small></td>
-<td>품질을 위해 답변 모델을 Mistral Large로 올리자 응답이 68초. 작업별 벤치마크로 병목(답변 생성 65%)을 확인하고 모델 하이브리드 분리 → 후처리 병렬화 → 프롬프트 경량화 → SSE 스트리밍. 효과 없던 실험과 틀렸던 결론의 정정까지 기록.</td>
-<td><span class="ll-num">68s→37s</span><a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">상세 →</a></td>
+<td>작업별 시간을 측정해 답변 생성 병목을 확인. 프롬프트 경량화로 생성 시간을 줄이고, 독립적인 태그·마크다운 후처리를 병렬화(2.89s → 1.01s). SSE는 완료 시간 단축과 별개로 생성 중 답변을 전달합니다.</td>
+<td><span class="ll-num">답변 생성 52.6s→37.3s</span><small>당시 Mistral Large<br/>단일 질문 · 2라운드 평균<br/>52.56s → 37.32s (약 29% 단축)<br/>전체 요청 시간과는 별도 측정</small><a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">상세 →</a></td>
 </tr>
 </tbody>
 </table>
@@ -190,7 +190,7 @@ flowchart LR
 <div class="ll-row" data-tag="기능구현"><span class="ll-date">04-28</span><a href="../LearnLog/통계-대시보드-+-Streak(불꽃)-시스템-구현">통계 대시보드 + Streak 시스템</a><span class="ll-tag" data-tag="기능구현">기능구현</span></div>
 <div class="ll-row" data-tag="CS"><span class="ll-date">04-28</span><a href="../LearnLog/싱글턴-패턴---Streak-모델-적용">싱글턴 패턴 — Streak 모델 적용</a><span class="ll-tag" data-tag="CS">CS</span></div>
 <div class="ll-row" data-tag="성능"><span class="ll-date">04-25</span><a href="../LearnLog/LLM-공급자-하이브리드-전환---Groq-+-Mistral-속도·품질-벤치마크">LLM 하이브리드 전환 — Groq + Mistral</a><span class="ll-tag" data-tag="성능">성능</span></div>
-<div class="ll-row" data-tag="성능"><span class="ll-date">04-25</span><a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">응답 속도 최적화 — 68s→37s</a><span class="ll-tag" data-tag="성능">성능</span></div>
+<div class="ll-row" data-tag="성능"><span class="ll-date">04-25</span><a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">답변 생성 최적화 — 52.6s→37.3s</a><span class="ll-tag" data-tag="성능">성능</span></div>
 <div class="ll-row" data-tag="AI/검증"><span class="ll-date">04-20</span><a href="../LearnLog/프롬프트-변경-효과-측정---correct_index-오류율-비교-테스트">프롬프트 변경 효과 측정 — 오류율 비교</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
 <div class="ll-row" data-tag="AI/검증"><span class="ll-date">04-20</span><a href="../LearnLog/프롬프트-검증-재설계---pytest를-버리고-실험-스크립트로">검증 재설계 — pytest→실험 스크립트</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
 <div class="ll-month">2026.03</div>

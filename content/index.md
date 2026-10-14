@@ -126,8 +126,8 @@ aria-label="사용자 질문으로 학습기록을 먼저 검색하고, 검색 �
 </div>
 
 <div class="rs-item">
-<div class="rs-head b"><span class="rs-name">성능 최적화</span><span class="rs-metric">응답 68s → 37s</span></div>
-<p class="rs-desc">외부 API 6회 동기 호출을 병렬 처리하고, 프롬프트 경량화와 SSE 스트리밍을 더해 체감 지연을 줄임.</p>
+<div class="rs-head b"><span class="rs-name">성능 최적화</span><span class="rs-metric">답변 생성 52.6s → 37.3s</span></div>
+<p class="rs-desc">프롬프트 경량화로 답변 생성 시간을 약 29% 단축하고, 독립 후처리를 병렬화(2.89s → 1.01s). SSE로 생성 중 답변을 전달. 답변 생성 수치는 당시 Mistral Large·단일 질문·2라운드 평균.</p>
 </div>
 
 <div class="rs-item">
