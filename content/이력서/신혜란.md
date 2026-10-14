@@ -59,54 +59,49 @@
 개발 중 기술적 질문을 검색하면 AI가 공식 레퍼런스 기반으로 답을 정리하고, 저장한 기록을 다시 검색해 새 답변에 활용하며 복습 문제까지 잇는 AI 학습 아카이브
 
 <div class="rs-flow">
-<svg class="flow" viewBox="0 0 700 208" role="img"
-aria-label="사용자 질문을 라우터가 분석해 웹 문서 검색 또는 학습기록 검색으로 보내고, 그 결과로 AI가 답변을 생성한다. 답변은 다른 모델로 환각을 교차 검증하고 학습기록으로 저장되며, 저장된 기록은 복습 문제로 이어지는 동시에 다음 질문의 학습기록 검색에 재활용된다.">
+<svg class="flow" viewBox="0 0 700 290" role="img"
+aria-label="사용자 질문으로 학습기록을 먼저 검색하고, 검색 결과를 본 라우터가 웹 자료 필요 여부와 기록 활용 여부를 판단한다. 필요할 때 웹검색을 거쳐 답변을 생성하고 사용자에게 스트리밍한다. 저장 후 백그라운드에서 모순을 검사하며, 복습 문제는 요청할 때 생성한다. 저장된 기록은 다음 질문의 검색에 재활용된다.">
 <defs>
-<marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
-<polygon class="f-h" points="0,0 10,5 0,10"/>
-</marker>
-<marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
-<polygon class="f-h k" points="0,0 10,5 0,10"/>
-</marker>
+<marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><polygon class="f-h" points="0,0 10,5 0,10"/></marker>
+<marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><polygon class="f-h k" points="0,0 10,5 0,10"/></marker>
 </defs>
-
-<rect class="f-box"   x="6"   y="76"  width="72"  height="36" rx="4"/>
-<text class="f-t" x="42"  y="99"  text-anchor="middle">질문</text>
-
-<rect class="f-box k" x="98"  y="76"  width="88"  height="36" rx="4"/>
-<text class="f-t on" x="142" y="99"  text-anchor="middle">경로 결정</text>
-
-<rect class="f-box"   x="210" y="22"  width="116" height="36" rx="4"/>
-<text class="f-t" x="268" y="45"  text-anchor="middle">웹 문서 검색</text>
-
-<rect class="f-box k" x="210" y="126" width="116" height="42" rx="4"/>
-<text class="f-t on" x="268" y="144" text-anchor="middle">학습기록 검색</text>
-<text class="f-s on" x="268" y="159" text-anchor="middle">키워드 + 의미</text>
-
-<rect class="f-box"   x="352" y="76"  width="86"  height="36" rx="4"/>
-<text class="f-t" x="395" y="99"  text-anchor="middle">답변 생성</text>
-
-<rect class="f-box k" x="464" y="22"  width="110" height="42" rx="4"/>
-<text class="f-t on" x="519" y="40"  text-anchor="middle">환각 검증</text>
-<text class="f-s on" x="519" y="55"  text-anchor="middle">다른 모델 교차</text>
-
-<rect class="f-box"   x="464" y="126" width="110" height="36" rx="4"/>
-<text class="f-t" x="519" y="149" text-anchor="middle">학습기록 저장</text>
-
-<rect class="f-box"   x="600" y="126" width="94"  height="36" rx="4"/>
-<text class="f-t" x="647" y="149" text-anchor="middle">복습 문제</text>
-
-<line     class="f-l" x1="78" y1="94" x2="94" y2="94" marker-end="url(#a1)"/>
-<polyline class="f-l" points="186,88 198,88 198,40 206,40"    marker-end="url(#a1)"/>
-<polyline class="f-l" points="186,100 198,100 198,147 206,147" marker-end="url(#a1)"/>
-<polyline class="f-l" points="326,40 338,40 338,94 348,94"     marker-end="url(#a1)"/>
-<polyline class="f-l" points="326,147 338,147 338,94"/>
-<polyline class="f-l" points="438,88 450,88 450,43 460,43"     marker-end="url(#a1)"/>
-<polyline class="f-l" points="438,100 450,100 450,144 460,144" marker-end="url(#a1)"/>
-<line     class="f-l" x1="574" y1="144" x2="596" y2="144" marker-end="url(#a1)"/>
-
-<polyline class="f-l k" points="519,162 519,186 268,186 268,172" marker-end="url(#a2)"/>
-<text class="f-c" x="393" y="202" text-anchor="middle">다음 질문에 재활용 (RAG)</text>
+<rect class="f-box" x="6" y="70" width="60" height="44" rx="4"/>
+<text class="f-t" x="36" y="96" text-anchor="middle">질문</text>
+<rect class="f-box k" x="86" y="64" width="116" height="56" rx="4"/>
+<text class="f-t on" x="144" y="86" text-anchor="middle">학습기록 검색</text>
+<text class="f-s on" x="144" y="105" text-anchor="middle">항상 먼저 · FTS+Vector</text>
+<rect class="f-box k" x="224" y="64" width="116" height="56" rx="4"/>
+<text class="f-t on" x="282" y="86" text-anchor="middle">검색 결과 판단</text>
+<text class="f-s on" x="282" y="105" text-anchor="middle">기록 활용 · 웹 필요?</text>
+<rect class="f-box" x="358" y="156" width="110" height="48" rx="4"/>
+<text class="f-t" x="413" y="176" text-anchor="middle">웹 자료 검색</text>
+<text class="f-s" x="413" y="194" text-anchor="middle">필요할 때만</text>
+<rect class="f-box" x="374" y="70" width="96" height="44" rx="4"/>
+<text class="f-t" x="422" y="96" text-anchor="middle">답변 생성</text>
+<rect class="f-box" x="504" y="8" width="188" height="48" rx="4"/>
+<text class="f-t" x="598" y="28" text-anchor="middle">답변 스트리밍</text>
+<text class="f-s" x="598" y="46" text-anchor="middle">사용자에게 먼저 전달</text>
+<rect class="f-box" x="504" y="108" width="188" height="44" rx="4"/>
+<text class="f-t" x="598" y="134" text-anchor="middle">학습기록 저장</text>
+<rect class="f-box k" x="486" y="214" width="112" height="48" rx="4"/>
+<text class="f-t on" x="542" y="234" text-anchor="middle">모순 검사</text>
+<text class="f-s on" x="542" y="252" text-anchor="middle">백그라운드 · 다른 모델</text>
+<rect class="f-box" x="614" y="214" width="78" height="48" rx="4"/>
+<text class="f-t" x="653" y="234" text-anchor="middle">복습 문제</text>
+<text class="f-s" x="653" y="252" text-anchor="middle">요청할 때 생성</text>
+<line class="f-l" x1="66" y1="92" x2="82" y2="92" marker-end="url(#a1)"/>
+<line class="f-l" x1="202" y1="92" x2="220" y2="92" marker-end="url(#a1)"/>
+<line class="f-l" x1="340" y1="92" x2="370" y2="92" marker-end="url(#a1)"/>
+<text class="f-s" x="357" y="60" text-anchor="middle">웹 생략</text>
+<polyline class="f-l" points="282,120 282,180 354,180" marker-end="url(#a1)"/>
+<text class="f-s" x="316" y="169" text-anchor="middle">웹 필요</text>
+<line class="f-l" x1="422" y1="156" x2="422" y2="118" marker-end="url(#a1)"/>
+<polyline class="f-l" points="470,82 486,82 486,32 500,32" marker-end="url(#a1)"/>
+<polyline class="f-l" points="470,102 486,102 486,130 500,130" marker-end="url(#a1)"/>
+<polyline class="f-l" points="556,152 556,186 542,186 542,210" marker-end="url(#a1)"/>
+<line class="f-l" x1="653" y1="152" x2="653" y2="210" marker-end="url(#a1)"/>
+<polyline class="f-l k" points="504,142 480,142 480,278 144,278 144,124" marker-end="url(#a2)"/>
+<text class="f-c" x="307" y="271" text-anchor="middle">다음 질문에 재활용 (RAG)</text>
 </svg>
 </div>
 
