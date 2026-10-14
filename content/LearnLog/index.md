@@ -27,21 +27,62 @@
 
 ## 🏗 아키텍처
 
-```mermaid
-flowchart LR
-    U[사용자 질문] --> RAG[(학습기록 검색<br/>FTS + Vector<br/>항상 먼저 실행)]
-    RAG --> R{검색 결과 판단<br/>기록 활용 · 웹 필요?}
-    R -->|웹 생략| G[AI 답변 생성]
-    R -->|웹 필요| T[공식 웹 자료 검색<br/>필요할 때만]
-    T --> G
-    G --> S[답변 스트리밍<br/>사용자에게 먼저 전달]
-    G --> DB[(학습기록 저장<br/>PostgreSQL)]
-    DB --> J[백그라운드 모순 검사<br/>다른 모델로 검증]
-    DB -->|요청할 때 생성| EX[복습 문제]
-    DB -.->|다음 질문에 재활용| RAG
-    classDef key fill:#d9ccf5,stroke:#7c5cbf,color:#332456,font-weight:bold
-    class R,RAG,J key
-```
+<div class="rs-flow">
+<svg class="flow" viewBox="0 0 1600 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="학습기록을 먼저 검색하고 라우터가 웹검색 필요 여부를 판단합니다. 답변 생성 후 사용자에게 스트리밍하고 저장하며, 저장 후 백그라운드 모순 검사와 요청 시 복습 문제 생성으로 이어집니다. PPT와 동일한 카드형 아키텍처 도식입니다.">
+<rect width="1600" height="540" fill="#F5F5F5"/>
+<g transform="translate(0 -240)">
+<rect x="56" y="402" width="150" height="96" rx="14" fill="#101828" stroke="#FFFFFF" stroke-width="1"/>
+<text x="131" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="131" y="456">사용자 질문</tspan></text>
+<rect x="260" y="364" width="220" height="170" rx="14" fill="#EAF1FF" stroke="#315EAE" stroke-width="1"/>
+<text x="370" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="370" y="430">학습기록 검색</tspan><tspan x="370" y="455">FTS + Vector</tspan><tspan x="370" y="480">항상 먼저 실행</tspan></text>
+<rect x="550" y="364" width="210" height="170" rx="14" fill="#F0EAFF" stroke="#6941C6" stroke-width="1"/>
+<text x="655" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="655" y="442.5">검색 결과 판단</tspan><tspan x="655" y="467.5">웹이 필요한가?</tspan></text>
+<rect x="820" y="590" width="230" height="108" rx="14" fill="#E7F8F1" stroke="#087A5B" stroke-width="1"/>
+<text x="935" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="935" y="637.5">공식 웹 자료 검색</tspan><tspan x="935" y="662.5">필요할 때만</tspan></text>
+<rect x="850" y="364" width="220" height="170" rx="14" fill="#101828" stroke="#FFFFFF" stroke-width="1"/>
+<text x="960" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="960" y="442.5">AI 답변 생성</tspan><tspan x="960" y="467.5">gpt-oss-120b</tspan></text>
+<rect x="1160" y="260" width="250" height="105" rx="14" fill="#E7F8F1" stroke="#087A5B" stroke-width="1"/>
+<text x="1285" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1285" y="306">답변 스트리밍</tspan><tspan x="1285" y="331">사용자에게 먼저 전달</tspan></text>
+<rect x="1160" y="445" width="250" height="105" rx="14" fill="#EAF1FF" stroke="#315EAE" stroke-width="1"/>
+<text x="1285" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1285" y="491">학습기록 저장</tspan><tspan x="1285" y="516">PostgreSQL</tspan></text>
+<rect x="1090" y="664" width="220" height="92" rx="14" fill="#FFF0E5" stroke="#B54708" stroke-width="1"/>
+<text x="1200" fill="#B54708" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1200" y="703.5">백그라운드 모순 검사</tspan><tspan x="1200" y="728.5">Qwen · Groq</tspan></text>
+<rect x="1360" y="664" width="180" height="92" rx="14" fill="#F0EAFF" stroke="#6941C6" stroke-width="1"/>
+<text x="1450" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1450" y="703.5">복습 문제</tspan><tspan x="1450" y="728.5">요청할 때 생성</tspan></text>
+<path d="M 206 450 L 260 450" stroke="#D0D5DD" stroke-width="2" fill="none"/>
+<path d="M 249.60769515458674 456 L 260 450" stroke="#D0D5DD" stroke-width="2" fill="none"/>
+<path d="M 260 450 L 249.60769515458674 444" stroke="#D0D5DD" stroke-width="2" fill="none"/>
+<path d="M 480 450 L 550 450" stroke="#315EAE" stroke-width="2" fill="none"/>
+<path d="M 539.6076951545867 456 L 550 450" stroke="#315EAE" stroke-width="2" fill="none"/>
+<path d="M 550 450 L 539.6076951545867 444" stroke="#315EAE" stroke-width="2" fill="none"/>
+<path d="M 760 420 L 850 420" stroke="#6941C6" stroke-width="2" fill="none"/>
+<path d="M 839.6076951545867 426 L 850 420" stroke="#6941C6" stroke-width="2" fill="none"/>
+<path d="M 850 420 L 839.6076951545867 414" stroke="#6941C6" stroke-width="2" fill="none"/>
+<path d="M 655 534 L 655 644" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 655 644 L 820 644" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 809.6076951545867 650 L 820 644" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 820 644 L 809.6076951545867 638" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 935 590 L 960 534" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 961.2423954909707 545.935512282429 L 960 534" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 960 534 L 950.2847409017206 541.0437021979424" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 1070 410 L 1160 312" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 1157.389772376005 323.71267312576146 L 1160 312" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 1160 312 L 1148.5514137148698 315.5958131308413" stroke="#087A5B" stroke-width="2" fill="none"/>
+<path d="M 1070 488 L 1160 498" stroke="#315EAE" stroke-width="2" fill="none"/>
+<path d="M 1149.0086680919248 502.8156643245277 L 1160 498" stroke="#315EAE" stroke-width="2" fill="none"/>
+<path d="M 1160 498 L 1150.333846404823 490.8890595084443" stroke="#315EAE" stroke-width="2" fill="none"/>
+<path d="M 1280 550 L 1200 664" stroke="#B54708" stroke-width="2" fill="none"/>
+<path d="M 1201.0582673408906 652.0467548240988 L 1200 664" stroke="#B54708" stroke-width="2" fill="none"/>
+<path d="M 1200 664 L 1210.8809476504393 658.939863813256" stroke="#B54708" stroke-width="2" fill="none"/>
+<path d="M 1350 550 L 1450 664" stroke="#6941C6" stroke-width="2" fill="none"/>
+<path d="M 1438.63636648832 660.1441170385731 L 1450 664" stroke="#6941C6" stroke-width="2" fill="none"/>
+<path d="M 1450 664 L 1447.6574758427753 652.2308632188755" stroke="#6941C6" stroke-width="2" fill="none"/>
+<text x="813" y="407" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">웹 생략</text>
+<text x="719" y="627" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#087A5B">웹 필요</text>
+<text x="1403" y="611" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">나중에 생성</text>
+</g>
+</svg>
+</div>
 
 학습기록을 먼저 검색하고, 그 결과를 본 라우터가 기록 활용 여부와 웹검색 필요 여부를 판단합니다. 생성한 답변은 사용자에게 스트리밍하며, 저장 후 모순 검사는 백그라운드에서 실행합니다. 복습 문제는 요청할 때 생성하고, 저장된 기록은 다음 질문의 검색에 재활용합니다.
 
