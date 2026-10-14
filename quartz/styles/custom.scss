@@ -167,6 +167,12 @@ input[name="llf"] { display:none; }
 // 아키텍처 도식 — 폭을 채우고 가운데
 .rs-flow { margin:0.7rem 0 0.3rem; }
 .rs-flow svg.flow { width:100%; height:auto; display:block; margin:0 auto; }
+.rs-flow svg.flow text[fill="#FFFFFF"] { fill:#FFFFFF; }
+.rs-flow svg.flow text[fill="#315EAE"] { fill:#315EAE; }
+.rs-flow svg.flow text[fill="#6941C6"] { fill:#6941C6; }
+.rs-flow svg.flow text[fill="#087A5B"] { fill:#087A5B; }
+.rs-flow svg.flow text[fill="#B54708"] { fill:#B54708; }
+.rs-flow svg.flow tspan { fill:inherit; }
 .f-box { fill:var(--lightgray); stroke:var(--gray); stroke-width:1.2; }
 .f-box.k { fill:var(--secondary); stroke:var(--secondary); }
 .f-t { fill:var(--dark); font-size:11.5px; font-weight:700; }
