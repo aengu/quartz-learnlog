@@ -121,8 +121,8 @@ aria-label="사용자 질문으로 학습기록을 먼저 검색하고, 검색 �
 </div>
 
 <div class="rs-item">
-<div class="rs-head b"><span class="rs-name">LLM 출력 검증</span><span class="rs-metric">오류율 10% → 5% → 불일치 0/91</span></div>
-<p class="rs-desc">연습문제 정답 인덱스 오류를 별도 모델 교차 채점으로 측정하고 프롬프트로 절반까지 줄인 뒤, 정답을 번호·값으로 중복 출력시켜 코드가 내부 일관성을 검사하고 어긋나면 재생성하는 런타임 가드를 도입.</p>
+<div class="rs-head b"><span class="rs-name">정답 인덱스 검증</span><span class="rs-metric">인덱스·값 불일치 0/91건</span></div>
+<p class="rs-desc">정답 값과 선택지 위치가 어긋나는 오류를 분석하고, 코드 일관성 검사·불일치 문항 제외·재생성을 구현. 적용 후 20회 생성의 최종 문항 91개에서 불일치 0건을 관찰했으며, 사실 정확도는 별도 평가 대상.</p>
 </div>
 
 <div class="rs-item">

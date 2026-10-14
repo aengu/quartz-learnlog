@@ -99,6 +99,7 @@ input[name="llf"] { display:none; }
 .ll-table td:first-child { width:20%; min-width:130px; }
 .ll-table td:first-child b { color:var(--dark); }
 .ll-table td:first-child small { display:block; color:var(--gray); font-size:0.74rem; margin-top:0.2rem; line-height:1.4; }
+.ll-table td:last-child small { display:block; color:var(--darkgray); font-size:0.7rem; margin-top:0.3rem; line-height:1.5; }
 .ll-table td:last-child { width:19%; min-width:120px; }
 .ll-table td:last-child .ll-num { display:inline-block; margin:0 0 0.35rem; }
 .ll-table td:last-child a { display:block; font-size:0.78rem; }
