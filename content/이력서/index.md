@@ -63,23 +63,23 @@
 <rect width="1600" height="540" fill="#F5F5F5"/>
 <g transform="translate(0 -240)">
 <rect x="56" y="402" width="150" height="96" rx="14" fill="#101828" stroke="#FFFFFF" stroke-width="1"/>
-<text x="131" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="131" y="456">사용자 질문</tspan></text>
+<text style="fill:#FFFFFF" x="131" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="131" y="456">사용자 질문</tspan></text>
 <rect x="260" y="364" width="220" height="170" rx="14" fill="#EAF1FF" stroke="#315EAE" stroke-width="1"/>
-<text x="370" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="370" y="430">학습기록 검색</tspan><tspan x="370" y="455">FTS + Vector</tspan><tspan x="370" y="480">항상 먼저 실행</tspan></text>
+<text style="fill:#315EAE" x="370" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="370" y="430">학습기록 검색</tspan><tspan style="fill:inherit" x="370" y="455">FTS + Vector</tspan><tspan style="fill:inherit" x="370" y="480">항상 먼저 실행</tspan></text>
 <rect x="550" y="364" width="210" height="170" rx="14" fill="#F0EAFF" stroke="#6941C6" stroke-width="1"/>
-<text x="655" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="655" y="442.5">검색 결과 판단</tspan><tspan x="655" y="467.5">웹이 필요한가?</tspan></text>
+<text style="fill:#6941C6" x="655" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="655" y="442.5">검색 결과 판단</tspan><tspan style="fill:inherit" x="655" y="467.5">웹이 필요한가?</tspan></text>
 <rect x="820" y="590" width="230" height="108" rx="14" fill="#E7F8F1" stroke="#087A5B" stroke-width="1"/>
-<text x="935" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="935" y="637.5">공식 웹 자료 검색</tspan><tspan x="935" y="662.5">필요할 때만</tspan></text>
+<text style="fill:#087A5B" x="935" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="935" y="637.5">공식 웹 자료 검색</tspan><tspan style="fill:inherit" x="935" y="662.5">필요할 때만</tspan></text>
 <rect x="850" y="364" width="220" height="170" rx="14" fill="#101828" stroke="#FFFFFF" stroke-width="1"/>
-<text x="960" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="960" y="442.5">AI 답변 생성</tspan><tspan x="960" y="467.5">gpt-oss-120b</tspan></text>
+<text style="fill:#FFFFFF" x="960" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="960" y="442.5">AI 답변 생성</tspan><tspan style="fill:inherit" x="960" y="467.5">gpt-oss-120b</tspan></text>
 <rect x="1160" y="260" width="250" height="105" rx="14" fill="#E7F8F1" stroke="#087A5B" stroke-width="1"/>
-<text x="1285" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1285" y="306">답변 스트리밍</tspan><tspan x="1285" y="331">사용자에게 먼저 전달</tspan></text>
+<text style="fill:#087A5B" x="1285" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1285" y="306">답변 스트리밍</tspan><tspan style="fill:inherit" x="1285" y="331">사용자에게 먼저 전달</tspan></text>
 <rect x="1160" y="445" width="250" height="105" rx="14" fill="#EAF1FF" stroke="#315EAE" stroke-width="1"/>
-<text x="1285" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1285" y="491">학습기록 저장</tspan><tspan x="1285" y="516">PostgreSQL</tspan></text>
+<text style="fill:#315EAE" x="1285" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1285" y="491">학습기록 저장</tspan><tspan style="fill:inherit" x="1285" y="516">PostgreSQL</tspan></text>
 <rect x="1090" y="664" width="220" height="92" rx="14" fill="#FFF0E5" stroke="#B54708" stroke-width="1"/>
-<text x="1200" fill="#B54708" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1200" y="703.5">백그라운드 모순 검사</tspan><tspan x="1200" y="728.5">Qwen · Groq</tspan></text>
+<text style="fill:#B54708" x="1200" fill="#B54708" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1200" y="703.5">백그라운드 모순 검사</tspan><tspan style="fill:inherit" x="1200" y="728.5">Qwen · Groq</tspan></text>
 <rect x="1360" y="664" width="180" height="92" rx="14" fill="#F0EAFF" stroke="#6941C6" stroke-width="1"/>
-<text x="1450" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan x="1450" y="703.5">복습 문제</tspan><tspan x="1450" y="728.5">요청할 때 생성</tspan></text>
+<text style="fill:#6941C6" x="1450" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1450" y="703.5">복습 문제</tspan><tspan style="fill:inherit" x="1450" y="728.5">요청할 때 생성</tspan></text>
 <path d="M 206 450 L 260 450" stroke="#D0D5DD" stroke-width="2" fill="none"/>
 <path d="M 249.60769515458674 456 L 260 450" stroke="#D0D5DD" stroke-width="2" fill="none"/>
 <path d="M 260 450 L 249.60769515458674 444" stroke="#D0D5DD" stroke-width="2" fill="none"/>
@@ -108,9 +108,9 @@
 <path d="M 1350 550 L 1450 664" stroke="#6941C6" stroke-width="2" fill="none"/>
 <path d="M 1438.63636648832 660.1441170385731 L 1450 664" stroke="#6941C6" stroke-width="2" fill="none"/>
 <path d="M 1450 664 L 1447.6574758427753 652.2308632188755" stroke="#6941C6" stroke-width="2" fill="none"/>
-<text x="813" y="407" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">웹 생략</text>
-<text x="719" y="627" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#087A5B">웹 필요</text>
-<text x="1403" y="611" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">나중에 생성</text>
+<text style="fill:#6941C6" x="813" y="407" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">웹 생략</text>
+<text style="fill:#087A5B" x="719" y="627" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#087A5B">웹 필요</text>
+<text style="fill:#6941C6" x="1403" y="611" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">나중에 생성</text>
 </g>
 </svg>
 </div>
