@@ -56,42 +56,42 @@
 개발 질문·답변을 저장하고 생성된 문제로 복습하는 개인 학습 서비스. 개념별 이해도를 추적하고, 내 수준에 맞춰 같은 문제를 푸는 AI 러닝메이트를 구현했습니다.
 
 <div class="rs-flow">
-<svg class="flow" viewBox="0 0 1600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="질문 흐름: 질문 입력, 관련 기록 검색, 라우터의 검색·답변 방식 결정, AI 답변 생성, 학습 기록 저장. 복습 흐름: 문제 생성·태깅, 나와 AI 러닝메이트의 문제 풀이, 개념별 이해도 갱신(BKT), 결과 확인. 두 흐름은 서로 다른 시점에 실행합니다.">
-<rect width="1600" height="460" rx="16" fill="#F5F5F5"/>
-<text x="40" y="42" fill="#315EAE" style="fill:#315EAE" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">질문할 때</text>
-<rect x="40" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
-<text x="180" y="126" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">질문 입력</text>
-<path d="M 320 117 H 350 M 339 111 L 350 117 L 339 123" fill="none" stroke="#315EAE" stroke-width="2"/>
-<rect x="350" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
-<text x="490" y="126" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">관련 기록 검색</text>
-<path d="M 630 117 H 660 M 649 111 L 660 117 L 649 123" fill="none" stroke="#315EAE" stroke-width="2"/>
-<rect x="660" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
-<text x="800" y="111" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">검색·답변 방식 결정</text>
-<text x="800" y="142" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">(라우터)</text>
-<path d="M 940 117 H 970 M 959 111 L 970 117 L 959 123" fill="none" stroke="#315EAE" stroke-width="2"/>
-<rect x="970" y="70" width="280" height="94" rx="12" fill="#101828" stroke="#FFFFFF"/>
-<text x="1110" y="126" fill="#FFFFFF" style="fill:#FFFFFF" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">AI 답변 생성</text>
-<path d="M 1250 117 H 1280 M 1269 111 L 1280 117 L 1269 123" fill="none" stroke="#315EAE" stroke-width="2"/>
-<rect x="1280" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
-<text x="1420" y="126" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">학습 기록 저장</text>
-<text x="40" y="202" fill="#667085" style="fill:#667085" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="21">라우터가 기록·웹 자료 사용 여부와 설명 방식을 결정하고, 답변은 스트리밍으로 전달합니다.</text>
-<path d="M 40 229 H 1560" stroke="#D0D5DD" fill="none"/>
-<text x="40" y="273" fill="#6941C6" style="fill:#6941C6" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">복습할 때</text>
-<rect x="40" y="300" width="290" height="94" rx="12" fill="#F0EAFF" stroke="#6941C6"/>
-<text x="185" y="356" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">문제 생성·태깅</text>
-<path d="M 330 347 H 450 M 439 341 L 450 347 L 439 353" fill="none" stroke="#6941C6" stroke-width="2"/>
-<rect x="450" y="300" width="290" height="94" rx="12" fill="#F0EAFF" stroke="#6941C6"/>
-<text x="595" y="341" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">문제 풀이</text>
-<text x="595" y="372" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">나 · AI 러닝메이트</text>
-<path d="M 740 347 H 860 M 849 341 L 860 347 L 849 353" fill="none" stroke="#6941C6" stroke-width="2"/>
-<rect x="860" y="300" width="290" height="94" rx="12" fill="#E7F8F1" stroke="#087A5B"/>
-<text x="1005" y="341" fill="#087A5B" style="fill:#087A5B" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">개념별 이해도 갱신</text>
-<text x="1005" y="372" fill="#087A5B" style="fill:#087A5B" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">(BKT)</text>
-<path d="M 1150 347 H 1270 M 1259 341 L 1270 347 L 1259 353" fill="none" stroke="#6941C6" stroke-width="2"/>
-<rect x="1270" y="300" width="290" height="94" rx="12" fill="#F0EAFF" stroke="#6941C6"/>
-<text x="1415" y="341" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">결과 확인</text>
-<text x="1415" y="372" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">정오답 · 내 이해도</text>
-<text x="40" y="436" fill="#667085" style="fill:#667085" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="21">검토·승인된 문항의 사용자 풀이만 BKT에 반영합니다.</text>
+<svg class="flow" viewBox="0 0 1600 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LearnLog 사용 예시. DB 잠금이 무엇인지 질문하고 답변을 저장합니다. 저장한 답변으로 만든 복습 문제를 풉니다. 같은 문제를 푼 사용자와 AI 러닝메이트의 정오답을 비교합니다. 러닝메이트는 내 수준에 맞춰 같은 문제를 푸는 AI 파트너입니다.">
+<rect width="1600" height="410" rx="16" fill="#F5F5F5"/>
+<text x="24" y="43" fill="#315EAE" style="fill:#315EAE" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">1. 질문한다</text>
+<rect x="24" y="70" width="480" height="274" rx="10" fill="#FFFFFF" stroke="#D0D5DD"/>
+<rect x="25" y="71" width="478" height="44" rx="10" fill="#101828"/>
+<text x="46" y="100" fill="#FFFFFF" style="fill:#FFFFFF" font-family="Inter, Pretendard, Arial, sans-serif" font-size="20" font-weight="700">LearnLog</text>
+<path d="M 510 207 H 553 M 543 201 L 553 207 L 543 213" fill="none" stroke="#98A2B3" stroke-width="2"/>
+<text x="560" y="43" fill="#6941C6" style="fill:#6941C6" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">2. 문제를 푼다</text>
+<rect x="560" y="70" width="480" height="274" rx="10" fill="#FFFFFF" stroke="#D0D5DD"/>
+<rect x="561" y="71" width="478" height="44" rx="10" fill="#101828"/>
+<text x="582" y="100" fill="#FFFFFF" style="fill:#FFFFFF" font-family="Inter, Pretendard, Arial, sans-serif" font-size="20" font-weight="700">LearnLog</text>
+<path d="M 1046 207 H 1089 M 1079 201 L 1089 207 L 1079 213" fill="none" stroke="#98A2B3" stroke-width="2"/>
+<text x="1096" y="43" fill="#087A5B" style="fill:#087A5B" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">3. 결과를 비교한다</text>
+<rect x="1096" y="70" width="480" height="274" rx="10" fill="#FFFFFF" stroke="#D0D5DD"/>
+<rect x="1097" y="71" width="478" height="44" rx="10" fill="#101828"/>
+<text x="1118" y="100" fill="#FFFFFF" style="fill:#FFFFFF" font-family="Inter, Pretendard, Arial, sans-serif" font-size="20" font-weight="700">LearnLog</text>
+<text x="46" y="159" fill="#182230" style="fill:#182230" font-family="Inter, Pretendard, Arial, sans-serif" font-size="28" font-weight="700">DB 잠금이 뭐야?</text>
+<text x="46" y="202" fill="#315EAE" style="fill:#315EAE" font-family="Inter, Pretendard, Arial, sans-serif" font-size="20" font-weight="700">AI 답변</text>
+<text x="46" y="238" fill="#182230" style="fill:#182230" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23">여러 작업이 같은 데이터를 바꿀 때,</text>
+<text x="46" y="272" fill="#182230" style="fill:#182230" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23">충돌하지 않도록 접근을 조절해요.</text>
+<rect x="46" y="293" width="436" height="33" rx="10" fill="#EAF1FF"/>
+<text x="118" y="317" fill="#315EAE" style="fill:#315EAE" font-family="Inter, Pretendard, Arial, sans-serif" font-size="20" font-weight="700">답변을 학습 기록으로 저장</text>
+<text x="582" y="159" fill="#182230" style="fill:#182230" font-family="Inter, Pretendard, Arial, sans-serif" font-size="26" font-weight="700">DB 잠금을 사용하는 이유는?</text>
+<rect x="582" y="195" width="436" height="51" rx="10" fill="#F0EAFF"/>
+<text x="600" y="229" fill="#6941C6" style="fill:#6941C6" font-family="Inter, Pretendard, Arial, sans-serif" font-size="22" font-weight="700">데이터 변경 충돌을 막으려고 ✓</text>
+<rect x="582" y="262" width="436" height="51" rx="10" fill="#F5F5F5"/>
+<text x="600" y="296" fill="#667085" style="fill:#667085" font-family="Inter, Pretendard, Arial, sans-serif" font-size="22">데이터를 더 작게 저장하려고</text>
+<text x="1118" y="159" fill="#182230" style="fill:#182230" font-family="Inter, Pretendard, Arial, sans-serif" font-size="25" font-weight="700">같은 문제의 풀이 결과</text>
+<text x="1118" y="217" fill="#182230" style="fill:#182230" font-family="Inter, Pretendard, Arial, sans-serif" font-size="24" font-weight="700">나</text>
+<text x="1488" y="217" fill="#087A5B" style="fill:#087A5B" font-family="Inter, Pretendard, Arial, sans-serif" font-size="24" font-weight="700">정답</text>
+<path d="M 1118 239 H 1554" stroke="#D0D5DD" fill="none"/>
+<text x="1118" y="284" fill="#6941C6" style="fill:#6941C6" font-family="Inter, Pretendard, Arial, sans-serif" font-size="24" font-weight="700">AI 러닝메이트</text>
+<text x="1488" y="284" fill="#B54708" style="fill:#B54708" font-family="Inter, Pretendard, Arial, sans-serif" font-size="24" font-weight="700">오답</text>
+<text x="24" y="385" fill="#667085" style="fill:#667085" font-family="Inter, Pretendard, Arial, sans-serif" font-size="19">기능 설명용 목업 · 질문·보기·결과는 예시</text>
+<text x="1096" y="375" fill="#6941C6" style="fill:#6941C6" font-family="Inter, Pretendard, Arial, sans-serif" font-size="21">내 수준에 맞춰 같은 문제를 푸는</text>
+<text x="1096" y="403" fill="#6941C6" style="fill:#6941C6" font-family="Inter, Pretendard, Arial, sans-serif" font-size="21">AI 파트너</text>
 </svg>
 </div>
 
