@@ -3,7 +3,7 @@
 > **Python/Django 백엔드 개발자 — 금융 주문 시스템 운영 · LLM/RAG 서비스 개발**
 >
 > - 활성 고객 수백 명 규모·월 20만 건대 주문을 처리하는 주식 자동매매 서비스 개발·운영 — 주문 승인 시스템 설계, 동시성 제어·스케줄러 중복 실행·DB 커넥션 문제 해결, 후반 7개월 단독 운영
-> - AI API 활용 개인 프로젝트(LearnLog) — 하이브리드 검색(RAG)·조건 분기 라우팅·LLM 출력 검증, Docker/CI/CD 직접 설계
+> - AI API 활용 개인 프로젝트(LearnLog) — 하이브리드 검색(RAG)·LLM 출력 검증·CI 품질 검사·BKT 기반 개념별 숙련도 추적 설계·구현
 > - Django·DB 핵심 주제(ORM 최적화·트랜잭션·MVCC 등)를 학습하고, 개념 정리와 직접 실험을 병행해 [기술 글 13편으로 정리](https://aengu.github.io/quartz-learnlog/이력서/신혜란/What-I-Learned/)
 > - AI 부트캠프 5인 팀 해커톤 — 수요예측 기반 식품 순환 플랫폼(잇다루프) 기획·화면 설계·백엔드 담당, 파트 간 함수 계약을 먼저 확정해 대기 없이 병렬 개발
 
@@ -56,7 +56,7 @@
 
 [GitHub](https://github.com/aengu/learn-log) | [배포 사이트](https://learn-log.onrender.com/) | [[📚 LearnLog - 개발자를 위한 AI 검색 아카이브 시스템|포트폴리오]]
 
-개발 중 기술적 질문을 검색하면 AI가 공식 레퍼런스 기반으로 답을 정리하고, 저장한 기록을 다시 검색해 새 답변에 활용하며 복습 문제까지 잇는 AI 학습 아카이브
+기술 질문·답변을 저장하고 RAG로 재활용하며, 복습 문제와 개념별 숙련도 추적·AI 러닝메이트로 학습을 이어가는 서비스
 
 <div class="rs-flow">
 <svg class="flow" viewBox="0 0 1600 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="학습기록을 먼저 검색하고 라우터가 웹검색 필요 여부를 판단합니다. 답변 생성 후 사용자에게 스트리밍하고 저장하며, 저장 후 백그라운드 모순 검사와 요청 시 복습 문제 생성으로 이어집니다. PPT와 동일한 카드형 아키텍처 도식입니다.">
@@ -118,7 +118,7 @@
 ### 기술 스택
 
 <div class="rs-stack">
-<span class="rs-chip" data-k="1">Django 5</span><span class="rs-chip" data-k="1">DRF</span><span class="rs-chip" data-k="1">PostgreSQL (FTS + pgvector)</span><span class="rs-chip" data-k="1">LangGraph</span><span class="rs-chip">Mistral</span><span class="rs-chip">Groq</span><span class="rs-chip">Tavily</span><span class="rs-chip" data-k="1">Docker</span><span class="rs-chip">pytest</span><span class="rs-chip">GitHub Actions</span>
+<span class="rs-chip" data-k="1">Django 5</span><span class="rs-chip" data-k="1">DRF</span><span class="rs-chip" data-k="1">PostgreSQL (FTS + pgvector)</span><span class="rs-chip" data-k="1">LangGraph</span><span class="rs-chip">Mistral</span><span class="rs-chip">Groq</span><span class="rs-chip">Tavily</span><span class="rs-chip" data-k="1">Docker</span><span class="rs-chip">pytest · pytest-cov</span><span class="rs-chip">Ruff</span><span class="rs-chip">GitHub Actions</span>
 </div>
 
 ### 주요 구현
@@ -151,13 +151,23 @@
 </div>
 
 <div class="rs-item">
-<div class="rs-head b"><span class="rs-name">AI 협업 워크플로</span><span class="rs-metric">설계 토론 → 교차 리뷰</span></div>
-<p class="rs-desc">Claude Agent Teams로 설계 쟁점을 검토하고, 구현 후 변경 코드와 토론 맥락을 Codex에 전달해 pytest와 함께 교차 검증하는 흐름을 구축.</p>
+<div class="rs-head b"><span class="rs-name">BKT 기반 숙련도 추적 · 러닝메이트</span><span class="rs-metric">개념별 상태 추정 · 풀이 전후 이력</span></div>
+<p class="rs-desc">고정 파라미터 기반 BKT로 승인된 문항의 정오답에서 개념별 숙련도를 갱신하고, 러닝메이트 정답 확률과 변화 그래프에 연결. 상태·관측 이력을 분리하고, 중복 반영 방지·원본 풀이를 보존하는 시간순 재계산을 구현.</p>
 </div>
 
 <div class="rs-item">
-<div class="rs-head b"><span class="rs-name">테스트 · 배포 자동화</span><span class="rs-metric">테스트 96개 · CI</span></div>
-<p class="rs-desc">pytest + factory_boy 테스트와 GitHub Actions CI, dbpush/dbpull DB 동기화 커맨드와 주간 자동 백업, Docker Compose·Render 배포.</p>
+<div class="rs-head b"><span class="rs-name">테스트 · CI 품질 검사</span><span class="rs-metric">서비스 커버리지 20% → 84%</span></div>
+<p class="rs-desc">출제·채점·복습 핵심 경로의 테스트 공백을 보강해 당시 연습문제 서비스 커버리지를 20%→84%로 개선. GitHub Actions에 Ruff·분기 커버리지 측정·Summary/PR 리포트를 연결하고, 일반 테스트와 실제 외부 API 예약 헬스체크를 분리. 현재 일반 테스트 230개 통과.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">AI 협업 워크플로</span><span class="rs-metric">설계 토론 → 교차 리뷰</span></div>
+<p class="rs-desc">Claude Agent Teams로 설계 쟁점을 검토하고, 구현 후 변경 코드와 토론 맥락을 Codex에 전달해 pytest와 함께 교차 검증. PR에는 CodeRabbit 리뷰를 추가하고, 지적 사항은 실제 코드·테스트 범위를 확인해 수용 여부를 판단.</p>
+</div>
+
+<div class="rs-item">
+<div class="rs-head b"><span class="rs-name">배포 · 운영 자동화</span><span class="rs-metric">Docker · Render · 주간 백업</span></div>
+<p class="rs-desc">Docker Compose·Render로 배포하고, dbpush/dbpull DB 동기화 커맨드와 GitHub Actions 주간 자동 백업을 구현.</p>
 </div>
 
 </div>

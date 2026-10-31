@@ -19,12 +19,22 @@ rsync -av "$OBSIDIAN/LearnLog/attachments/" "$CONTENT/LearnLog/attachments/"
 # LearnLog index (포트폴리오)
 cp "$OBSIDIAN/LearnLog/📚 LearnLog - 개발자를 위한 AI 검색 아카이브 시스템.md" "$CONTENT/LearnLog/index.md"
 
-# 이력서 (What I Learned, index.md 제외 - 별도 관리, 대용량 영상 제외)
+# 이력서 최상위 파일 (생성한 index.md와 하위 디렉터리는 보존)
+# macOS 원본의 분해형 한글 폴더명과 Quartz의 완성형 이름을 구형 rsync가
+# 다르게 판단하므로, 경력 상세 폴더는 아래에서 경로를 지정해 별도로 동기화한다.
 rsync -av --delete \
-  --exclude='신혜란/What I Learned/' \
+  --exclude='*/' \
+  --exclude='index.md' \
   --exclude='*.mov' \
   --exclude='*.mp4' \
   "$OBSIDIAN/이력서/" "$CONTENT/이력서/"
+
+# 경력 상세 문서·이미지 (What I Learned는 아래에서 별도 관리)
+rsync -av --delete \
+  --exclude='What I Learned/' \
+  --exclude='*.mov' \
+  --exclude='*.mp4' \
+  "$OBSIDIAN/이력서/신혜란/" "$CONTENT/이력서/신혜란/"
 
 # 이력서 폴더 index (explorer 클릭 시 콘텐츠 표시용)
 cp "$OBSIDIAN/이력서/신혜란.md" "$CONTENT/이력서/index.md"
