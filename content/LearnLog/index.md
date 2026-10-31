@@ -209,6 +209,9 @@
 <div class="ll-filter"><label for="f-all">전체</label><label for="f-design">설계</label><label for="f-feature">기능구현</label><label for="f-rag">AI/RAG</label><label for="f-verify">AI/검증</label><label for="f-perf">성능</label><label for="f-test">테스트</label><label for="f-ops">배포·운영</label><label for="f-cs">CS</label></div>
 <div class="ll-timeline">
 <div class="ll-month">2026.10</div>
+<div class="ll-row" data-tag="기능구현"><span class="ll-date">10-30</span><a href="../LearnLog/BKT로-개념별-숙련도-추적하기---러닝메이트-수준-맞추기">BKT 숙련도 추적 — 러닝메이트 수준 맞추기</a><span class="ll-tag" data-tag="기능구현">기능구현</span></div>
+<div class="ll-row" data-tag="설계"><span class="ll-date">10-30</span><a href="../LearnLog/연습문제-출제-개선---개념-태깅과-학습-컨텍스트">연습문제 출제 개선 — 개념 태깅·학습 컨텍스트</a><span class="ll-tag" data-tag="설계">설계</span></div>
+<div class="ll-row" data-tag="AI/RAG"><span class="ll-date">10-30</span><a href="../LearnLog/답변-라우팅-개선---질문-의도와-예제-스택-분리">답변 라우팅 — 질문 의도·예제 스택 분리</a><span class="ll-tag" data-tag="AI/RAG">AI/RAG</span></div>
 <div class="ll-row" data-tag="테스트"><span class="ll-date">10-26</span><a href="../LearnLog/연습문제-서비스-테스트-보강---커버리지-20-percent--%3E84-percent">연습문제 테스트 보강 — 커버리지 20%→84%</a><span class="ll-tag" data-tag="테스트">테스트</span></div>
 <div class="ll-row" data-tag="테스트"><span class="ll-date">10-26</span><a href="../LearnLog/테스트-커버리지와-Ruff-정적-분석---CI-코드-품질-자동화">pytest-cov + Ruff — CI 코드 품질 자동화</a><span class="ll-tag" data-tag="테스트">테스트</span></div>
 <div class="ll-month">2026.09</div>

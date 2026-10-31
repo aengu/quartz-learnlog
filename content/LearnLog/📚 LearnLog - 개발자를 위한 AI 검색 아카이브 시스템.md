@@ -16,11 +16,11 @@
 
 <div class="ll-stats">
   <div class="ll-stat"><b>5개월</b><span>지속 개발 (2026.1–6)</span></div>
-  <div class="ll-stat"><b>28편</b><span>개발 일지</span></div>
+  <div class="ll-stat"><b>35편</b><span>개발 일지</span></div>
   <div class="ll-stat"><b>16개</b><span>벤치마크·검증 스크립트</span></div>
   <div class="ll-stat"><b>0/91</b><span>정답 인덱스·값 불일치 (20회 생성)</span></div>
   <div class="ll-stat"><b>52.6→37.3s</b><span>답변 생성 단축 · 당시 Mistral</span></div>
-  <div class="ll-stat"><b>73개</b><span>테스트 · CI 자동화</span></div>
+  <div class="ll-stat"><b>111개</b><span>테스트 · CI 자동화</span></div>
 </div>
 
 ---
@@ -157,7 +157,7 @@
 - **Backend**: Django 5 · DRF · **PostgreSQL 18** — FTS + pgvector 하이브리드 검색을 별도 벡터 DB 없이 DB 안에서 해결
 - **AI 파이프라인**: LangGraph — 질문별 조건 분기 라우팅 (검색→생성 파이프라인 제어)
 - **Frontend**: Django Template + **HTMX** — SPA 없이 SSE 스트리밍·무한스크롤·부분 갱신 · Tailwind CSS
-- **Testing & CI**: pytest · factory_boy (테스트 73개) · GitHub Actions push/PR 자동 실행
+- **Testing & CI**: pytest · factory_boy (테스트 111개) · pytest-cov · Ruff · GitHub Actions push/PR 자동 실행
 - **Deployment**: Docker Compose · Render (Web Service + Managed PostgreSQL)
 
 ---
@@ -186,7 +186,7 @@
 
 ## 개발 타임라인
 
-2026년 1월부터 33편 — 검색 아카이브에서 RAG·환각 방어를 거쳐, 모델이 죽었을 때의 운영까지 기록했습니다. 태그를 누르면 영역별로 필터됩니다.
+2026년 1월부터 35편 — 검색 아카이브에서 RAG·환각 방어를 거쳐, 테스트·CI 품질 자동화까지 기록했습니다. 태그를 누르면 영역별로 필터됩니다.
 
 성공만 기록하지 않았습니다 —
 
@@ -208,6 +208,12 @@
 <input type="radio" name="llf" id="f-cs">
 <div class="ll-filter"><label for="f-all">전체</label><label for="f-design">설계</label><label for="f-feature">기능구현</label><label for="f-rag">AI/RAG</label><label for="f-verify">AI/검증</label><label for="f-perf">성능</label><label for="f-test">테스트</label><label for="f-ops">배포·운영</label><label for="f-cs">CS</label></div>
 <div class="ll-timeline">
+<div class="ll-month">2026.10</div>
+<div class="ll-row" data-tag="기능구현"><span class="ll-date">10-30</span><a href="../LearnLog/BKT로-개념별-숙련도-추적하기---러닝메이트-수준-맞추기">BKT 숙련도 추적 — 러닝메이트 수준 맞추기</a><span class="ll-tag" data-tag="기능구현">기능구현</span></div>
+<div class="ll-row" data-tag="설계"><span class="ll-date">10-30</span><a href="../LearnLog/연습문제-출제-개선---개념-태깅과-학습-컨텍스트">연습문제 출제 개선 — 개념 태깅·학습 컨텍스트</a><span class="ll-tag" data-tag="설계">설계</span></div>
+<div class="ll-row" data-tag="AI/RAG"><span class="ll-date">10-30</span><a href="../LearnLog/답변-라우팅-개선---질문-의도와-예제-스택-분리">답변 라우팅 — 질문 의도·예제 스택 분리</a><span class="ll-tag" data-tag="AI/RAG">AI/RAG</span></div>
+<div class="ll-row" data-tag="테스트"><span class="ll-date">10-26</span><a href="../LearnLog/연습문제-서비스-테스트-보강---커버리지-20-percent--%3E84-percent">연습문제 테스트 보강 — 커버리지 20%→84%</a><span class="ll-tag" data-tag="테스트">테스트</span></div>
+<div class="ll-row" data-tag="테스트"><span class="ll-date">10-26</span><a href="../LearnLog/테스트-커버리지와-Ruff-정적-분석---CI-코드-품질-자동화">pytest-cov + Ruff — CI 코드 품질 자동화</a><span class="ll-tag" data-tag="테스트">테스트</span></div>
 <div class="ll-month">2026.09</div>
 <div class="ll-row" data-tag="AI/검증"><span class="ll-date">09-11</span><a href="../LearnLog/멀티에이전트-작업을-기록으로-남기기---진행판과-Codex-브릿지-인계">멀티에이전트 기록 — 진행판·Codex 인계</a><span class="ll-tag" data-tag="AI/검증">AI/검증</span></div>
 <div class="ll-row" data-tag="배포·운영"><span class="ll-date">09-11</span><a href="../LearnLog/쓰던-모델-4개가-한꺼번에-죽었다---교체와-CI가-못-잡은-이유">모델 4개 사망 — 교체와 CI 사각지대</a><span class="ll-tag" data-tag="배포·운영">배포·운영</span></div>
