@@ -97,9 +97,9 @@
 
 ### 기술 스택
 
-<div class="rs-stack">
-<span class="rs-chip" data-k="1">Django 5</span><span class="rs-chip" data-k="1">DRF</span><span class="rs-chip" data-k="1">PostgreSQL (FTS + pgvector)</span><span class="rs-chip" data-k="1">LangGraph</span><span class="rs-chip">Mistral</span><span class="rs-chip">Groq</span><span class="rs-chip">Tavily</span><span class="rs-chip" data-k="1">Docker</span><span class="rs-chip">pytest · pytest-cov</span><span class="rs-chip">Ruff</span><span class="rs-chip">GitHub Actions</span>
-</div>
+- **Backend:** Python · Django/DRF · PostgreSQL
+- **AI:** LangGraph · RAG(FTS + pgvector)
+- **배포·품질:** Docker · GitHub Actions · Ruff · CodeRabbit
 
 ### 주요 구현
 
