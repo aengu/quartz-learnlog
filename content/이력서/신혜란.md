@@ -95,11 +95,14 @@
 </svg>
 </div>
 
-### 기술 스택
-
-- **Backend:** Python · Django/DRF · PostgreSQL
-- **AI:** LangGraph · RAG(FTS + pgvector)
-- **배포·품질:** Docker · GitHub Actions · Ruff · CodeRabbit
+<div class="rs-stack-summary" style="break-inside:avoid;page-break-inside:avoid">
+<h3>기술 스택</h3>
+<ul>
+<li><strong>Backend:</strong> Python · Django/DRF · PostgreSQL</li>
+<li><strong>AI:</strong> LangGraph · RAG(FTS + pgvector)</li>
+<li><strong>배포·품질:</strong> Docker · GitHub Actions · Ruff · CodeRabbit</li>
+</ul>
+</div>
 
 ### 주요 구현
 
