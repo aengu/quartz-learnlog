@@ -6,9 +6,15 @@
 
 ## 🎯 프로젝트 개요
 
-개발 중 기술적 질문을 검색하면 AI가 참고 자료와 함께 답을 정리하고, 저장한 학습 로그를 RAG로 재활용합니다. 간격 반복 연습문제에 개념별 숙련도 추적과 사용자 수준에 맞춘 AI 러닝메이트를 연결한 개인 학습 서비스입니다.
+개발 질문을 기록하고, 그 내용으로 만든 문제를 풀며 복습하는 개인 AI 학습 서비스입니다.
 
-**핵심 가치**: 검색 → 정리 → 복습 → 재활용(RAG)의 학습 루프를 하나의 시스템 안에서 완결
+1. **질문한다:** “DB 잠금이 뭐야?”처럼 궁금한 내용을 묻고 답변을 저장합니다.
+2. **문제를 푼다:** 저장한 답변을 바탕으로 생성된 연습문제로 복습합니다.
+3. **결과를 확인한다:** 러닝메이트와 정오답을 비교하고, 내 개념별 이해도 변화를 살펴봅니다.
+
+**AI 러닝메이트**는 내 학습 수준에 맞춰 같은 문제를 푸는 AI 파트너입니다. 함께 문제를 풀고 결과를 비교해 학습 동기를 높이는 것을 목표로 합니다. 내 이해도는 별도로 BKT(정오답으로 개념을 알고 있을 확률을 갱신하는 모델)로 추정합니다.
+
+저장한 기록은 이후 질문의 답변 생성에도 재활용합니다. 하이브리드 검색(RAG)은 기록 재활용을, BKT는 개념별 학습 상태 확인과 러닝메이트 수준 조정을 위해 선택했습니다.
 
 > 개발하면서 직접 사용하는 개인 학습 도구입니다. 사용 중 느낀 불편을 기능 개선으로 이어가며, 성능·출력 정합성은 벤치마크로, 코드 동작은 테스트와 정적 검사로 확인합니다. BKT 숙련도는 고정 가정값 기반의 초기 추정이며, 학습 효과 검증과는 구분합니다.
 
@@ -16,77 +22,66 @@
 
 <div class="ll-stats">
   <div class="ll-stat"><b>진행 중</b><span>지속 개선 (2026.1–현재)</span></div>
-  <div class="ll-stat"><b>38편</b><span>개발 일지</span></div>
-  <div class="ll-stat"><b>16개</b><span>벤치마크·검증 스크립트</span></div>
-  <div class="ll-stat"><b>0/91</b><span>정답 인덱스·값 불일치 (20회 생성)</span></div>
-  <div class="ll-stat"><b>52.6→37.3s</b><span>답변 생성 단축 · 당시 Mistral</span></div>
-  <div class="ll-stat"><b>230개</b><span>일반 테스트 통과 · CI 품질 검사</span></div>
+  <div class="ll-stat"><b>개념별 이해도</b><span>BKT 추정 · 러닝메이트 수준 연동</span></div>
+  <div class="ll-stat"><b>52.6→37.3s</b><span>생성 시간 비교 · 당시 Mistral</span></div>
+  <div class="ll-stat"><b>20%→84%</b><span>당시 연습문제 서비스 커버리지</span></div>
 </div>
 
 ---
 
 ## 🏗 아키텍처
 
+### 서비스 처리 흐름
+
 <div class="rs-flow">
-<svg class="flow" viewBox="0 0 1600 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="학습기록을 먼저 검색하고 라우터가 웹검색 필요 여부를 판단합니다. 답변 생성 후 사용자에게 스트리밍하고 저장하며, 저장 후 백그라운드 모순 검사와 요청 시 복습 문제 생성으로 이어집니다. PPT와 동일한 카드형 아키텍처 도식입니다.">
-<rect width="1600" height="540" fill="#F5F5F5"/>
-<g transform="translate(0 -240)">
-<rect x="56" y="402" width="150" height="96" rx="14" fill="#101828" stroke="#FFFFFF" stroke-width="1"/>
-<text style="fill:#FFFFFF" x="131" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="131" y="456">사용자 질문</tspan></text>
-<rect x="260" y="364" width="220" height="170" rx="14" fill="#EAF1FF" stroke="#315EAE" stroke-width="1"/>
-<text style="fill:#315EAE" x="370" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="370" y="430">학습기록 검색</tspan><tspan style="fill:inherit" x="370" y="455">FTS + Vector</tspan><tspan style="fill:inherit" x="370" y="480">항상 먼저 실행</tspan></text>
-<rect x="550" y="364" width="210" height="170" rx="14" fill="#F0EAFF" stroke="#6941C6" stroke-width="1"/>
-<text style="fill:#6941C6" x="655" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="655" y="442.5">검색 결과 판단</tspan><tspan style="fill:inherit" x="655" y="467.5">웹이 필요한가?</tspan></text>
-<rect x="820" y="590" width="230" height="108" rx="14" fill="#E7F8F1" stroke="#087A5B" stroke-width="1"/>
-<text style="fill:#087A5B" x="935" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="935" y="637.5">공식 웹 자료 검색</tspan><tspan style="fill:inherit" x="935" y="662.5">필요할 때만</tspan></text>
-<rect x="850" y="364" width="220" height="170" rx="14" fill="#101828" stroke="#FFFFFF" stroke-width="1"/>
-<text style="fill:#FFFFFF" x="960" fill="#FFFFFF" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="960" y="442.5">AI 답변 생성</tspan><tspan style="fill:inherit" x="960" y="467.5">gpt-oss-120b</tspan></text>
-<rect x="1160" y="260" width="250" height="105" rx="14" fill="#E7F8F1" stroke="#087A5B" stroke-width="1"/>
-<text style="fill:#087A5B" x="1285" fill="#087A5B" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1285" y="306">답변 스트리밍</tspan><tspan style="fill:inherit" x="1285" y="331">사용자에게 먼저 전달</tspan></text>
-<rect x="1160" y="445" width="250" height="105" rx="14" fill="#EAF1FF" stroke="#315EAE" stroke-width="1"/>
-<text style="fill:#315EAE" x="1285" fill="#315EAE" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1285" y="491">학습기록 저장</tspan><tspan style="fill:inherit" x="1285" y="516">PostgreSQL</tspan></text>
-<rect x="1090" y="664" width="220" height="92" rx="14" fill="#FFF0E5" stroke="#B54708" stroke-width="1"/>
-<text style="fill:#B54708" x="1200" fill="#B54708" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1200" y="703.5">백그라운드 모순 검사</tspan><tspan style="fill:inherit" x="1200" y="728.5">Qwen · Groq</tspan></text>
-<rect x="1360" y="664" width="180" height="92" rx="14" fill="#F0EAFF" stroke="#6941C6" stroke-width="1"/>
-<text style="fill:#6941C6" x="1450" fill="#6941C6" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700"><tspan style="fill:inherit" x="1450" y="703.5">복습 문제</tspan><tspan style="fill:inherit" x="1450" y="728.5">요청할 때 생성</tspan></text>
-<path d="M 206 450 L 260 450" stroke="#D0D5DD" stroke-width="2" fill="none"/>
-<path d="M 249.60769515458674 456 L 260 450" stroke="#D0D5DD" stroke-width="2" fill="none"/>
-<path d="M 260 450 L 249.60769515458674 444" stroke="#D0D5DD" stroke-width="2" fill="none"/>
-<path d="M 480 450 L 550 450" stroke="#315EAE" stroke-width="2" fill="none"/>
-<path d="M 539.6076951545867 456 L 550 450" stroke="#315EAE" stroke-width="2" fill="none"/>
-<path d="M 550 450 L 539.6076951545867 444" stroke="#315EAE" stroke-width="2" fill="none"/>
-<path d="M 760 420 L 850 420" stroke="#6941C6" stroke-width="2" fill="none"/>
-<path d="M 839.6076951545867 426 L 850 420" stroke="#6941C6" stroke-width="2" fill="none"/>
-<path d="M 850 420 L 839.6076951545867 414" stroke="#6941C6" stroke-width="2" fill="none"/>
-<path d="M 655 534 L 655 644" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 655 644 L 820 644" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 809.6076951545867 650 L 820 644" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 820 644 L 809.6076951545867 638" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 935 590 L 960 534" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 961.2423954909707 545.935512282429 L 960 534" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 960 534 L 950.2847409017206 541.0437021979424" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 1070 410 L 1160 312" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 1157.389772376005 323.71267312576146 L 1160 312" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 1160 312 L 1148.5514137148698 315.5958131308413" stroke="#087A5B" stroke-width="2" fill="none"/>
-<path d="M 1070 488 L 1160 498" stroke="#315EAE" stroke-width="2" fill="none"/>
-<path d="M 1149.0086680919248 502.8156643245277 L 1160 498" stroke="#315EAE" stroke-width="2" fill="none"/>
-<path d="M 1160 498 L 1150.333846404823 490.8890595084443" stroke="#315EAE" stroke-width="2" fill="none"/>
-<path d="M 1280 550 L 1200 664" stroke="#B54708" stroke-width="2" fill="none"/>
-<path d="M 1201.0582673408906 652.0467548240988 L 1200 664" stroke="#B54708" stroke-width="2" fill="none"/>
-<path d="M 1200 664 L 1210.8809476504393 658.939863813256" stroke="#B54708" stroke-width="2" fill="none"/>
-<path d="M 1350 550 L 1450 664" stroke="#6941C6" stroke-width="2" fill="none"/>
-<path d="M 1438.63636648832 660.1441170385731 L 1450 664" stroke="#6941C6" stroke-width="2" fill="none"/>
-<path d="M 1450 664 L 1447.6574758427753 652.2308632188755" stroke="#6941C6" stroke-width="2" fill="none"/>
-<text style="fill:#6941C6" x="813" y="407" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">웹 생략</text>
-<text style="fill:#087A5B" x="719" y="627" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#087A5B">웹 필요</text>
-<text style="fill:#6941C6" x="1403" y="611" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#6941C6">나중에 생성</text>
-</g>
+<svg class="flow" viewBox="0 0 1600 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="질문 흐름: 질문 입력, 관련 기록 검색, 라우터의 검색·답변 방식 결정, AI 답변 생성, 학습 기록 저장. 복습 흐름: 문제 생성·태깅, 나와 AI 러닝메이트의 문제 풀이, 개념별 이해도 갱신(BKT), 결과 확인. 두 흐름은 서로 다른 시점에 실행합니다.">
+<rect width="1600" height="460" rx="16" fill="#F5F5F5"/>
+<text x="40" y="42" fill="#315EAE" style="fill:#315EAE" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">질문할 때</text>
+<rect x="40" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
+<text x="180" y="126" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">질문 입력</text>
+<path d="M 320 117 H 350 M 339 111 L 350 117 L 339 123" fill="none" stroke="#315EAE" stroke-width="2"/>
+<rect x="350" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
+<text x="490" y="126" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">관련 기록 검색</text>
+<path d="M 630 117 H 660 M 649 111 L 660 117 L 649 123" fill="none" stroke="#315EAE" stroke-width="2"/>
+<rect x="660" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
+<text x="800" y="111" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">검색·답변 방식 결정</text>
+<text x="800" y="142" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">(라우터)</text>
+<path d="M 940 117 H 970 M 959 111 L 970 117 L 959 123" fill="none" stroke="#315EAE" stroke-width="2"/>
+<rect x="970" y="70" width="280" height="94" rx="12" fill="#101828" stroke="#FFFFFF"/>
+<text x="1110" y="126" fill="#FFFFFF" style="fill:#FFFFFF" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">AI 답변 생성</text>
+<path d="M 1250 117 H 1280 M 1269 111 L 1280 117 L 1269 123" fill="none" stroke="#315EAE" stroke-width="2"/>
+<rect x="1280" y="70" width="280" height="94" rx="12" fill="#EAF1FF" stroke="#315EAE"/>
+<text x="1420" y="126" fill="#315EAE" style="fill:#315EAE" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">학습 기록 저장</text>
+<text x="40" y="202" fill="#667085" style="fill:#667085" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="21">라우터가 기록·웹 자료 사용 여부와 설명 방식을 결정하고, 답변은 스트리밍으로 전달합니다.</text>
+<path d="M 40 229 H 1560" stroke="#D0D5DD" fill="none"/>
+<text x="40" y="273" fill="#6941C6" style="fill:#6941C6" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="27" font-weight="700">복습할 때</text>
+<rect x="40" y="300" width="290" height="94" rx="12" fill="#F0EAFF" stroke="#6941C6"/>
+<text x="185" y="356" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">문제 생성·태깅</text>
+<path d="M 330 347 H 450 M 439 341 L 450 347 L 439 353" fill="none" stroke="#6941C6" stroke-width="2"/>
+<rect x="450" y="300" width="290" height="94" rx="12" fill="#F0EAFF" stroke="#6941C6"/>
+<text x="595" y="341" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">문제 풀이</text>
+<text x="595" y="372" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">나 · AI 러닝메이트</text>
+<path d="M 740 347 H 860 M 849 341 L 860 347 L 849 353" fill="none" stroke="#6941C6" stroke-width="2"/>
+<rect x="860" y="300" width="290" height="94" rx="12" fill="#E7F8F1" stroke="#087A5B"/>
+<text x="1005" y="341" fill="#087A5B" style="fill:#087A5B" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">개념별 이해도 갱신</text>
+<text x="1005" y="372" fill="#087A5B" style="fill:#087A5B" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">(BKT)</text>
+<path d="M 1150 347 H 1270 M 1259 341 L 1270 347 L 1259 353" fill="none" stroke="#6941C6" stroke-width="2"/>
+<rect x="1270" y="300" width="290" height="94" rx="12" fill="#F0EAFF" stroke="#6941C6"/>
+<text x="1415" y="341" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">결과 확인</text>
+<text x="1415" y="372" fill="#6941C6" style="fill:#6941C6" text-anchor="middle" font-family="Inter, Pretendard, Arial, sans-serif" font-size="23" font-weight="700">정오답 · 내 이해도</text>
+<text x="40" y="436" fill="#667085" style="fill:#667085" text-anchor="start" font-family="Inter, Pretendard, Arial, sans-serif" font-size="21">검토·승인된 문항의 사용자 풀이만 BKT에 반영합니다.</text>
 </svg>
 </div>
 
-학습기록을 먼저 검색하고, 그 결과를 본 라우터가 기록 활용 여부와 웹검색 필요 여부를 판단합니다. 생성한 답변은 사용자에게 스트리밍하며, 저장 후 모순 검사는 백그라운드에서 실행합니다. 복습 문제는 요청할 때 생성하고, 저장된 기록은 다음 질문의 검색에 재활용합니다.
+학습기록을 먼저 검색하고, 그 결과를 본 라우터가 기록 활용 여부와 웹검색 필요 여부를 판단합니다. 생성한 답변은 사용자에게 스트리밍하며, 저장 후 모순 검사는 백그라운드에서 실행합니다. 저장된 기록은 다음 질문의 검색에 재활용합니다.
 
-*구현: 라우팅 LangGraph · 하이브리드 검색 pgvector+FTS · 답변 Mistral · 검증·경량작업 Groq · 웹검색 Tavily*
+*구현: 파이프라인 LangGraph · 검색 pgvector+FTS · 답변·검사 Groq의 서로 다른 모델 · 임베딩 Mistral · 웹검색 Tavily*
+
+### 복습 반영 기준
+
+저장한 답변으로 문제와 개념 후보를 생성하며, 문항·개념 연결 검토와 승인·보류는 수동으로 관리합니다. 승인된 문항의 사용자 정오답으로 BKT 현재 상태와 변화 이력을 갱신합니다.
+
+러닝메이트는 자신의 풀이 시작 시점 이전 사용자 기록으로 수준을 맞춥니다. 이번 사용자 답을 미리 참고하지 않으며, 러닝메이트의 정오답은 사용자 BKT에 반영하지 않습니다.
 
 ---
 
@@ -102,22 +97,12 @@
 </tr>
 <tr>
 <td>🛡 <b>환각 방어</b><small>예방 · 검출 · 표시 3단</small></td>
-<td>답변이 저장돼 연습문제로 암기되는 구조라 환각이 치명적인데, 무료 티어 모델의 환각 자체는 막을 수 없다. 예방(grounding)·검출(생성과 <b>다른 모델</b>로 저장 후 비동기 모순 검사)·표시(출처·검증 배지) 3단으로 다루고, 그 Judge까지 Claude로 66건 교차검증.</td>
+<td>잘못된 답변이 다음 답변과 복습 문제에 재사용될 수 있어, 공식 문서 검색을 통한 생성 근거 확보·생성과 <b>다른 모델</b>의 저장 후 모순 검사·검사 상태와 의심 사유 표시로 관리했습니다. 문제 생성 시에도 의심 기록을 경고합니다. 검사 모델의 판정 66건을 Claude로 교차확인했으며, 근거 자체의 진위나 모든 환각을 검증하는 것은 아닙니다.</td>
 <td><span class="ll-num">응답 안 막는 검증</span><a href="../LearnLog/환각-방어---예방·검출·표시-3단">상세 →</a></td>
 </tr>
 <tr>
-<td>🧪 <b>LLM 검증 체계</b><small>채점 스크립트의 오판 발견 · 교체</small></td>
-<td>프롬프트 개선 효과를 측정하니 오히려 악화로 나왔다 — 원시 응답을 전수 확인해 보니 "오류"의 75%가 채점 스크립트의 오판. 채점기를 먼저 고치고, 스킵률 90%인 정규식 채점을 다른 모델의 LLM 교차 채점으로 교체해 전수 판정.</td>
-<td><span class="ll-num">Judge 오류 판정 10%→5%</span><small>8/80 → 4/80 문항 · 모호한 판정 포함</small><a href="../LearnLog/프롬프트-검증-재설계---pytest를-버리고-실험-스크립트로">상세 →</a></td>
-</tr>
-<tr>
-<td>🔒 <b>런타임 가드</b><small>출력 자가검증 + 실패 시 재생성</small></td>
-<td>정답 값과 선택지 위치의 불일치를 코드로 검사하고, 불일치 문항은 제외한 뒤 재생성하도록 구현. 두 필드가 같은 오답을 가리키면 통과할 수 있어, 내부 일관성과 사실 정확도를 구분했습니다.</td>
-<td><span class="ll-num">인덱스·값 불일치 0/91건</span><small>20회 생성 · 최종 문항 기준<br/>해당 실행에서 재생성 미발생<br/>가드의 제거 효과는 별도 검증 필요</small><a href="../LearnLog/correct_index-런타임-가드-—-정답-인덱스-정합성-검증">상세 →</a></td>
-</tr>
-<tr>
-<td>⚡ <b>속도 vs 품질</b><small>모델 분리 + 병렬화 + 스트리밍</small></td>
-<td>작업별 시간을 측정해 답변 생성 병목을 확인. 프롬프트 경량화로 생성 시간을 줄이고, 독립적인 태그·마크다운 후처리를 병렬화(2.89s → 1.01s). SSE는 완료 시간 단축과 별개로 생성 중 답변을 전달합니다.</td>
+<td>⚡ <b>답변 처리 시간 개선</b><small>후처리 병렬화 · 프롬프트 경량화 · SSE</small></td>
+<td>독립적인 태그·마크다운 후처리를 병렬화해 2.89s→1.01s로 단축했습니다. 프롬프트 경량화 전후 생성 시간 약 29% 감소를 관측했으며, 출력 길이 영향과는 분리하지 못했습니다. SSE는 완료 시간 단축과 별개로 생성 중 답변을 전달합니다.</td>
 <td><span class="ll-num">답변 생성 52.6s→37.3s</span><small>당시 Mistral Large<br/>단일 질문 · 2라운드 평균<br/>52.56s → 37.32s (약 29% 단축)<br/>전체 요청 시간과는 별도 측정</small><a href="../LearnLog/LLM-응답-속도-최적화---병렬화,-프롬프트-경량화,-스트리밍">상세 →</a></td>
 </tr>
 <tr>
@@ -133,6 +118,23 @@
 </tbody>
 </table>
 
+<details>
+<summary>추가 검증 사례: 채점기 오판 수정 · 정답 인덱스 검증</summary>
+
+### 채점 스크립트의 오판 발견·교체
+
+프롬프트 변경 효과를 측정하던 중 원시 응답을 확인해, 오류로 분류한 결과의 75%가 채점 스크립트의 오판임을 발견했습니다. 채점기를 수정하고 스킵률 90%인 정규식 채점을 다른 모델의 LLM 교차 채점으로 교체했습니다. 비교 문항 80개에서 Judge의 오류 판정은 8건에서 4건으로 줄었으며 모호한 판정도 포함합니다.
+
+→ [[프롬프트 검증 재설계 - pytest를 버리고 실험 스크립트로|채점기 개선 상세]]
+
+### 정답 값·선택지 위치의 일관성 검사
+
+정답 값과 선택지 위치의 불일치를 코드로 검사하고, 불일치 문항 제외·실패 시 재생성을 구현했습니다. 적용 후 20회 생성한 최종 문항 91개에서 불일치 0건을 관측했습니다. 해당 실행에서 재생성은 발생하지 않았으므로 가드의 제거 효과를 입증한 것은 아닙니다. 두 필드가 같은 오답을 가리키면 통과할 수 있어 사실 정확도와도 구분합니다.
+
+→ [[correct_index 런타임 가드 — 정답 인덱스 정합성 검증|정답 인덱스 검증 상세]]
+
+</details>
+
 ---
 
 ## ✨ 주요 기능
@@ -147,7 +149,7 @@
 라우터가 **웹검색 필요 여부·학습기록 사용 여부**와 함께 **설명 초점·예제 스택(SQL/Python/Django/auto)**을 선택합니다. SQL로 충분한 질문에 Django 예제를 억지로 붙이지 않도록 생성 지침을 분기하며, 기존 스트리밍은 유지합니다.
 
 ### 환각 방어
-생성과 다른 모델로 모순을 **비동기** 검증하고 출처 배지를 표시합니다. 검증이 답변 속도를 막지 않게 분리했습니다.
+생성 모델과 다른 LLM이 답변과 생성 근거의 모순을 **저장 후 비동기** 검사합니다. 검사 상태·의심 사유를 표시하고, 해당 기록으로 문제를 만들 때 경고합니다. 검사는 스트리밍 응답과 분리했으며, 이미 전달한 답변을 자동 수정하거나 모든 주장의 사실성을 보장하지는 않습니다.
 
 ### 간격 반복 연습문제
 저장한 기록을 바탕으로 선택지 고르기·직접 답하기 두 유형을 출제하고, 1·3·7·14·30일 간격으로 복습을 관리합니다. 새 선택지 문항에는 개념·사고 유형·추정 난이도를 태깅하며, 새 개념 후보는 검토 후 등록합니다. 태그 형식 검증과 문항의 사실성 검토는 구분합니다.
@@ -171,6 +173,12 @@
 
 ### 테스트·정적 검사·외부 API 모니터링
 GitHub Actions에서 Ruff → pytest·분기 커버리지 측정 → Job Summary/PR 리포트를 자동화했습니다. Ruff는 우선 F 규칙부터 적용하고, 커버리지는 일괄 실패 기준보다 측정과 핵심 로직 보강부터 시작했습니다. 일반 테스트는 외부 호출을 대체하고, 실제 Groq·Mistral·Tavily 응답은 별도 예약 헬스체크로 확인합니다. PR에는 CodeRabbit을 보조 리뷰로 추가하되, 지적은 코드와 테스트 범위를 확인해 판단합니다.
+
+### 개발·운영 방식
+
+Claude Agent Teams로 설계 쟁점을 검토하고, 변경 코드와 논의 맥락을 Codex에 전달해 테스트와 함께 교차 검증했습니다. AI의 제안과 CodeRabbit 리뷰는 근거를 확인해 수용 여부를 직접 판단합니다.
+
+Docker Compose·Render로 배포하고, 로컬·배포 DB 동기화 커맨드와 GitHub Actions 주간 자동 백업을 구현했습니다. 개발 기록은 아래 타임라인에서 확인할 수 있습니다.
 
 ## 🛠 기술 스택
 
